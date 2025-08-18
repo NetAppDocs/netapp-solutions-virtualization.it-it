@@ -1,0 +1,158 @@
+---
+section: vmware
+title: Virtualizzazione VMware
+url: "/vmware/index.html"
+entries:
+- title: Iniziare
+  pdf-filename: Introduzione a NetApp e VMware
+  entries:
+  - title: Concetti fondamentali
+    entries:
+    - title: Informazioni su ONTAP per VMware vSphere
+      url: "/vmware/vmw-getting-started-overview.html"
+    - title: Informazioni sulle piattaforme NetApp per VMware
+      url: "/vmware/vmw-getting-started-ntap-options.html"
+    - title: Informazioni sugli ambienti multicloud ibridi
+      url: "/vmware/vmw-getting-started-hmc.html"
+  - title: Strumenti e soluzioni di gestione
+    entries:
+    - title: ONTAP tools for VMware vSphere
+      url: "/vmware/vmw-getting-started-otv.html"
+    - title: API ONTAP e VMware per l'amministrazione
+      url: "/vmware/vmw-getting-started-automation.html"
+    - title: Data Infrastructure Insights per il monitoraggio
+      url: "/vmware/vmw-getting-started-dii.html"
+    - title: Migrazione del carico di lavoro delle VM per una maggiore efficienza
+      url: "/vmware/vmw-getting-started-migration.html"
+  - title: Soluzioni per la protezione dei dati
+    entries:
+    - title: Protezione con MetroCluster e SnapMirror ActiveSync
+      url: "/vmware/vmw-getting-started-vmsc.html"
+    - title: Sicurezza e protezione dal ransomware con ONTAP
+      url: "/vmware/vmw-getting-started-security.html"
+  - title: Soluzioni di backup e disaster recovery
+    entries:
+    - title: SnapCenter Plug-in for VMware vSphere
+      url: "/vmware/vmw-getting-started-snapcenter.html"
+    - title: BlueXP disaster recovery
+      url: "/vmware/vmw-dr-gs.html"
+- title: VMware Cloud Foundation su NetApp
+  pdf-filename: VMware Cloud Foundation su NetApp
+  entries:
+  - title: Informazioni su VMware Cloud Foundation e ONTAP
+    url: "/vmware/vmw-vcf-overview.html"
+  - title: Convertire i cluster vSphere esistenti in VCF
+    entries:
+    - title: Informazioni sulla conversione dei cluster vSphere esistenti in VCF
+      url: "/vmware/vmw-vcf-migrate.html"
+    - title: Convertire il cluster vSphere esistente con datastore NFS
+      url: "/vmware/vmw-vcf-mgmt-nfs.html"
+    - title: Convertire il cluster vSphere esistente con datastore FC
+      url: "/vmware/vmw-vcf-mgmt-fc.html"
+  - title: Fornire VCF con storage principale
+    entries:
+    - title: Informazioni sul provisioning dell'archiviazione principale
+      url: "/vmware/vmw-vcf-provision.html"
+    - title: Domini di gestione delle disposizioni con FC
+      url: "/vmware/vmw-vcf-mgmt-principal-fc.html"
+    - title: Domini di gestione delle disposizioni con NFS
+      url: "/vmware/vmw-vcf-mgmt-principal-nfs.html"
+    - title: Fornire domini di carico di lavoro VI con FC
+      url: "/vmware/vmw-vcf-viwld-principal-fc.html"
+    - title: Fornire domini di carico di lavoro VI con NFS
+      url: "/vmware/vmw-vcf-viwld-principal-nfs.html"
+  - title: Espandi VCF con spazio di archiviazione supplementare
+    entries:
+    - title: Informazioni sull'espansione dello spazio di archiviazione
+      url: "/vmware/vmw-vcf-expand.html"
+    - title: Espandi i domini di gestione con iSCSI
+      url: "/vmware/vmw-vcf-mgmt-supplemental-iscsi.html"
+    - title: Espandi i domini di gestione con FC
+      url: "/vmware/vmw-vcf-mgmt-supplemental-fc.html"
+    - title: Espandi i domini del carico di lavoro VI con vVols iSCSI
+      url: "/vmware/vmw-vcf-viwld-supp-iscsi-vvols.html"
+    - title: Espandi i domini del carico di lavoro VI con vVols NFS
+      url: "/vmware/vmw-vcf-viwld-supp-nfs-vvols.html"
+    - title: Espandi i domini del carico di lavoro VI con NVMe/TCP
+      url: "/vmware/vmw-vcf-viwld-supp-nvme.html"
+    - title: Espandi i domini del carico di lavoro VI con FC
+      url: "/vmware/vmw-vcf-viwld-supp-fc.html"
+  - title: Proteggi VCF con SnapCenter
+    entries:
+    - title: Informazioni sulla protezione dei carichi di lavoro VCF con SnapCenter
+      url: "/vmware/vmw-vcf-protect-sc.html"
+    - title: Proteggere un singolo dominio di carico di lavoro VCF
+      url: "/vmware/vmw-vcf-scv-viwld.html"
+    - title: Proteggere più domini di carico di lavoro VCF
+      url: "/vmware/vmw-vcf-scv-multiwkld-protection.html"
+    - title: Proteggi i domini dei carichi di lavoro VCF con NVMe
+      url: "/vmware/vmw-vcf-scv-nvme.html"
+  - title: Proteggi i datastore VMware con BlueXP
+    entries:
+    - title: Informazioni sulla protezione dei datastore VMware con BlueXP
+      url: "/vmware/vmw-vcf-disaster-recovery.html"
+    - title: Configurare la protezione dei dati con SnapCenter e BlueXP
+      url: "/vmware/vmw-vcf-321-data-protection.html"
+    - title: Impostare il ripristino di emergenza per i datastore VMFS
+      url: "/vmware/vmw-disaster-recovery-vmfs.html"
+    - title: Impostare il ripristino di emergenza per i datastore NFS
+      url: "/vmware/vmw-disaster-recovery-nfs.html"
+  - title: Proteggi i carichi di lavoro con vSphere Metro Storage Cluster
+    entries:
+    - title: Informazioni sull'integrazione dell'alta disponibilità ONTAP
+      url: "/vmware/vmw-vcf-protect-vmsc.html"
+    - title: Configurare i domini di gestione con MetroCluster
+      url: "/vmware/vmw-vcf-vmsc-mgmt-mcc.html"
+    - title: Configurare i domini del carico di lavoro VI con MetroCluster
+      url: "/vmware/vmw-vcf-vmsc-viwld-mcc.html"
+    - title: Configurare i domini di gestione con SnapMirror Active Sync
+      url: "/vmware/vmw-vcf-vmsc-mgmt-smas.html"
+    - title: Configurare i domini del carico di lavoro VI con SnapMirror Active Sync
+      url: "/vmware/vmw-vcf-vmsc-viwld-smas.html"
+  - title: Migrazione delle VM da vSphere
+    url: "/vmware/migrate-vms-to-ontap-datastore.html"
+  - title: Proteggi e recupera i dati dal ransomware
+    url: "/vmware/vmw-nfs-arp.html"
+  - title: Monitorare l'archiviazione locale con DII
+    url: "/vmware/vmw-dii.html"
+- title: VMware vSphere Foundation su NetApp
+  pdf-filename: VMware vSphere Foundation su NetApp
+  entries:
+  - title: Iniziare
+    entries:
+    - title: Informazioni su VMware vSphere Foundation su NetApp
+      url: "/vmware/vmw-vvf-overview.html"
+    - title: Informazioni sul supporto NetApp per VMware vSphere 8
+      url: "/vmware/vmw-vsphere8.html"
+    - title: Informazioni sull'utilizzo di VMware vSphere 8 con storage ONTAP
+      url: "/vmware/vmw-vsphere-with-ontap.html"
+    - title: Novità di VMware vSphere 8
+      url: "/vmware/vmw-vsphere8-overview.html"
+  - title: Distribuisci VMFS per vSphere 8
+    url: "/vmware/vmw-vmfs-deploy.html"
+  - title: Utilizzare la funzionalità NFS nConnect
+    url: "/vmware/vmw-vsphere8-nfs-nconnect.html"
+  - title: Configurare i datastore NFS
+    url: "/vmware/vmw-nfs-otv10.html"
+  - title: Configurare il ripristino di emergenza
+    url: "/vmware/vmw-nfs-vlsr.html"
+  - title: Configurare vMSC con SnapMirror Active Sync
+    url: "/vmware/vmw-vmsc-with-smas.html"
+  - title: Converti SnapMirror Active Sync con VMSC
+    url: "/vmware/vmware-smbc-cvt-smas.html"
+  - title: Utilizzare vVols con ONTAP
+    url: "/vmware/vmw-vvol-overview.html"
+  - title: Raccogli dati con Virtual Machine Data Collector
+    pdf-filename: Raccoglitore di dati di macchine virtuali
+    entries:
+    - title: Informazioni su VMDC
+      url: "/vmware/vmw-getting-started-vmdc.html"
+    - title: Utilizzare VMDC per raccogliere dati
+      url: "/assess/vmw-vmdc.html"
+- title: VMware Sovereign Cloud
+  pdf-filename: NetApp e VMware Sovereign Cloud
+  entries:
+  - title: Informazioni su Sovereign Cloud
+    url: "/vmware/vmw-sovereign-cloud.html"
+  - title: Integrazioni NetApp con Sovereign Cloud
+    url: "/vmware/vmw-sovereign-cloud-use-cases.html"

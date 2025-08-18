@@ -1,0 +1,77 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vmfs-nvmeof.html 
+keywords: vSphere, datastore, VMFS, NVMeoF, ONTAP tools, zone, network interface, namespace, storage subsystem 
+summary: Questa pagina illustra i passaggi per distribuire uno storage NetApp ONTAP NVMe/FC per datastore VMFS in un ambiente VMware vSphere. 
+---
+= vSphere VMFS Datastore - NVMe/FC con ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questa sezione illustra la creazione di un datastore VMFS con storage ONTAP mediante NVMe/FC.
+
+
+
+== Di cosa hai bisogno
+
+* Competenze di base necessarie per gestire un ambiente vSphere e ONTAP.
+* link:++https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/7-0/vsphere-storage-7-0/about-vmware-nvme-storage/vmware-nvme-concepts/basic-vmware-nvme-architecture.html++["Conoscenza di base di NVMe/FC"] .
+* Un sistema di archiviazione ONTAP (FAS/ AFF/ CVO / ONTAP Select/ ASA) che esegue {ontap_version}
+* Credenziali ONTAP (nome SVM, ID utente e password)
+* ONTAP WWPN per informazioni su host, target, SVM e LUN
+* link:++https://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-fc-esx-cpg/GUID-429C4DDD-5EC0-4DBD-8EA8-76082AB7ADEC.html++["Un foglio di lavoro di configurazione FC completato"]
+* Server vCenter
+* Informazioni sugli host vSphere ({vsphere_version})
+* Interruttore(i) in tessuto
++
+** Con porte dati ONTAP FC e host vSphere connessi.
+** Con la funzionalità di virtualizzazione N_port ID (NPIV) abilitata.
+** Creare una singola zona target dell'iniziatore.
+** Creare una zona per ogni iniziatore (zona iniziatore singolo).
+** Per ogni zona, includere un target che sia l'interfaccia logica ONTAP FC (WWPN) per gli SVM.  Dovrebbero esserci almeno due interfacce logiche per nodo per SVM.  NON utilizzare il WWPN delle porte fisiche.
+
+
+
+
+
+
+== Fornire il datastore VMFS
+
+. Verificare la compatibilità con il https://mysupport.netapp.com/matrix["Strumento di matrice di interoperabilità (IMT)"] .
+. link:++https://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-fc-esx-cpg/GUID-7D444A0D-02CE-4A21-8017-CB1DC99EFD9A.html++["Verificare che la configurazione NVMe/FC sia supportata."]
+
+
+
+
+== Attività ONTAP
+
+. link:https://docs.netapp.com/us-en/ontap-cli-98/system-license-show.html["Verificare la licenza ONTAP per FCP."]Utilizzare il `system license show` comando e verificare se NVMe_oF è elencato.  Utilizzo `license add -license-code <license code>` per aggiungere una licenza.
+. Verificare che il protocollo NVMe sia abilitato sulla SVM.
++
+.. link:++https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanag/GUID-CDDBD7F4-2089-4466-892F-F2DFF5798B1C.html++["Configurare le SVM per NVMe."]
+
+
+. Verificare che le interfacce logiche NVMe/FC siano disponibili sulle SVM.
++
+.. Utilizzo `Network Interface show` per verificare l'adattatore FCP.
+.. Quando si crea una SVM con la GUI, le interfacce logiche fanno parte di tale processo.
+.. Per rinominare l'interfaccia di rete, utilizzare il comando `Network Interface modify` .
+
+
+. link:++https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanag/GUID-BBBAB2E4-E106-4355-B95C-C3626DCD5088.html++["Crea uno spazio dei nomi e un sottosistema NVMe"]
+
+
+
+
+== Attività VMware vSphere
+
+. Verificare che i driver HBA siano installati.  Gli HBA supportati da VMware hanno i driver distribuiti immediatamente e dovrebbero essere visibili alink:++https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/GUID-ED20B7BE-0D1C-4BF7-85C9-631D45D96FEC.html++["Informazioni sull'adattatore di archiviazione"]
+. link:++https://docs.netapp.com/us-en/ontap-sanhost/nvme_esxi_7.html++["Eseguire attività di installazione e convalida del driver vSphere Host NVMe"]
+. link:++https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/7-0/vsphere-storage-7-0/working-with-datastores-in-vsphere-storage-environment/creating-vsphere-datastores/create-a-vsphere-vmfs-datastore.html++["Crea datastore VMFS"]
+

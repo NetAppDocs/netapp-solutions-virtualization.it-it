@@ -1,0 +1,69 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-workflow-vm-from-snapshot.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization 
+summary: Virtualizzazione Red Hat OpenShift con NetApp ONTAP 
+---
+= Crea una VM da una copia snapshot con Red Hat OpenShift Virtualization
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Crea una VM da uno snapshot con OpenShift Virtualization.  Questa procedura include la creazione di un VolumeSnapshotClass, l'acquisizione di uno snapshot del claim del volume persistente (PVC) della VM, il ripristino dello snapshot su un nuovo PVC e la distribuzione di una nuova VM che utilizza il PVC ripristinato come disco radice.
+
+
+
+== Crea una VM da uno snapshot
+
+Con Trident e Red Hat OpenShift, gli utenti possono acquisire uno snapshot di un volume persistente sulle classi di archiviazione da esso fornite.  Grazie a questa funzionalità, gli utenti possono effettuare una copia di un volume in un dato momento e utilizzarla per creare un nuovo volume o ripristinare lo stesso volume a uno stato precedente.  Ciò consente o supporta una varietà di casi d'uso, dal rollback alla clonazione al ripristino dei dati.
+
+Per le operazioni Snapshot in OpenShift, è necessario definire le risorse VolumeSnapshotClass, VolumeSnapshot e VolumeSnapshotContent.
+
+* Un VolumeSnapshotContent è l'istantanea effettiva acquisita da un volume nel cluster.  Si tratta di una risorsa a livello di cluster analoga a PersistentVolume per l'archiviazione.
+* Un VolumeSnapshot è una richiesta di creazione dello snapshot di un volume.  È analogo a PersistentVolumeClaim.
+* VolumeSnapshotClass consente all'amministratore di specificare attributi diversi per un VolumeSnapshot.  Consente di avere attributi diversi per snapshot diversi acquisiti dallo stesso volume.
+
+
+image:redhat-openshift-060.png["VM dall'architettura Snapshot"]
+
+Per creare uno snapshot di una VM, completare i seguenti passaggi:
+
+. Creare una VolumeSnapshotClass che potrà poi essere utilizzata per creare un VolumeSnapshot.  Passare a Storage > VolumeSnapshotClasses e fare clic su Create VolumeSnapshotClass.
+. Immettere il nome della classe Snapshot, immettere csi.trident.netapp.io per il driver e fare clic su Crea.
++
+image:redhat-openshift-061.png["Crea classe Snapshot"]
+
+. Identificare il PVC collegato alla VM di origine e quindi creare uno snapshot di tale PVC.  Vai a `Storage > VolumeSnapshots` e fare clic su Crea VolumeSnapshot.
+. Selezionare il PVC per cui si desidera creare lo Snapshot, immettere il nome dello Snapshot o accettare quello predefinito e selezionare la VolumeSnapshotClass appropriata.  Quindi fare clic su Crea.
++
+image:redhat-openshift-062.png["Crea istantanea"]
+
+. In questo modo si crea un'istantanea del PVC in quel momento.
+
+
+
+
+== Crea una nuova VM dallo snapshot
+
+. Per prima cosa, ripristina lo Snapshot in un nuovo PVC.  Passare a Storage > VolumeSnapshots, fare clic sui puntini di sospensione accanto allo Snapshot che si desidera ripristinare e fare clic su Ripristina come nuovo PVC.
+. Inserisci i dettagli del nuovo PVC e fai clic su Ripristina.  In questo modo si crea un nuovo PVC.
++
+image:redhat-openshift-063.png["Ripristina lo snapshot su un nuovo PVC"]
+
+. Successivamente, creare una nuova VM da questo PVC.  Vai su Virtualizzazione > Macchine virtuali e fai clic su Crea > Con YAML.
+. Nella sezione spec > template > spec > volumi, specificare il nuovo PVC creato da Snapshot anziché dal disco del contenitore.  Fornisci tutti gli altri dettagli per la nuova VM in base alle tue esigenze.
++
+[source, cli]
+----
+- name: rootdisk
+  persistentVolumeClaim:
+    claimName: rhel8-short-frog-rootdisk-28dvb-snapshot-restore
+----
+. Fare clic su Crea per creare la nuova VM.
+. Dopo aver creato correttamente la VM, accedi e verifica che la nuova VM abbia lo stesso stato della VM il cui PVC è stato utilizzato per creare lo snapshot al momento della creazione dello snapshot.
+

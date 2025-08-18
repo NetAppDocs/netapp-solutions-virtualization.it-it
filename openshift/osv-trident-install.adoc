@@ -1,0 +1,408 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-trident-install.html 
+keywords: OpenShift, OCP, Trident, Trident protect, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, Red Hat OpenShift Virtualization 
+summary: Virtualizzazione Red Hat OpenShift con NetApp ONTAP 
+---
+= Installa Trident sul cluster Red Hat OpenShift e crea oggetti di archiviazione
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Installa Trident utilizzando Red Hat Certified Trident Operator sui cluster OpenShift e prepara i nodi worker per l'accesso ai blocchi.  Crea oggetti backend e classi di archiviazione Trident per l'archiviazione ONTAP e FSxN per abilitare il provisioning dinamico dei volumi per container e VM.
+
+
+NOTE: Se è necessario creare VM in OpenShift Virtualization, è necessario installare Trident e creare gli oggetti backend e gli oggetti della classe di archiviazione in OpenShift Cluster prima di installare OpenShift Virtualization sul cluster (in locale e ROSA).  La classe di archiviazione predefinita e la classe di snapshot del volume predefinita devono essere impostate sull'archiviazione Trident e sulla classe di snapshot nel cluster.  Solo se questa opzione è configurata, OpenShift Virtualization può rendere le immagini golden disponibili localmente per la creazione di VM tramite modelli.
+
+
+NOTE: Se l'operatore OpenShift Virtualization è installato prima di installare Trident, è possibile utilizzare il seguente comando per eliminare le immagini golden create utilizzando una classe di archiviazione diversa e quindi consentire a OpenShift Virtualization di creare le immagini golden utilizzando la classe di archiviazione Trident , assicurandosi che siano impostati i valori predefiniti delle classi di archiviazione Trident e snapshot del volume.
+
+[source, yaml]
+----
+oc delete dv,VolumeSnapshot -n openshift-virtualization-os-images --selector=cdi.kubevirt.io/dataImportCron
+----
+
+NOTE: Per ottenere file yaml di esempio per creare oggetti trident per l'archiviazione FSxN per cluster ROSA e per ottenere file yaml di esempio per VolumeSnapshotClass, scorrere verso il basso in questa pagina.
+
+**Installazione di Trident**
+
+.Installazione di Trident tramite Red Hat Certified Operator
+[%collapsible%open]
+====
+In questa sezione vengono forniti i dettagli sull'installazione Trident utilizzando Red Hat Certified Trident Operatorlink:https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy.html["Fare riferimento alla documentazione Trident"] per altri modi per installare Trident.  Con il rilascio di Trident 25.02, gli utenti di Trident in Red Hat OpenShift on premises e nel cloud e nei servizi gestiti come Red Hat OpenShift Service su AWS possono ora installare Trident utilizzando Trident Certified Operator dall'Operator Hub.  Ciò è significativo per la comunità di utenti di OpenShift, poiché in precedenza Trident era disponibile solo come operatore della comunità.
+
+Il vantaggio dell'operatore Red Hat Certified Trident è che la base per l'operatore e i suoi container è completamente supportata da NetApp quando utilizzata con OpenShift (sia in locale, nel cloud o come servizio gestito con ROSA).  Inoltre, NetApp Trident non ha alcun costo per il cliente, quindi tutto ciò che devi fare è installarlo utilizzando l'operatore certificato che è stato verificato per funzionare senza problemi con Red Hat OpenShift e confezionato per una facile gestione del ciclo di vita.
+
+Inoltre, l'operatore Trident 25.02 (e le versioni future) offre il vantaggio opzionale di preparare i nodi worker per iSCSI.  Ciò è particolarmente vantaggioso se si prevede di distribuire i carichi di lavoro su cluster ROSA e si intende utilizzare il protocollo iSCSI con FSxN, in particolare per i carichi di lavoro delle VM di OpenShift Virtualization.  La sfida della preparazione dei nodi worker per iSCSI sui cluster ROSA utilizzando FSxN è stata mitigata grazie a questa funzionalità durante l'installazione Trident sul cluster.
+
+I passaggi di installazione tramite l'operatore sono gli stessi, indipendentemente dal fatto che l'installazione avvenga su un cluster locale o su ROSA.  Per installare Trident tramite Operator, fare clic sull'hub Operator e selezionare Certified NetApp Trident.  Nella pagina Installa, per impostazione predefinita è selezionata la versione più recente.  Fare clic su Installa.image:rh-os-n-use-case-osv-trident-install-001.png["hub operatore"]
+
+image:rh-os-n-use-case-osv-trident-install-002.png["installare"]
+
+Una volta installato l'operatore, fare clic su Visualizza operatore e quindi creare un'istanza di Trident Orchestrator.  Se si desidera preparare i nodi worker per l'accesso all'archiviazione iSCSI, andare alla vista yaml e modificare il parametro nodePrep aggiungendo iscsi.
+
+image:rh-os-n-use-case-osv-trident-install-003.png["aggiungi iscsi per la preparazione del nodo"]
+
+Ora dovresti avere tutti i pod Trident in esecuzione nel tuo cluster.image:rh-os-n-use-case-osv-trident-install-004.png["Trident installato"]
+
+Per verificare che gli strumenti iSCSI siano stati abilitati sui nodi worker dell'OpenShift Cluster, accedi ai nodi worker e verifica di vedere iscsid, multipathd active e le voci nel file multipath.conf come mostrato.
+
+image:rh-os-n-use-case-osv-trident-install-005.png["iscsid in esecuzione"]
+
+image:rh-os-n-use-case-osv-trident-install-006.png["multipathd in esecuzione"]
+
+image:rh-os-n-use-case-osv-trident-install-007.png["file multipathconf in esecuzione"]
+
+====
+
+
+== Dimostrazione video
+
+Il seguente video mostra una dimostrazione dell'installazione di Trident utilizzando Red Hat Certified Trident Operator
+
+.Installazione di Trident 25.02.1 utilizzando l'operatore Trident certificato in OpenShift
+video::15c225f3-13ef-41ba-b255-b2d500f927c0[panopto,width=360]
+
+
+== Configurazione Trident per cluster OpenShift on-prem
+
+.Backend Trident e classe di archiviazione per NAS
+[%collapsible%open]
+====
+[source, yaml]
+----
+cat tbc-nas.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tbc-nas-secret
+type: Opaque
+stringData:
+  username: <cluster admin username>
+  password: <cluster admin password>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: tbc-nas
+spec:
+  version: 1
+  storageDriverName: ontap-nas
+  managementLIF: <cluster management lif>
+  backendName: tbc-nas
+  svm: zoneb
+  storagePrefix: testzoneb
+  defaults:
+    nameTemplate: "{{ .config.StoragePrefix }}_{{ .volume.Namespace }}_{{ .volume.RequestName }}"
+  credentials:
+    name: tbc-nas-secret
+----
+[source, yaml]
+----
+cat sc-nas.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-nas
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-nas"
+  media: "ssd"
+  provisioningType: "thin"
+  snapshots: "true"
+allowVolumeExpansion: true
+----
+====
+.Backend Trident e classe di archiviazione per iSCSI
+[%collapsible%open]
+====
+[source, yaml]
+----
+# cat tbc-iscsi.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-tbc-ontap-iscsi-secret
+type: Opaque
+stringData:
+  username: <cluster admin username>
+  password: <cluster admin password>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: ontap-iscsi
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  managementLIF: <management LIF>
+  backendName: ontap-iscsi
+  svm: <SVM name>
+  credentials:
+    name: backend-tbc-ontap-iscsi-secret
+----
+[source, yaml]
+----
+# cat sc-iscsi.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-iscsi
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-san"
+  media: "ssd"
+  provisioningType: "thin"
+  fsType: ext4
+  snapshots: "true"
+allowVolumeExpansion: true
+----
+====
+.Backend Trident e classe di archiviazione per NVMe/TCP
+[%collapsible%open]
+====
+[source, yaml]
+----
+# cat tbc-nvme.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-tbc-ontap-nvme-secret
+type: Opaque
+stringData:
+  username: <cluster admin password>
+  password: <cluster admin password>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: backend-tbc-ontap-nvme
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  managementLIF: <cluster management LIF>
+  backendName: backend-tbc-ontap-nvme
+  svm: <SVM name>
+  credentials:
+    name: backend-tbc-ontap-nvme-secret
+----
+[source, yaml]
+----
+# cat sc-nvme.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-nvme
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-san"
+  media: "ssd"
+  provisioningType: "thin"
+  fsType: ext4
+  snapshots: "true"
+allowVolumeExpansion: true
+----
+====
+.Backend Trident e classe di archiviazione per FC
+[%collapsible%open]
+====
+[source, yaml]
+----
+# cat tbc-fc.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tbc-fc-secret
+type: Opaque
+stringData:
+  username: <cluster admin password>
+  password: <cluster admin password>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: tbc-fc
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  managementLIF: <cluster mgmt lif>
+  backendName: tbc-fc
+  svm: openshift-fc
+  sanType: fcp
+  storagePrefix: demofc
+  defaults:
+    nameTemplate: "{{ .config.StoragePrefix }}_{{ .volume.Namespace }}_{{ .volume.RequestName }}"
+  credentials:
+    name: tbc-fc-secret
+----
+[source, yaml]
+----
+# cat sc-fc.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-fc
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-san"
+  media: "ssd"
+  provisioningType: "thin"
+  fsType: ext4
+  snapshots: "true"
+allowVolumeExpansion: true
+----
+====
+
+
+== Configurazione Trident per cluster ROSA utilizzando storage FSxN
+
+.Backend Trident e classe di archiviazione per NAS FSxN
+[%collapsible%open]
+====
+[source, yaml]
+----
+#cat tbc-fsx-nas.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-fsx-ontap-nas-secret
+  namespace: trident
+type: Opaque
+stringData:
+  username: <cluster admin lif>
+  password: <cluster admin passwd>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: backend-fsx-ontap-nas
+  namespace: trident
+spec:
+  version: 1
+  backendName: fsx-ontap
+  storageDriverName: ontap-nas
+  managementLIF: <Management DNS name>
+  dataLIF: <NFS DNS name>
+  svm: <SVM NAME>
+  credentials:
+    name: backend-fsx-ontap-nas-secret
+----
+[source, yaml]
+----
+# cat sc-fsx-nas.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: trident-csi
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-nas"
+  fsType: "ext4"
+allowVolumeExpansion: True
+reclaimPolicy: Retain
+----
+====
+.Backend Trident e classe di archiviazione per FSxN iSCSI
+[%collapsible%open]
+====
+[source, yaml]
+----
+# cat tbc-fsx-iscsi.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-tbc-fsx-iscsi-secret
+type: Opaque
+stringData:
+  username: <cluster admin username>
+  password: <cluster admin password>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: fsx-iscsi
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  managementLIF: <management LIF>
+  backendName: fsx-iscsi
+  svm: <SVM name>
+  credentials:
+    name: backend-tbc-ontap-iscsi-secret
+----
+[source, yaml]
+----
+# cat sc-fsx-iscsi.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-fsx-iscsi
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-san"
+  media: "ssd"
+  provisioningType: "thin"
+  fsType: ext4
+  snapshots: "true"
+allowVolumeExpansion: true
+----
+====
+
+
+== Creazione della classe Snapshot del volume Trident
+
+.Classe di snapshot del volume Trident
+[%collapsible%open]
+====
+[source, yaml]
+----
+# cat snapshot-class.yaml
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: trident-snapshotclass
+driver: csi.trident.netapp.io
+deletionPolicy: Retain
+----
+====
+Una volta che hai i file yaml necessari per la configurazione del backend, la configurazione della classe di archiviazione e le configurazioni degli snapshot, puoi creare gli oggetti backend trident, classe di archiviazione e classe snapshot utilizzando il seguente comando
+
+[source, yaml]
+----
+oc create -f <backend-filename.yaml> -n trident
+oc create -f < storageclass-filename.yaml>
+oc create -f <snapshotclass-filename.yaml>
+----
+
+
+== Impostazione dei valori predefiniti con Trident Storage e Snapshot Class
+
+.Impostazione dei valori predefiniti con Trident Storage e Snapshot Class
+[%collapsible%open]
+====
+Ora è possibile impostare la classe di archiviazione Trident e la classe di snapshot del volume come predefinite in OpenShift Cluster.  Come accennato in precedenza, è necessario impostare la classe di archiviazione predefinita e la classe di snapshot del volume per consentire a OpenShift Virtualization di rendere disponibile la sorgente dell'immagine golden per creare macchine virtuali da modelli predefiniti.
+
+È possibile impostare la classe di archiviazione Trident e la classe snapshot come predefinite modificando l'annotazione dalla console o applicando la patch dalla riga di comando con quanto segue.
+
+[source, yaml]
+----
+storageclass.kubernetes.io/is-default-class:true
+or
+kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+storageclass.kubevirt.io/is-default-virt-class: true
+or
+kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubevirt.io/is-default-virt-class": "true"}}}'
+----
+Una volta impostata questa opzione, è possibile eliminare tutti gli oggetti dv e VolumeSnapShot preesistenti utilizzando il seguente comando:
+
+[source, yaml]
+----
+oc delete dv,VolumeSnapshot -n openshift-virtualization-os-images --selector=cdi.kubevirt.io/dataImportCron
+----
+====

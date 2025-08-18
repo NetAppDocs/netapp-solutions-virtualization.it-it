@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: migration/migrate-get-start-ontap.html 
+keywords: migration, getting, started, ontap datastores, netapp 
+summary:  
+---
+= Scopri di più sulla migrazione delle VM nei datastore ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+La migrazione dei carichi di lavoro VMware su ONTAP migliora la gestione e le prestazioni dei dati con funzionalità quali deduplicazione, compressione e snapshot.
+
+Questa migrazione consente un'integrazione fluida, una migliore protezione dei dati e una maggiore flessibilità nella gestione degli ambienti virtualizzati, garantendo una transizione fluida con tempi di inattività minimi.
+
+
+
+== Casi d'uso
+
+Quando si valuta il passaggio a datastore supportati ONTAP , sono disponibili numerose opzioni di migrazione in termini di origine e destinazione.
+
+* Migrazione da sistemi di archiviazione di terze parti (incluso vSAN) a datastore ONTAP .
+* Migrazione di VM nello stesso cluster vSphere
+* Migrazione di VM su più cluster vSphere
+* Migrazione di VM tra server vCenter nello stesso dominio SSO
+* Migrazione di VM tra server vCenter in diversi domini SSO
+* Migrazione di VM tra le sedi dei data center
+* Migrazione da sistemi di archiviazione di terze parti (incluso vSAN) a datastore ONTAP .
+* Migrazione di VM in un ambiente cloud ibrido
+
+
+Per ulteriori informazioni sulla migrazione dei carichi di lavoro VMware verso datastore supportati da ONTAP , vederelink:migrate-vms-to-ontap-datastore.html["Migrare le VM nei datastore ONTAP"] .

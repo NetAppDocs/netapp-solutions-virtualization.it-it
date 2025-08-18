@@ -1,0 +1,124 @@
+---
+sidebar: sidebar 
+permalink: migration/migrate-vms-to-ec2-fsxn-overview.html 
+keywords: netapp, vmware, amazon, ec2, fsxn, migration, iscsi, 
+summary: 'Questo report tecnico illustra come migrare le VM VMware vSphere on-premise a un"istanza Amazon EC2 con dischi dati posizionati su LUN iSCSI FSx ONTAP utilizzando la funzionalità MigrateOps "data-mobility-as-code" di Cirrus Migrate Cloud (CMC).' 
+---
+= Scopri come migrare le VM su Amazon EC2 utilizzando Amazon FSx per ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Amazon FSx for NetApp ONTAP semplifica la migrazione delle VM VMware vSphere su Amazon EC2, preservando importanti funzionalità di storage come snapshot, thin provisioning e replica.  Supporta strumenti e protocolli noti, semplificando il processo di migrazione e riducendo costi e complessità.
+
+Le organizzazioni stanno accelerando la migrazione verso soluzioni di cloud computing su AWS, sfruttando servizi quali le istanze di Amazon Elastic Compute Cloud (Amazon EC2) e Amazon FSx for NetApp ONTAP (FSx ONTAP) per modernizzare le proprie infrastrutture IT, ottenere risparmi sui costi e migliorare l'efficienza operativa.  Queste offerte AWS consentono migrazioni che ottimizzano il costo totale di proprietà (TCO) attraverso modelli di prezzo basati sul consumo, funzionalità di storage aziendale, offrendo la flessibilità e la scalabilità necessarie per soddisfare le mutevoli esigenze aziendali globali.
+
+
+
+== Panoramica
+
+Per le aziende che hanno investito molto in VMware vSphere, la migrazione ad AWS rappresenta un'opzione conveniente, date le attuali condizioni di mercato, che rappresenta un'opportunità unica.
+
+Nel passaggio ad AWS, queste organizzazioni cercano di sfruttare al meglio l'agilità e i vantaggi in termini di costi del cloud, preservando al contempo le funzionalità familiari, in particolare per quanto riguarda l'archiviazione.  Mantenere operazioni senza interruzioni con protocolli di archiviazione familiari, in particolare iSCSI, processi, strumenti e competenze è fondamentale quando si migrano carichi di lavoro o si configurano soluzioni di disaster recovery.
+
+Utilizzando il servizio di storage gestito AWS FSx ONTAP per mantenere le capacità di storage aziendali, provenienti anche da qualsiasi storage di fornitori terzi in locale, le aziende possono sfruttare la potenza di AWS riducendo al minimo le interruzioni e massimizzando i propri investimenti futuri.
+
+Questo report tecnico illustra come migrare le VM VMware vSphere on-premise a un'istanza Amazon EC2 con dischi dati posizionati su LUN iSCSI FSx ONTAP utilizzando la funzionalità MigrateOps "data-mobility-as-code" di Cirrus Migrate Cloud (CMC).
+
+
+
+== Requisiti della soluzione
+
+Sono numerose le sfide che i clienti VMware stanno attualmente cercando di risolvere.  Queste organizzazioni vogliono:
+
+. Sfrutta le funzionalità di storage aziendale, come il thin provisioning, le tecnologie di efficienza dello storage, i cloni a ingombro zero, i backup integrati, la replica a livello di blocco e il tiering.  Ciò consente di ottimizzare gli sforzi di migrazione e di garantire una distribuzione a prova di futuro su AWS fin dal primo giorno.
+. Ottimizza le distribuzioni di storage attualmente su AWS che utilizzano istanze Amazon EC2 incorporando FSx ONTAP e le funzionalità di ottimizzazione dei costi che offre.
+. Riduci il costo totale di proprietà (TCO) dell'utilizzo di istanze Amazon EC2 con soluzioni di storage a blocchi dimensionando correttamente le istanze Amazon EC2 in modo da soddisfare i parametri IOPS e di throughput richiesti.  Con l'archiviazione a blocchi, le operazioni su disco di Amazon EC2 hanno un limite di larghezza di banda e velocità di I/O.  L'archiviazione dei file con FSx ONTAP utilizza la larghezza di banda della rete.  In altre parole, FSx ONTAP non ha limiti di I/O a livello di VM.
+
+
+
+
+== Panoramica dei componenti tecnici
+
+
+
+=== Concetti di FSx ONTAP
+
+Amazon FSx ONTAP è un servizio di storage AWS completamente gestito che fornisce ai file system NetApp ONTAP tutte le funzionalità di gestione dei dati, le prestazioni e le API ONTAP note su AWS.  Il suo storage ad alte prestazioni supporta più protocolli (NFS, SMB, iSCSI), fornendo un unico servizio per carichi di lavoro che utilizzano istanze EC2 Windows, Linux e macOS.
+
+Poiché FSx ONTAP è un file system ONTAP , porta con sé una serie di funzionalità e servizi NetApp familiari, tra cui la tecnologia di replicazione dei dati SnapMirror , i cloni sottili e le copie NetApp Snapshot.  Sfruttando un livello di capacità a basso costo tramite la suddivisione in livelli dei dati, FSx ONTAP è elastico e può raggiungere una scala praticamente illimitata.  Inoltre, grazie alla tecnologia di efficienza di storage esclusiva NetApp , i costi di storage su AWS vengono ulteriormente ridotti.  Per saperne di più, vederelink:https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/getting-started.html["Introduzione ad Amazon FSx ONTAP"] .
+
+
+
+==== Sistema di file
+
+La risorsa centrale di FSx ONTAP è il suo file system basato su unità di archiviazione a stato solido (SSD).  Durante il provisioning di un file system FSx ONTAP , l'utente immette la capacità di elaborazione e di archiviazione desiderate e seleziona un Amazon VPC in cui risiederà il file system.
+
+Gli utenti possono anche scegliere tra due modelli di distribuzione ad alta disponibilità integrati per il file system: distribuzione Multi-Availability Zone (AZ) o distribuzione Single-AZ.  Ognuna di queste opzioni offre un proprio livello di durabilità e disponibilità, che i clienti possono selezionare in base ai requisiti di continuità aziendale del loro caso d'uso.  Le distribuzioni multi-AZ sono costituite da doppi nodi che si replicano senza soluzione di continuità su due AZ.  L'opzione di distribuzione single-AZ, più economica, struttura il file system in due nodi suddivisi tra due domini di errore separati, entrambi residenti in una singola AZ.
+
+
+
+=== Macchine virtuali di archiviazione
+
+L'accesso ai dati nel file system FSx ONTAP avviene tramite una partizione di archiviazione logica denominata macchina virtuale di archiviazione (SVM).  Un SVM è in realtà un file server dotato di propri punti di accesso dati e amministrativi.  Quando si accede alle LUN iSCSI su un file system FSx ONTAP , l'istanza Amazon EC2 si interfaccia direttamente con l'SVM utilizzando l'indirizzo IP dell'endpoint iSCSI dell'SVM.
+
+Sebbene sia possibile gestire una singola SVM in un cluster, l'opzione di eseguire più SVM in un cluster presenta un'ampia gamma di utilizzi e vantaggi.  I clienti possono determinare il numero ottimale di SVM da configurare tenendo conto delle proprie esigenze aziendali, compresi i requisiti di isolamento del carico di lavoro.
+
+
+
+==== Volumi
+
+I dati all'interno di un SVM FSx ONTAP vengono archiviati e organizzati in strutture note come volumi, che fungono da contenitori virtuali.  Un singolo volume può essere configurato con una o più LUN.  I dati memorizzati in ciascun volume consumano capacità di archiviazione nel file system.  Tuttavia, poiché FSx ONTAP prevede un provisioning limitato del volume, quest'ultimo occupa solo la capacità di archiviazione necessaria per la quantità di dati archiviati.
+
+
+
+=== Il concetto Cirrus Migrate Cloud MigrateOps
+
+CMC è un'offerta SaaS (software-as-a-service) transazionale di Cirrus Data Solutions, Inc., disponibile tramite AWS Marketplace.  MigrateOps è una funzionalità di automazione Data-Mobility-as-Code di CMC che consente di gestire in modo dichiarativo le operazioni di mobilità dei dati su larga scala utilizzando semplici configurazioni operative in YAML.  Una configurazione MigrateOps determina come si desidera che vengano eseguite le attività di mobilità dei dati.  Per saperne di più su MigrateOps, vederelink:https://www.google.com/url?q=https://customer.cirrusdata.com/cdc/kb/articles/about-migrateops-hCCHcmhfbj&sa=D&source=docs&ust=1715480377722215&usg=AOvVaw033gzvuAlgxAWDT_kOYLg1["Informazioni su MigrateOps"] .
+
+MigrateOps adotta un approccio incentrato sull'automazione, appositamente studiato per semplificare l'intero processo, garantendo la mobilità dei dati aziendali su scala cloud senza interruzioni operative.  Oltre alle funzionalità già ricche di funzionalità che CMC offre per l'automazione, MigrateOps aggiunge altre automazioni che spesso vengono gestite esternamente, come:
+
+* Risanamento del sistema operativo
+* Passaggio dell'applicazione e pianificazione dell'approvazione
+* Migrazione di cluster senza tempi di inattività
+* Integrazione della piattaforma cloud pubblica/privata
+* Integrazione della piattaforma di virtualizzazione
+* Integrazione della gestione dello storage aziendale
+* Configurazione SAN (iSCSI)
+
+
+Con le attività sopra descritte completamente automatizzate, tutti i noiosi passaggi nella preparazione della VM di origine on-prem (come l'aggiunta di agenti e strumenti AWS), la creazione di LUN FSx di destinazione, la configurazione di iSCSI e Multipath/MPIO nell'istanza di destinazione AWS e tutte le attività di arresto/avvio dei servizi applicativi vengono eliminati semplicemente specificando i parametri in un file YAML.
+
+FSx ONTAP viene utilizzato per fornire i LUN dei dati e dimensionare correttamente il tipo di istanza Amazon EC2, offrendo al contempo tutte le funzionalità che le organizzazioni avevano in precedenza nei loro ambienti locali.  La funzionalità MigrateOps di CMC verrà utilizzata per automatizzare tutti i passaggi coinvolti, incluso il provisioning di LUN iSCSI mappati, trasformando questa operazione in un'operazione prevedibile e dichiarativa.
+
+*Nota*: CMC richiede l'installazione di un agente molto sottile sulle istanze della macchina virtuale di origine e di destinazione per garantire un trasferimento sicuro dei dati dall'archivio di origine a FSx ONTAP.
+
+
+
+== Vantaggi dell'utilizzo di Amazon FSx ONTAP con istanze EC2
+
+L'archiviazione FSx ONTAP per le istanze Amazon EC2 offre numerosi vantaggi:
+
+* Archiviazione ad alta velocità e bassa latenza che garantisce prestazioni elevate e costanti per i carichi di lavoro più impegnativi
+* La memorizzazione nella cache NVMe intelligente migliora le prestazioni
+* La capacità regolabile, la produttività e gli IOP possono essere modificati al volo e adattarsi rapidamente alle mutevoli esigenze di archiviazione
+* Replica dei dati basata su blocchi dall'archiviazione ONTAP locale ad AWS
+* Accessibilità multiprotocollo, incluso per iSCSI, ampiamente utilizzato nelle distribuzioni VMware on-premise
+* La tecnologia NetApp Snapshot e il DR orchestrato da SnapMirror prevengono la perdita di dati e accelerano il ripristino
+* Funzionalità di efficienza di archiviazione che riducono l'ingombro e i costi di archiviazione, tra cui provisioning sottile, deduplicazione dei dati, compressione e compattazione
+* Una replica efficiente riduce il tempo necessario per creare backup da ore a pochi minuti, ottimizzando l'RTO
+* Opzioni granulari per il backup e il ripristino dei file tramite NetApp SnapCenter
+
+
+L'implementazione di istanze Amazon EC2 con FSx ONTAP come livello di storage basato su iSCSI garantisce prestazioni elevate, funzionalità di gestione dei dati mission-critical e funzionalità di efficienza di storage che riducono i costi, in grado di trasformare la tua implementazione su AWS.
+
+Eseguendo una Flash Cache, più sessioni iSCSI e sfruttando una dimensione del set di lavoro del 5%, FSx ONTAP può fornire IOPS di circa 350K, garantendo livelli di prestazioni in grado di soddisfare anche i carichi di lavoro più intensi.
+
+Poiché a FSx ONTAP vengono applicati solo i limiti di larghezza di banda della rete e non i limiti di larghezza di banda dell'archiviazione a blocchi, gli utenti possono sfruttare i piccoli tipi di istanze Amazon EC2 ottenendo al contempo le stesse prestazioni di tipi di istanze molto più grandi.  L'utilizzo di tipi di istanze così piccoli mantiene bassi anche i costi di elaborazione, ottimizzando il TCO.
+
+Un altro vantaggio è la capacità di FSx ONTAP di supportare più protocolli, che aiuta a standardizzare un singolo servizio di archiviazione AWS per un'ampia gamma di requisiti di servizi di dati e file esistenti.  Per le aziende che hanno investito molto in VMware vSphere, la migrazione ad AWS rappresenta un'opzione conveniente, date le attuali condizioni di mercato, che rappresenta un'opportunità unica.

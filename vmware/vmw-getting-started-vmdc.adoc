@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-getting-started-vmdc.html 
+keywords: vmware, getting, started, overview, netapp, vm, data, collector, vmdc 
+summary:  
+---
+= Scopri come valutare la tua infrastruttura VMware utilizzando Virtual Machine Data Collector
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Virtual Machine Data Collector (VMDC) è uno strumento gratuito e leggero con un'interfaccia grafica utente progettata per gli ambienti VMware.  Raccoglie dati di inventario e prestazioni su VM, host, storage e reti, offrendo informazioni utili per l'ottimizzazione delle risorse e la pianificazione della capacità.
+
+
+
+== Introduzione
+
+Virtual Machine Data Collector (VMDC) è un toolkit gratuito, leggero e semplice basato su GUI per ambienti VMware che consente agli utenti di raccogliere informazioni di inventario dettagliate sulle proprie macchine virtuali (VM), host, storage e reti.
+
+Per ulteriori informazioni su Virtual Machine Data Collector, vederelink:../assess/vmw-vmdc.html["Documentazione del raccoglitore dati della macchina virtuale"] .
+
+
+
+== Capacità VMDC
+
+VMDC è solo un trampolino di lancio per raccogliere statistiche rapide e istantanee per la proiezione delle possibilità di ottimizzazione per le licenze core VMWare insieme a vCPU e RAM.  NetApp Data Infrastructure Insights , che richiede l'installazione di AU e collettori di dati, dovrebbe essere il passo successivo ovvio per comprendere la topologia dettagliata delle VM, il raggruppamento delle VM tramite annotazione, in modo da dimensionare correttamente i carichi di lavoro e rendere l'infrastruttura a prova di futuro.
+
+Campionamento delle metriche raccolte con VMDC:
+
+* Informazioni sulla macchina virtuale
++
+** Nome della macchina virtuale
+** Stato di alimentazione della VM
+** Informazioni sulla CPU della VM
+** Informazioni sulla memoria della VM
+** Posizione della macchina virtuale
+** Informazioni sulla rete VM
+** e altro ancora
+
+
+* Prestazioni della VM
++
+** Dati sulle prestazioni per le VM all'intervallo selezionato
+** Informazioni di lettura/scrittura della VM
+** Informazioni IOPS VM
+** Latenza della VM
+** e altro ancora
+
+
+* Informazioni sull'host ESXi
++
+** Informazioni sul datacenter host
+** Informazioni sul cluster host
+** Informazioni sul modello host
+** Informazioni sulla CPU host
+** Informazioni sulla memoria host
+** e altro ancora
+
+
+

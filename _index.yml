@@ -1,0 +1,76 @@
+---
+indexpage:
+  title: Soluzioni di virtualizzazione NetApp
+  summary: NetApp fornisce soluzioni di virtualizzazione complete che consentono alle
+    organizzazioni di ottimizzare la propria infrastruttura IT su più hypervisor e
+    piattaforme.  Scopri le strategie per modernizzare gli ambienti VMware, migrare
+    verso hypervisor alternativi e sfruttare le funzionalità avanzate di gestione
+    dei dati e di integrazione cloud di NetApp.
+  lead: NetApp fornisce soluzioni di virtualizzazione complete che consentono alle
+    organizzazioni di ottimizzare la propria infrastruttura IT su più hypervisor e
+    piattaforme.  Scopri le strategie per modernizzare gli ambienti VMware, migrare
+    verso hypervisor alternativi e sfruttare le funzionalità avanzate di gestione
+    dei dati e di integrazione cloud di NetApp.
+  tiles:
+  - title: Iniziare
+    links:
+    - title: Cosa c'è di nuovo
+      url: "/whats-new.html"
+    - title: Scopri di più sulla virtualizzazione con NetApp
+      url: "/virtualization/virt-overview.html"
+    - title: Utilizza NetApp per qualsiasi soluzione di virtualizzazione
+      url: "/virtualization/virt-options-on-netapp.html"
+    - title: Blog
+      url: "/blogs.html"
+    - title: Video e demo
+      url: "/videos/index.html"
+  - title: Soluzioni NetApp per la virtualizzazione
+    links:
+    - title: VMware on-premise e cloud
+      url: "/vmware/index.html"
+    - title: Microsoft Hyper-V
+      url: hyperv/index.html
+    - title: Virtualizzazione Red Hat OpenShift
+      url: "/openshift/index.html"
+    - title: Ambiente virtuale Proxmox
+      url: "/proxmox/index.html"
+    - title: KVM e libvirt
+      url: "/kvm/index.html"
+  - title: Migrazione e conversione delle VM
+    links:
+    - title: Migrazione delle VM tramite Shift Toolkit
+      url: "/migration/shift-toolkit-migration.html"
+    - title: Convertire le VM utilizzando Shift Toolkit
+      url: "/migration/shift-toolkit-conversion.html"
+    - title: Migrare le VM nei datastore ONTAP
+      url: "/migration/migrate-vms-to-ontap-datastore.html"
+    - title: Migrazione delle VM su Amazon EC2
+      url: "/migration/migrate-vms-to-ec2-fsxn-overview.html"
+  - title: Strumenti di gestione e integrazioni
+    links:
+    - title: ONTAP tools for VMware vSphere
+      url: "/vmware/vmw-getting-started-otv.html"
+    - title: API ONTAP e VMware per l'amministrazione
+      url: "/vmware/vmw-getting-started-automation.html"
+    - title: Data Infrastructure Insights per il monitoraggio
+      url: "/vmware/vmw-getting-started-dii.html"
+    - title: Migrazione del carico di lavoro delle VM per una maggiore efficienza
+      url: "/vmware/vmw-getting-started-migration.html"
+  - title: Protezione dei dati e ripristino di emergenza
+    links:
+    - title: Proteggi con MetroCluster e SnapMirror Active Sync
+      url: "/vmware/vmw-getting-started-vmsc.html"
+    - title: Proteggi e recupera i dati dal ransomware
+      url: "/vmware/vmw-getting-started-security.html"
+    - title: SnapCenter Plug-in for VMware vSphere
+      url: "/vmware/vmw-getting-started-snapcenter.html"
+    - title: BlueXP disaster recovery
+      url: "/vmware/vmw-dr-gs.html"
+  - title: Richieste di soluzioni e feedback
+    links:
+    - title: Richiedi automazione
+      url: https://github.com/NetAppDocs/netapp-solutions/issues/new?body=[Request%20Automation]%0d%0a%0d%0aSolution%20Name:%20%0d%0aRequest%20Title:%20%0d%0aDescription:%0d%0aSuggestions:&title=Request%20Automation%20-%20%3Crequest_title%3E
+    - title: Proponi una nuova soluzione
+      url: https://github.com/NetAppDocs/netapp-solutions/issues/new?body=[Request%20Solution]%0d%0a%0d%0aSolution%20Use%20Case:%20%0d%0aSolution%20Description:%20%0d%0aAdditional%20Comments:&title=Request%20Solution%20-%20%3Csolution%3E
+    - title: Fornire feedback sulla soluzione
+      url: https://github.com/NetAppDocs/netapp-solutions/issues/new?body=[Solution%20Feedback]%0d%0a%0d%0aSolution%20Name:%20%0d%0aSolution%20Feedback:%20%0d%0aAdditional%20Comments:&title=Solution%20Feedback%20-%20%3Csolution%3E

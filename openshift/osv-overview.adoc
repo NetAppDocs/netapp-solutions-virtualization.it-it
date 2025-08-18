@@ -1,0 +1,27 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-overview.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization 
+summary: Virtualizzazione Red Hat OpenShift con NetApp ONTAP 
+---
+= Scopri di più sulla virtualizzazione Red Hat OpenShift con ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Scopri come utilizzare Red Hat OpenShift Virtualization e lo storage ONTAP per eseguire e gestire le VM.  Utilizza Trident per abilitare la migrazione live delle VM, la clonazione dei dischi delle VM e gli snapshot delle VM, semplificando così la gestione dell'infrastruttura e la protezione dei dati.
+
+A seconda del caso d'uso specifico, sia i container che le macchine virtuali (VM) possono fungere da piattaforme ottimali per diversi tipi di applicazioni.  Per questo motivo, molte organizzazioni eseguono alcuni dei loro carichi di lavoro su container e altri su macchine virtuali.  Spesso, questo porta le organizzazioni ad affrontare ulteriori sfide, dovendo gestire piattaforme separate: un hypervisor per le VM e un orchestratore di container per le applicazioni.
+
+Per affrontare questa sfida, Red Hat ha introdotto OpenShift Virtualization (precedentemente noto come Container Native Virtualization) a partire dalla versione 4.6 di OpenShift.  La funzionalità di virtualizzazione OpenShift consente di eseguire e gestire macchine virtuali insieme ai container sulla stessa installazione di OpenShift Container Platform, offrendo funzionalità di gestione ibrida per automatizzare la distribuzione e la gestione delle VM tramite operatori.  Oltre a creare VM in OpenShift, con OpenShift Virtualization, Red Hat supporta anche l'importazione di VM da distribuzioni VMware vSphere, Red Hat Virtualization e Red Hat OpenStack Platform.
+
+image:redhat-openshift-044.png["Virtualizzazione OpenShift"]
+
+Alcune funzionalità, come la migrazione live delle VM, la clonazione dei dischi delle VM, gli snapshot delle VM e così via, sono supportate anche da OpenShift Virtualization con l'assistenza di Trident , se supportato da NetApp ONTAP.  Esempi di ciascuno di questi flussi di lavoro sono trattati più avanti in questo documento nelle rispettive sezioni.
+
+Per saperne di più su Red Hat OpenShift Virtualization, consulta la documentazione https://www.openshift.com/learn/topics/virtualization/["Qui"] .

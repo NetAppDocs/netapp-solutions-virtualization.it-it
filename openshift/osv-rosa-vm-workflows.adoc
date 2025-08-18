@@ -1,0 +1,55 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-rosa-vm-workflows.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, ROSA, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization 
+summary: Virtualizzazione Red Hat OpenShift su ROSA 
+---
+= Riavviare o migrare le VM in Red Hat OpenShift Virtualization con FSx per ONTAP su un cluster ROSA
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Riavvia una VM o esegui una migrazione live della VM tra due nodi in OpenShift Virtualization con Amazon FSx per ONTAP.
+
+Fare clic sul pulsante Riavvia.image:redhat-openshift-ocpv-rosa-020.png["Riavvio della VM OCP-v"]
+
+La VM torna allo stato di esecuzione con gli stessi identici file system, PVC e file nei file systemimage:redhat-openshift-ocpv-rosa-021.png["Riavvio dei file system della VM OCP-v"]
+
+image:redhat-openshift-ocpv-rosa-022.png["Dischi di riavvio della VM OCP-v"]
+
+image:redhat-openshift-ocpv-rosa-023.png["File di riavvio della VM OCP-v"]
+
+
+
+== Migrazione live della VM
+
+In questa sezione eseguiremo una migrazione live della VM e poi esamineremo il contenuto dei dischi.  La migrazione in tempo reale si riferisce al processo di spostamento di una macchina virtuale (VM) in esecuzione da un host fisico a un altro host senza interrompere le normali operazioni o causare tempi di inattività o altri effetti negativi per l'utente finale.  La migrazione in tempo reale è considerata un passaggio fondamentale nella virtualizzazione.  Consente di spostare un'intera VM con un sistema operativo (SO) in esecuzione, memoria, storage e connettività di rete dal nodo corrente alla destinazione.  Di seguito vedremo come eseguire una migrazione live della VM dal nodo corrente a un nuovo nodo.
+
+Nota il nodo su cui è in esecuzione la VMimage:redhat-openshift-ocpv-rosa-024.png["Nodo corrente della VM OCP-v"]
+
+Fare clic sui 3 punti e selezionare Migraimage:redhat-openshift-ocpv-rosa-025.png["Migrazione live della VM OCP-v"]
+
+Nella pagina Panoramica puoi vedere che la migrazione è riuscita e che lo Stato è cambiato in Riuscito.image:redhat-openshift-ocpv-rosa-026.png["Migrazione della VM OCP-v riuscita"]
+
+Dopo il completamento della migrazione live, la VM si trova ora su un nodo diverso.image:redhat-openshift-ocpv-rosa-027.png["VM OCP-v su nodo diverso"]
+
+Aprire la console Web e visualizzare il contenuto dei dischi.  Contiene ancora gli stessi 2 file che avevamo creato prima della migrazione live.image:redhat-openshift-ocpv-rosa-028.png["Stessi file della VM OCP-v dopo la migrazione live1"] image:redhat-openshift-ocpv-rosa-029.png["Stessi file della VM OCP-v dopo la migrazione live2"]
+
+L'archiviazione per la VM sul nuovo nodo mostra ancora gli stessi dischiimage:redhat-openshift-ocpv-rosa-030.png["Stessi dischi della VM OCP-v dopo la migrazione live"]
+
+Anche i PVC sono gli stessi.image:redhat-openshift-ocpv-rosa-031.png["OCP-v VM stessi PVC dopo la migrazione live"]
+
+Anche i volumi associati al pod VM sono gli stessi (2 PVC) di prima.image:redhat-openshift-ocpv-rosa-032.png["OCP-v VM stessi PVC dopo la migrazione live"]
+
+
+
+== Video dimostrativo
+
+.Migrazione live di macchine virtuali in OpenShift Virtualization su ROSA con Amazon FSx for NetApp ONTAP
+video::4b3ef03d-7d65-4637-9dab-b21301371d7d[panopto,width=360]
+Sono disponibili altri video sulle soluzioni di virtualizzazione Red Hat OpenShift e OpenShiftlink:../videos/openshift-videos.html["Qui"] .

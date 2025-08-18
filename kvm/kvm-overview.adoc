@@ -1,0 +1,280 @@
+---
+sidebar: sidebar 
+permalink: kvm/kvm-overview.html 
+keywords: libvirt, kvm, qemu, lxc, vm 
+summary:  
+---
+= Scopri di più sulla virtualizzazione KVM con QEMU e Libvirt
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Scopri di più sulla virtualizzazione KVM e su come funziona con QEMU e Libvirt per creare una piattaforma di virtualizzazione Linux completa.  Scopri come questi componenti consentono di realizzare macchine virtuali con prestazioni quasi native, offrendo al contempo funzionalità di gestione flessibili per le risorse di elaborazione, archiviazione e rete negli ambienti aziendali.
+
+
+
+== Panoramica dei componenti
+
+. KVM (macchina virtuale basata sul kernel):
++
+** Ruolo: KVM è un modulo kernel che fornisce le funzionalità di virtualizzazione di base sfruttando le estensioni di virtualizzazione assistite dall'hardware nella CPU (ad esempio, Intel VT-x o AMD-V).
+** Funzionalità: KVM consente al kernel Linux di agire come un hypervisor di tipo 1, consentendogli di creare e gestire macchine virtuali con prestazioni quasi native per le operazioni di CPU e memoria.
+** Livello più basso: KVM è il componente di livello più basso, che interagisce direttamente con l'hardware per fornire l'infrastruttura necessaria per la virtualizzazione completa.
+
+
+. QEMU (Quick EMUlator):
++
+** Ruolo: QEMU è un emulatore di macchina (hardware) che fornisce gli altri componenti hardware virtualizzati per il sistema guest, come interfacce di rete, controller di dischi e schede grafiche.
+** Funzionalità: QEMU può funzionare come hypervisor di tipo 2 quando KVM non è disponibile, ma è notevolmente più lento perché deve simulare la CPU guest nel software.  In combinazione con KVM, QEMU utilizza KVM per accelerare le operazioni della CPU e della memoria, mentre QEMU gestisce l'emulazione delle periferiche e di altri dispositivi hardware.
+** Interazione con KVM: QEMU interagisce con KVM tramite un file di dispositivo (ad esempio, /dev/kvm) utilizzando le chiamate di sistema ioctl() per gestire i processi della macchina virtuale e comunicare con KVM.
+
+
+. https://wiki.libvirt.org/FAQ.html["Libvirt"]:
++
+** Ruolo: Libvirt è una libreria di virtualizzazione e un'API che fornisce un'interfaccia di gestione di livello superiore per varie piattaforme di virtualizzazione, tra cui KVM/QEMU, Xen e VMware ESXi.
+** Funzionalità: Libvirt semplifica la gestione delle macchine virtuali fornendo un'interfaccia unificata e un set di strumenti.  Funziona come un livello di astrazione, consentendo agli utenti e alle applicazioni di gestire le VM senza dover interagire direttamente con i comandi specifici o le API dell'hypervisor sottostante.
+** Caratteristiche principali:
++
+*** Gestione del ciclo di vita delle VM: avvio, arresto, pausa, salvataggio, ripristino e migrazione delle VM.
+*** Gestione remota: controlla le VM sugli host remoti tramite SSH o altri protocolli.
+*** Gestione dell'archiviazione: crea e gestisci pool di archiviazione e volumi per le VM.
+*** Reti virtuali: configura reti virtuali con NAT, bridging e altre modalità.
+*** Sicurezza: integrazione con SELinux e AppArmor per il contenimento della sicurezza delle VM.
+*** Hotplug: aggiungi o rimuovi dispositivi come dischi e interfacce di rete mentre la VM è in esecuzione.
+*** Strumenti: Libvirt include strumenti da riga di comando come virsh e strumenti grafici come virt-manager per la gestione delle VM.
+
+
+** Come lavorano insieme:
++
+*** KVM: fornisce l'infrastruttura di virtualizzazione a livello di kernel.
+*** QEMU: fornisce l'hardware emulato e gestisce i processi della VM.
+*** Libvirt: funge da livello di gestione, fornendo un'API e strumenti per controllare KVM/QEMU e altri hypervisor.
+
+
+** In sostanza: KVM fornisce l'accelerazione hardware per la virtualizzazione, QEMU fornisce l'hardware emulato ed esegue la VM, e Libvirt fornisce l'interfaccia di gestione intuitiva e l'API per controllare l'intera configurazione.
+
+
+
+
+Gli strumenti client di Libvirt possono essere utilizzati per gestire VM o operazioni da CLI, GUI o basate sul Web utilizzando macchine cockpit.  Per l'elenco delle applicazioni che utilizzano libvirt, controllare https://libvirt.org/apps.html["Qui"] .
+
+Man mano che le applicazioni si spostano nell'ambiente Kubernetes, dai un'occhiata a Kubevirt per eseguire macchine virtuali come pod in tali ambienti.
+
+https://galaxy.ansible.com/ui/repo/published/community/libvirt/["Il modulo Ansible è disponibile per libvirt"]per scopi di automazione.
+
+
+
+== Gestione dei cluster
+
+In genere Virtualization Manager o lo strumento virsh cli gestisce un singolo host alla volta.  Per gestire più host in un cluster, spesso vengono utilizzate applicazioni di livello superiore come oVirt, CloudStack o OpenStack.  Questi strumenti aiuteranno a posizionare le VM e a distribuire il carico.  Se si desidera un'elevata disponibilità di determinate VM in un ambiente cluster di piccole dimensioni, è possibile utilizzare Pacemaker insieme a Corosync oppure verificare l'opzione dello stack di gestione.
+
+image:kvm-overview-001.png["Stack Libvirt con componenti di gestione"]
+
+
+
+== Calcolare
+
+Libvirt fornisce un framework completo per la gestione delle risorse e delle funzionalità delle macchine virtuali.  Ciò include attività relative a:
+
+. Gestione delle macchine virtuali (domini):
++
+** Operazioni del ciclo di vita: Libvirt offre un set completo di operazioni per la gestione dello stato delle macchine virtuali (definite "domini" nella terminologia di libvirt).  Ciò include l'avvio, l'arresto, la pausa, la ripresa, il salvataggio, il ripristino e la migrazione delle VM.
+** Configurazione XML: le configurazioni delle macchine virtuali vengono definite tramite file XML.  È possibile utilizzare strumenti come virsh o virt-manager per creare, modificare ed eliminare queste configurazioni XML.
+** Gestione remota: è possibile gestire macchine virtuali su host remoti utilizzando il protocollo remoto di libvirt, che supporta vari trasporti di rete come SSH.
+
+
+. Assegnazione e gestione delle risorse:
++
+** Gestione CPU: Libvirt consente di configurare le CPU guest, specificando il numero di CPU virtuali, controllando il pinning della CPU (associando vCPU a specifiche CPU fisiche sull'host) e gestendo le modalità della CPU (come host-passthrough per esporre le funzionalità della CPU dell'host al guest).
+** Gestione della memoria: è possibile allocare memoria alle macchine virtuali e configurare l'overcommit della memoria (consentendo alla somma della memoria assegnata alle VM di superare la memoria fisica disponibile sull'host).
+** Gestione dell'archiviazione: Libvirt può gestire vari tipi di archiviazione per macchine virtuali, tra cui immagini disco (in formati come qcow2, vmdk e raw), condivisioni NFS, gruppi di volumi LVM, condivisioni iSCSI e dispositivi disco raw.
+** Gestione dei dispositivi host: è possibile gestire dispositivi host fisici e virtuali come USB, PCI, SCSI e dispositivi di rete, comprese funzionalità di virtualizzazione come SR-IOV e NPIV.
+
+
+. Networking virtuale:
++
+** Switch di rete virtuali: Libvirt crea switch di rete virtuali (bridge) per connettere le macchine virtuali tra loro e alla rete host.
+** Modalità di rete: supporta varie modalità di rete, come NAT, bridged, isolated e routed, per configurare il modo in cui le VM interagiscono con la rete.
+** Regole del firewall: Libvirt gestisce automaticamente le regole del firewall (utilizzando iptables) per controllare il traffico di rete per le reti virtuali.
+
+
+. Ottimizzazione delle prestazioni:
++
+** Blocco della CPU: il blocco delle vCPU su CPU fisiche specifiche può migliorare l'efficienza e le prestazioni della cache, soprattutto negli ambienti NUMA.
+** Ottimizzazione NUMA: è possibile ottimizzare le prestazioni sui sistemi NUMA limitando le dimensioni del guest alla quantità di risorse su un singolo nodo NUMA e collegando vCPU e memoria allo stesso socket fisico connesso all'adattatore I/O.
+** Hugepages: l'utilizzo di hugepages può migliorare le prestazioni riducendo il sovraccarico associato alla gestione di pagine con memoria ridotta.
+
+
+. Integrazione con altri strumenti:
++
+** virsh: l'interfaccia della riga di comando per interagire con libvirt.
+** virt-manager: uno strumento grafico per la gestione di macchine virtuali e risorse libvirt.
+** OpenStack: Libvirt è un driver di virtualizzazione comunemente utilizzato in OpenStack.
+** Strumenti di terze parti: molti altri strumenti e applicazioni sfruttano l'API di libvirt per gestire le macchine virtuali, tra cui piattaforme di gestione cloud e soluzioni di backup.
+
+
+
+
+L'hypervisor KVM consente di sovraccaricare CPU e memoria poiché solitamente le VM guest sono sottoutilizzate.  Ma è necessario monitorarlo e bilanciarlo per ottenere prestazioni migliori.
+
+I metadati della VM vengono archiviati come XML in /etc/libvirt/qemu.  La VM può essere creata utilizzando virt-install o virsh cli.  È possibile utilizzare Virt-Manager se si preferisce l'interfaccia utente oppure utilizzare lo stack di gestione superiore.
+
+In sintesi, libvirt fornisce un livello di gestione completo per gli aspetti di elaborazione della virtualizzazione, consentendo di controllare i cicli di vita delle macchine virtuali, allocare risorse, configurare la rete, ottimizzare le prestazioni e integrarsi con altri strumenti e piattaforme.
+
+
+
+== Magazzinaggio
+
+I dischi della VM possono essere forniti dinamicamente sul pool di archiviazione oppure possono essere forniti in anticipo per la VM dall'amministratore dell'archiviazione.  libvirt supporta vari tipi di pool.  Ecco l'elenco dei tipi di pool applicabili insieme al protocollo di archiviazione supportato.  La scelta più diffusa è dir. Poi netfs e logical. iscsi e iscsi-direct utilizzano un singolo target e non offrono tolleranza agli errori. mpath offre percorsi multipli, ma non allocati dinamicamente.  In vSphere viene utilizzato più come mappatura dei dispositivi raw.  Per i protocolli di file (NFS/SMB/CIFS), le opzioni di montaggio possono essere specificate in https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/managing_file_systems/mounting-file-systems-on-demand#the-autofs-service["automontante"] oppure viene utilizzato il tipo fstab e dir pool.  Nel caso di protocolli a blocchi (iSCSI, FC, NVMe-oF), viene utilizzato un file system condiviso come ocfs2 o gfs2.
+
+[cols="20% 10% 10% 10% 10% 10% 10% 10%"]
+|===
+| Protocollo di archiviazione | direzione | fs | netfs | logico | disco | iscsi | iscsi-diretto | mpath 
+
+
+| PMI/CIFS | SÌ | NO | SÌ | NO | NO | NO | NO | NO 
+
+
+| NFS | SÌ | NO | SÌ | NO | NO | NO | NO | NO 
+
+
+| iSCSI | SÌ | SÌ | NO | SÌ | SÌ | SÌ | SÌ | SÌ 
+
+
+| FC | SÌ | SÌ | NO | SÌ | SÌ | NO | NO | SÌ 
+
+
+| NVMe-oF | SÌ | SÌ | NO | SÌ | SÌ | NO | NO | No^1^ 
+|===
+*Note:* 1 - Potrebbe essere necessaria una configurazione aggiuntiva.
+
+In base al protocollo di archiviazione utilizzato, è necessario che sull'host siano disponibili pacchetti aggiuntivi.  Ecco un esempio di elenco.
+
+[cols="40% 20% 20% 20%"]
+|===
+| Protocollo di archiviazione | Fedora | Debian | Pac-Man 
+
+
+| PMI/CIFS | samba-client/cifs-utils | smbclient/cifs-utils | smbclient/cifs-utils 
+
+
+| NFS | nfs-utils | nfs-comune | nfs-utils 
+
+
+| iSCSI | iscsi-initiator-utils,device-mapper-multipath,ocfs2-tools/gfs2-utils | open-iscsi,multipath-tools,ocfs2-tools/gfs2-utils | open-iscsi,multipath-tools,ocfs2-tools/gfs2-utils 
+
+
+| FC | sysfsutils,device-mapper-multipath,ocfs2-tools/gfs2-utils | sysfsutils,strumenti multipath,ocfs2-tools/gfs2-utils | sysfsutils,strumenti multipath,ocfs2-tools/gfs2-utils 
+
+
+| NVMe-oF | nvme-cli,ocfs2-tools/gfs2-utils | nvme-cli,ocfs2-tools/gfs2-utils | nvme-cli,ocfs2-tools/gfs2-utils 
+|===
+I dettagli del pool di archiviazione sono memorizzati nel file XML in /etc/libvirt/storage.
+
+Per importare i dati della VM da un ambiente vSphere, consultarelink:../migration/shift-toolkit-overview.html["Kit di strumenti per il cambio"] .
+
+
+
+== Rete
+
+Libvirt fornisce solide funzionalità di rete virtuale per la gestione di macchine virtuali e container.  Ciò è possibile grazie al concetto di switch o bridge di rete virtuale.
+
+Concetti fondamentali: * Switch di rete virtuale (bridge): agisce come uno switch di rete basato su software sul server host.  Le macchine virtuali si collegano a questo switch e il traffico scorre attraverso di esso.  * Dispositivi TAP: si tratta di dispositivi di rete speciali che funzionano come "cavi virtuali" che collegano l'interfaccia di rete della macchina virtuale al bridge libvirt.
+
+* Modalità di rete: Libvirt supporta varie configurazioni di rete per soddisfare diverse esigenze:
++
+** NAT (Network Address Translation): questa è la modalità predefinita.  Le VM connesse a una rete NAT possono accedere alla rete esterna utilizzando l'indirizzo IP dell'host, ma gli host esterni non possono avviare direttamente connessioni alle VM.
+** Bridged: in questa modalità, la rete virtuale è connessa direttamente allo stesso segmento di rete dell'host.  Ciò consente alle VM di apparire come se fossero connesse direttamente alla rete fisica.
+** Isolato: le VM su una rete isolata possono comunicare tra loro e con l'host, ma non possono raggiungere nulla al di fuori dell'host.  Questa funzione è utile per i test o per ambienti sicuri.
+** Instradato: il traffico dalla rete virtuale viene instradato verso la rete fisica senza NAT.  Ciò richiede una corretta configurazione del routing sulla rete dell'host.
+** Aperto: simile alla modalità Routed, ma senza regole firewall applicate automaticamente da libvirt.  Ciò presuppone che il traffico di rete sarà gestito da altri sistemi.
+
+
+* DHCP e DNS: Libvirt può gestire i servizi DHCP per le sue reti virtuali utilizzando dnsmasq, consentendogli di assegnare indirizzi IP alle VM e di gestire la risoluzione DNS all'interno della rete virtuale.
+* Regole del firewall: Libvirt imposta automaticamente le regole iptables per controllare il flusso del traffico per le reti virtuali, in particolare in modalità NAT.
+
+
+Gestione delle reti Libvirt:
+
+* virsh: lo strumento da riga di comando virsh fornisce un set completo di comandi per la gestione delle reti virtuali, tra cui l'elenco, l'avvio, l'arresto, la definizione e la de-definizione delle reti.
+* Virtual Machine Manager (virt-manager): questo strumento grafico semplifica la creazione e la gestione di reti virtuali con un'interfaccia utente intuitiva.
+* Configurazione XML: Libvirt utilizza file XML per definire la configurazione delle reti virtuali.  È possibile modificare direttamente questi file XML oppure utilizzare strumenti come virsh net-edit per modificare le configurazioni di rete.
+
+
+Casi d'uso comuni:
+
+* NAT: connettività semplice e di base per VM su un host con una singola interfaccia di rete.
+* Bridged: integrazione perfetta delle VM in una rete esistente.
+* Isolato: creazione di ambienti sicuri o di test in cui l'accesso esterno alle VM è limitato.
+* Instradato: scenari più avanzati in cui è richiesto un routing specifico.
+* Open vSwitch (OVS): per distribuzioni complesse e su larga scala che richiedono gestione e automazione di rete avanzate.
+
+
+Sfruttando queste funzionalità, libvirt fornisce un framework flessibile e potente per la gestione della rete di macchine virtuali negli ambienti Linux.
+
+
+
+== Monitoraggio
+
+NetApp Data Infrastructure Insights (in precedenza Cloud Insights) è una piattaforma di monitoraggio e analisi dell'infrastruttura basata su cloud che fornisce una visibilità completa sulla tua infrastruttura IT, comprese le macchine virtuali.
+
+Sebbene Data Infrastructure Insights sia noto per la sua forte attenzione al monitoraggio degli ambienti di storage NetApp e VMware, offre anche funzionalità per il monitoraggio di altri tipi di infrastrutture e carichi di lavoro.
+
+Ecco come è possibile monitorare potenzialmente le macchine virtuali basate su Libvirt con NetApp Data Infrastructure Insights:
+
+. Responsabili della raccolta dati:
++
+** Data Infrastructure Insights funziona tramite il software Acquisition Unit, che utilizza vari collettori di dati per raccogliere dati dalla tua infrastruttura.
+** Data Infrastructure Insights dispone di collettori per infrastrutture e carichi di lavoro eterogenei, tra cui Kubernetes.  Sono inoltre disponibili un collettore Telegraf aperto e API aperte per una facile integrazione con altri sistemi.
+
+
+. Potenziale integrazione con Libvirt:
++
+** Raccolta dati personalizzata: potresti utilizzare il raccoglitore aperto Telegraf o l'API Data Infrastructure Insights per raccogliere dati dai tuoi sistemi basati su Libvirt.  Dovresti scrivere o configurare il raccoglitore per raccogliere le metriche da Libvirt utilizzando la sua API (ad esempio, tramite i comandi virsh o accedendo alle metriche interne di Libvirt).
+
+
+. Vantaggi del monitoraggio di Libvirt con Data Infrastructure Insights:
++
+** Visibilità unificata: ottieni una visione unificata del tuo ambiente virtualizzato, inclusi sia lo storage NetApp sia le VM basate su Libvirt.
+** Monitoraggio delle prestazioni: identifica i colli di bottiglia delle prestazioni e i vincoli delle risorse, siano essi interni alle VM o correlati all'infrastruttura sottostante che le supporta.
+** Ottimizzazione delle risorse: analizza i profili del carico di lavoro per dimensionare correttamente le VM, recuperare le risorse inutilizzate e ottimizzare l'utilizzo delle risorse nell'intero ambiente.
+** Risoluzione dei problemi: identifica e risolvi rapidamente i problemi correlando le metriche delle prestazioni delle VM con le metriche di archiviazione back-end per una visibilità end-to-end.
+** Analisi predittiva: utilizza l'apprendimento automatico per ottenere informazioni intelligenti e identificare in modo proattivo potenziali problemi prima che influiscano sulle prestazioni.
+
+
+
+
+In sintesi, sebbene Data Infrastructure Insights offra un solido supporto per VMware, è possibile integrarlo con la virtualizzazione basata su Libvirt utilizzando collettori di dati personalizzati o sfruttando le sue API aperte.  Ciò garantirebbe visibilità unificata, monitoraggio delle prestazioni migliorato e funzionalità di ottimizzazione delle risorse per il tuo ambiente Libvirt all'interno della piattaforma Data Infrastructure Insights .
+
+
+
+== Protezione dei dati
+
+La protezione dei dati per le macchine virtuali basate su Libvirt con NetApp ONTAP può essere ottenuta tramite diversi metodi, spesso sfruttando le funzionalità di protezione dei dati integrate in ONTAP.  Ecco una ripartizione delle strategie più comuni:
+
+. Utilizzo delle funzionalità di protezione dati native di ONTAP:
++
+** Snapshot: la tecnologia principale di protezione dei dati di ONTAP è costituita dagli Snapshot.  Si tratta di copie rapide e puntuali dei volumi di dati che richiedono uno spazio su disco minimo e comportano un sovraccarico di prestazioni trascurabile.  È possibile utilizzare gli snapshot per creare backup frequenti dei dischi della VM Libvirt (supponendo che siano archiviati su volumi ONTAP ).
+** SnapMirror: SnapMirror viene utilizzato per replicare in modo asincrono le copie Snapshot da un sistema di archiviazione ONTAP a un altro.  Ciò consente di creare copie di disaster recovery (DR) delle VM Libvirt in un sito remoto o nel cloud.
+** SnapVault: SnapVault viene utilizzato per eseguire il backup dei dati da più sistemi di archiviazione su un sistema ONTAP centrale.  Questa è una buona opzione per consolidare i backup di molte VM Libvirt da host diversi in un repository di backup centrale.
+** SnapRestore: SnapRestore consente di ripristinare rapidamente i dati dalle copie Snapshot.  Ciò è essenziale per ripristinare le VM Libvirt in caso di perdita o danneggiamento dei dati.
+** FlexClone: FlexClone crea copie scrivibili di volumi basate su copie Snapshot.  Questa funzionalità è utile per creare rapidamente ambienti di test/sviluppo basati sui dati delle VM di produzione.
+** Sincronizzazione attiva MetroCluster/ SnapMirror : per RPO (Recovery Point Objective) zero automatizzato e disponibilità da sito a sito, è possibile utilizzare ONTAP MetroCluster o SMas, che consente di avere cluster estesi tra siti.
+
+
+. Integrazione con soluzioni di backup di terze parti: molte soluzioni di backup di terze parti si integrano con NetApp ONTAP e supportano il backup di macchine virtuali.  È possibile utilizzare queste soluzioni per eseguire il backup delle VM Libvirt sullo storage ONTAP , sfruttando le funzionalità di protezione dei dati di ONTAP.  Ad esempio, alcune soluzioni di backup utilizzano la tecnologia Snapshot di ONTAP per backup rapidi e senza agenti.
+. Scripting e automazione: è possibile creare script per automatizzare il processo di creazione di snapshot ONTAP dei volumi VM Libvirt.  Questi script possono sfruttare l'interfaccia della riga di comando o le API di ONTAP per interagire con il sistema di archiviazione.
+
+
+Considerazioni chiave:
+
+* Posizione di archiviazione: le immagini del disco della VM Libvirt devono essere archiviate su volumi ONTAP per sfruttare le funzionalità di protezione dei dati di ONTAP.
+* Connettività di rete: assicura la connettività di rete tra gli host Libvirt e il sistema di archiviazione ONTAP .
+* Gestione HBA: se si utilizza Fibre Channel (FC) per la connettività di archiviazione, assicurarsi di aver installato i pacchetti di gestione HBA necessari sugli host Libvirt.
+* Monitoraggio e reporting: monitora le tue operazioni di protezione dei dati e assicurati che vengano completate correttamente.  Combinando le capacità di Libvirt con le solide funzionalità di protezione dei dati di ONTAP, è possibile implementare una strategia completa di protezione dei dati per il proprio ambiente virtualizzato.
+

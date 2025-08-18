@@ -1,0 +1,21 @@
+= Casi d'uso
+:allow-uri-read: 
+
+
+Questa migrazione consente un'integrazione fluida, una migliore protezione dei dati e una maggiore flessibilità nella gestione degli ambienti virtualizzati, garantendo una transizione fluida con tempi di inattività minimi.
+
+
+
+== Casi d'uso
+
+Quando si valuta il passaggio a datastore supportati ONTAP , sono disponibili numerose opzioni di migrazione in termini di origine e destinazione.
+
+* Migrazione da sistemi di archiviazione di terze parti (incluso vSAN) a datastore ONTAP .
+* Migrazione di VM nello stesso cluster vSphere
+* Migrazione di VM su più cluster vSphere
+* Migrazione di VM tra server vCenter nello stesso dominio SSO
+* Migrazione di VM tra server vCenter in diversi domini SSO
+* Migrazione di VM tra le sedi dei data center
+* Migrazione da sistemi di archiviazione di terze parti (incluso vSAN) a datastore ONTAP .
+* Migrazione di VM in un ambiente cloud ibrido
+

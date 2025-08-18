@@ -1,0 +1,26 @@
+---
+indexpage:
+  title: Soluzioni di virtualizzazione KVM NetApp
+  summary: Le soluzioni NetApp KVM sono un insieme di funzionalità strategiche e tecnologiche
+    che dimostrano le potenzialità dello storage NetApp per la virtualizzazione mediante
+    libvirt con KVM.
+  lead: Le soluzioni di virtualizzazione KVM NetApp sono un insieme di funzionalità
+    strategiche e tecnologiche che dimostrano le potenzialità dello storage NetApp
+    per la virtualizzazione mediante libvirt con KVM.
+  tiles:
+  - title: Iniziare
+    links:
+    - title: Virtualizzazione KVM con QEMU e Libvirt
+      url: kvm-overview.html
+    - title: Storage NetApp ONTAP per ambienti di virtualizzazione KVM
+      url: kvm-ontap.html
+  - title: Risorse aggiuntive
+    links:
+    - title: Configurare libvirt su Rocky Linux
+      url: https://docs.rockylinux.org/guides/virtualization/libvirt-rocky/
+    - title: Configurare libvirt su Ubuntu
+      url: https://documentation.ubuntu.com/server/how-to/virtualisation/libvirt/index.html
+    - title: Guida alla virtualizzazione di SUSE Linux
+      url: https://documentation.suse.com/sles/15-SP6/html/SLES-all/book-virtualization.html
+    - title: Libvirt con Arch Linux
+      url: https://wiki.archlinux.org/title/Libvirt

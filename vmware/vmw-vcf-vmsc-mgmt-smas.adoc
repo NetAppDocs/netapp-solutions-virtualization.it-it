@@ -1,0 +1,74 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-vmsc-mgmt-smas.html 
+keywords: netapp, vmware, cloud, foundation, vcf, asa, all-flash, array, ontap tools, otv, sddc, iscsi 
+summary:  
+---
+= Configurare un cluster esteso per un dominio di gestione VCF utilizzando SnapMirror Active Sync
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+In questo caso d'uso descriviamo la procedura per utilizzare gli ONTAP tools for VMware vSphere per configurare un cluster esteso per un dominio di gestione VCF.  Questa procedura include la distribuzione di host vSphere e vCenter Server, l'installazione di strumenti ONTAP , la protezione dei datastore con SnapMirror Active Sync, la migrazione delle VM verso datastore protetti e la configurazione di storage supplementare.
+
+image:vmware-vcf-asa-mgmt-stretchcluster-001.png["Istanza singola - Zone di disponibilità multiple"]
+
+
+
+== Panoramica dello scenario
+
+La soluzione Stretch Cluster può essere implementata sul cluster predefinito o su un cluster aggiuntivo nei domini di gestione o di carico di lavoro VCF.  VMFS su FC è supportato sia sul datastore principale che sui datastore supplementari.  VMFS su iSCSI è supportato solo con datastore supplementari.  Fare riferimento a IMT per il supporto di VMFS su NVMe-oF con SnapMirror ActiveSync.
+
+image:vmware-vcf-asa-mgmt-stretchcluster-002.png["Stretch Cluster con ONTAP per il dominio di gestione VCF"]
+
+.Archiviazione principale sul dominio di gestione
+[%collapsible%open]
+====
+A partire da VCF 5.2, il dominio di gestione può essere distribuito senza VSAN utilizzando lo strumento di importazione VCF.  L'opzione di conversione dello strumento di importazione VCF consentelink:vmw-vcf-mgmt-fc.html["una distribuzione vCenter esistente in un dominio di gestione"] .  Tutti i cluster in vCenter diventeranno parte del dominio di gestione.
+
+. Distribuisci host vSphere
+. Distribuire il server vCenter sul datastore locale (vCenter deve coesistere sugli host vSphere che verranno convertiti nel dominio di gestione)
+. Distribuisci gli ONTAP tools for VMware vSphere
+. Distribuisci il plug-in SnapCenter per VMware vSphere (facoltativo)
+. Creare un datastore (la configurazione della zona FC deve essere a posto)
+. Proteggere il cluster vSphere
+. Migrare le VM al datastore appena creato
+
+
+
+NOTE: Ogni volta che il cluster viene espanso o ridotto, è necessario aggiornare la relazione Host Cluster sugli strumenti ONTAP per il cluster, per indicare le modifiche apportate all'origine o alla destinazione.
+
+====
+.Archiviazione supplementare sul dominio di gestione
+[%collapsible%open]
+====
+Una volta che il dominio di gestione è attivo e funzionante, è possibile creare datastore aggiuntivi utilizzando gli strumenti ONTAP che attiveranno l'espansione del gruppo di coerenza.
+
+
+TIP: Se un cluster vSphere è protetto, saranno protetti tutti i datastore nel cluster.
+
+Se l'ambiente VCF viene distribuito con lo strumento Cloud Builder, per creare l'archiviazione supplementare con iSCSI, distribuire gli strumenti ONTAP per creare il datastore iSCSI e proteggere il cluster vSphere.
+
+
+NOTE: Ogni volta che il cluster viene espanso o ridotto, è necessario aggiornare la relazione Host Cluster sugli strumenti ONTAP per il cluster, per indicare le modifiche apportate all'origine o alla destinazione.
+
+====
+
+
+== Informazioni aggiuntive
+
+Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] centro.
+
+Per informazioni sulla configurazione di VCF fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2.html["Documentazione di VMware Cloud Foundation 5.2"] .
+
+
+
+== Demo video per questa soluzione
+
+.Cluster di allungamento per VCF con strumenti ONTAP
+video::569a91a9-2679-4414-b6dc-b25d00ff0c5a[panopto,width=360]

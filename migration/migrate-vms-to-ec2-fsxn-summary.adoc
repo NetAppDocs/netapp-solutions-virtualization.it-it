@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: migration/migrate-vms-to-ec2-fsxn-summary.html 
+keywords: netapp, vmware, amazon, ec2, fsxn, migration, iscsi, 
+summary: 'Questo report tecnico illustra come migrare le VM VMware vSphere on-premise a un"istanza Amazon EC2 con dischi dati posizionati su LUN iSCSI FSx ONTAP utilizzando la funzionalità MigrateOps "data-mobility-as-code" di Cirrus Migrate Cloud (CMC).' 
+---
+= Ulteriori opzioni per migrare le VM su Amazon EC2 utilizzando Amazon FSx per ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Esplora le opzioni per migrare le VM su Amazon EC2 utilizzando Amazon FSx for NetApp ONTAP, incluso l'uso della replica dello storage in-guest.
+
+
+
+== Altre possibilità
+
+Lo stesso approccio può essere esteso per migrare le VM utilizzando l'archiviazione in-guest sulle VM locali.  È possibile migrare il VMDK del sistema operativo tramite CMC e replicare le LUN iSCSI interne tramite SnapMirror.  Il processo richiede la rottura del mirror e il collegamento della LUN alla nuova istanza Amazon EC2 migrata, come illustrato nel diagramma seguente.
+
+image:migrate-ec2-fsxn-013.png["Immagine che mostra un'ulteriore possibilità per questa soluzione di migrazione"]
+
+
+
+== Conclusione
+
+Questo documento ha fornito una guida completa all'utilizzo della funzionalità MigrateOps di CMC per migrare i dati archiviati nei repository VMware locali su AWS utilizzando istanze Amazon EC2 e FSx ONTAP.
+
+Il seguente video illustra il processo di migrazione dall'inizio alla fine:
+
+.Migrazione delle VM VMware su Amazon EC2
+video::317a0758-cba9-4bd8-a08b-b17000d88ae9[panopto]
+Per scoprire l'interfaccia utente grafica e la migrazione locale di base da Amazon EBS a FSx ONTAP , guarda questo video dimostrativo di cinque minuti:
+
+.Migrazione su qualsiasi storage su larga scala con Cirrus Migrate Cloud
+video::PeFNZxXeQAU[youtube]

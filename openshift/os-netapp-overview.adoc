@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: openshift/os-netapp-overview.html 
+keywords: NetApp, ONTAP, Element, Storage 
+summary: NetApp dispone di diverse piattaforme di storage qualificate con il nostro Trident Storage Orchestrator per fornire storage per le applicazioni distribuite su Red Hat OpenShift. 
+---
+= Scopri di più sul provisioning dello storage per le applicazioni distribuite su Red Hat OpenShift
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+NetApp si integra con Red Hat OpenShift tramite Trident Storage Orchestrator per fornire storage persistente per le applicazioni containerizzate.  Le opzioni di archiviazione supportate includono sistemi basati su ONTAP come AFF e FAS, nonché ONTAP Select e Cloud Volumes ONTAP per ambienti virtualizzati e cloud.  Sono supportati anche servizi cloud-native come Amazon FSx for NetApp ONTAP, Azure NetApp Files e Google Cloud NetApp Volumes .
+
+image:redhat-openshift-043.png["Figura che mostra il dialogo di input/output o che rappresenta il contenuto scritto"]
+
+* I sistemi AFF e FAS eseguono NetApp ONTAP e forniscono storage sia per casi d'uso basati su file (NFS) sia per casi d'uso basati su blocchi (iSCSI).
+* Cloud Volumes ONTAP e ONTAP Select offrono gli stessi vantaggi rispettivamente nel cloud e nello spazio virtuale.
+* Amazon FSx for NetApp ONTAP, Azure NetApp Files e Google Cloud NetApp Volumes forniscono storage basato su file nel cloud.
+* I sistemi di storage NetApp Element consentono casi d'uso basati su blocchi (iSCSI) in un ambiente altamente scalabile.
+
+
+
+NOTE: Ogni sistema di storage del portfolio NetApp può semplificare sia la gestione dei dati che il loro spostamento tra siti on-premise e il cloud, garantendo che i dati siano sempre dove si trovano le applicazioni.
+
+Le pagine seguenti contengono informazioni aggiuntive sui sistemi di storage NetApp convalidati nella soluzione Red Hat OpenShift con NetApp :
+
+* link:os-netapp-ontap.html["NetApp ONTAP"]
+* link:https://docs.netapp.com/us-en/netapp-solutions-containers/openshift/os-netapp-element.html["NetApp Element"^]
+

@@ -1,0 +1,77 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-mgmt-principal-fc.html 
+keywords: netapp, vmware, cloud, foundation, vcf, asa, all-flash, array, ontap tools, otv, sddc, fc 
+summary:  
+---
+= Utilizzare un datastore VMFS basato su FC su ONTAP come storage principale per il dominio di gestione VCF
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+In questo caso d'uso descriviamo la procedura per utilizzare un datastore VMFS basato su FC esistente su ONTAP come storage primario per i domini di gestione VMware Cloud Foundation (VCF).  Questa procedura riassume i componenti, le configurazioni e i passaggi di distribuzione richiesti.
+
+
+
+== Introduzione
+
+Se opportuno, faremo riferimento alla documentazione esterna per i passaggi che devono essere eseguiti in SDDC Manager di VCF e faremo riferimento ai passaggi specifici della parte di configurazione dell'archiviazione.
+
+Per informazioni sulla conversione di un ambiente vSphere basato su FC esistente con ONTAP, fare riferimento alink:vmw-vcf-mgmt-fc.html["Convertire vSphere Environment (datastore FC) in VCF Management Domain"] .
+
+
+NOTE: La versione 5.2 di VCF ha introdotto la possibilità di convertire un ambiente vSphere 8 esistente in un dominio di gestione VCF o di importarlo come domini di carico di lavoro VCF VI.  Prima di questa versione, VMware vSAN era l'unica opzione per l'archiviazione principale per il dominio di gestione VCF.
+
+
+NOTE: Questa soluzione è applicabile alle piattaforme ONTAP che supportano l'archiviazione FC, tra cui NetApp ASA, AFF e FAS.
+
+
+
+== Prerequisiti
+
+In questo scenario vengono utilizzati i seguenti componenti e configurazioni:
+
+* Sistema di storage NetApp con una macchina virtuale di storage (SVM) configurata per consentire il traffico FC.
+* Sono state create interfacce logiche (LIF) sulla struttura FC che deve trasportare il traffico FC ed è associata alla SVM.
+* La suddivisione in zone è stata configurata per utilizzare la suddivisione in zone con singolo iniziatore-destinazione sugli switch FC per HBA host e destinazioni di archiviazione.
+
+
+Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] centro.
+
+Per informazioni sulla configurazione di VCF fare riferimento alink:https://docs.vmware.com/en/VMware-Cloud-Foundation/index.html["Documentazione di VMware Cloud Foundation"] .
+
+
+
+== Fasi di distribuzione
+
+
+
+=== Dominio di gestione - Cluster predefinito
+
+L'archiviazione principale FC sul cluster iniziale è supportata solo con lo strumento di importazione brownfield VCF.  Se VCF viene distribuito con lo strumento Cloud Builder (prima della versione 5.2.x), è supportato solo vSAN.
+
+Per ulteriori informazioni sull'utilizzo di un ambiente vSphere esistente, fare riferimento a https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2/map-for-administering-vcf-5-2/importing-existing-vsphere-environments-admin/convert-or-import-a-vsphere-environment-into-vmware-cloud-foundation-admin.html["conversione dell'ambiente vSphere esistente in dominio di gestione"] per maggiori informazioni.
+
+
+
+=== Dominio di gestione - Cluster aggiuntivo
+
+Il cluster vSphere aggiuntivo sul dominio di gestione può essere distribuito con le seguenti opzioni:
+
+* Avere un cluster aggiuntivo nell'ambiente vSphere e utilizzare lo strumento di importazione brownfield VCF per convertire l'ambiente vSphere nel dominio di gestione. https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/create-vvols-datastore.html["ONTAP tools for VMware vSphere"] https://docs.netapp.com/us-en/ontap/san-admin/provision-storage.html["Gestore di sistema o API ONTAP"] può essere utilizzato per distribuire il datastore VMFS nel cluster vSphere.
+* Utilizzare l'API SDDC per distribuire cluster aggiuntivi.  Gli host vSphere devono avere configurato il datastore VMFS.  Utilizzo https://docs.netapp.com/us-en/ontap/san-admin/provision-storage.html["Gestore di sistema o API ONTAP"] per distribuire LUN sugli host vSphere.
+* Utilizzare l'interfaccia utente di SDDC Manager per distribuire cluster aggiuntivi.  Tuttavia, questa opzione crea solo datastore VSAN fino alla versione 5.2.x.
+
+
+
+
+== Informazioni aggiuntive
+
+Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] centro.
+
+Per informazioni sulla configurazione di VCF fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2.html["Documentazione di VMware Cloud Foundation"] .

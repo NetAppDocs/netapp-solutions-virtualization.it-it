@@ -1,0 +1,93 @@
+---
+sidebar: sidebar 
+permalink: openshift/os-netapp-ontap.html 
+keywords: NetApp, ONTAP, AFF, FAS, iSCSI, NFS 
+summary: 'NetApp ONTAP è un potente strumento software di storage con funzionalità quali un"interfaccia utente grafica intuitiva, API REST con integrazione dell"automazione, analisi predittiva basata sull"intelligenza artificiale e azioni correttive, aggiornamenti hardware senza interruzioni e importazione tra storage.' 
+---
+= NetApp ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+NetApp ONTAP è un potente strumento software di storage con funzionalità quali un'interfaccia utente grafica intuitiva, API REST con integrazione dell'automazione, analisi predittiva basata sull'intelligenza artificiale e azioni correttive, aggiornamenti hardware senza interruzioni e importazione tra storage.
+
+Per ulteriori informazioni sul sistema di storage NetApp ONTAP , visitare il sito https://www.netapp.com/data-management/ontap-data-management-software/["Sito web NetApp ONTAP"^] .
+
+ONTAP offre le seguenti funzionalità:
+
+* Un sistema di archiviazione unificato con accesso simultaneo ai dati e gestione dei protocolli NFS, CIFS, iSCSI, FC, FCoE e FC-NVMe.
+* I diversi modelli di distribuzione includono configurazioni hardware on-premise all-flash, ibride e all-HDD; piattaforme di storage basate su VM su un hypervisor supportato come ONTAP Select; e nel cloud come Cloud Volumes ONTAP.
+* Maggiore efficienza di archiviazione dei dati sui sistemi ONTAP con supporto per la suddivisione automatica dei dati in livelli, la compressione dei dati in linea, la deduplicazione e la compattazione.
+* Archiviazione basata sul carico di lavoro e controllata dalla qualità del servizio.
+* Integrazione perfetta con un cloud pubblico per la suddivisione in livelli e la protezione dei dati. ONTAP offre inoltre solide funzionalità di protezione dei dati che lo distinguono in qualsiasi ambiente:
++
+** * Copie Snapshot NetApp .* Un backup rapido e puntuale dei dati utilizzando una quantità minima di spazio su disco, senza alcun sovraccarico aggiuntivo delle prestazioni.
+** * NetApp SnapMirror.* Esegue il mirroring delle copie Snapshot dei dati da un sistema di archiviazione a un altro. ONTAP supporta anche il mirroring dei dati su altre piattaforme fisiche e servizi cloud-native.
+** * NetApp SnapLock.* Gestione efficiente dei dati non riscrivibili mediante scrittura su volumi speciali che non possono essere sovrascritti o cancellati per un periodo di tempo designato.
+** * NetApp SnapVault.* Esegue il backup dei dati da più sistemi di archiviazione su una copia Snapshot centrale che funge da backup per tutti i sistemi designati.
+** * NetApp SyncMirror.* Fornisce il mirroring dei dati in tempo reale a livello RAID su due diversi plex di dischi collegati fisicamente allo stesso controller.
+** * NetApp SnapRestore.* Fornisce un rapido ripristino dei dati sottoposti a backup su richiesta dalle copie Snapshot.
+** * NetApp FlexClone.* Fornisce il provisioning istantaneo di una copia completamente leggibile e scrivibile di un volume NetApp basata su una copia Snapshot.
+
+
+
+
+Per maggiori informazioni su ONTAP, vedere https://docs.netapp.com/ontap-9/index.jsp["Centro di documentazione ONTAP 9"^] .
+
+
+NOTE: NetApp ONTAP è disponibile in locale, virtualizzato o nel cloud.
+
+image:redhat-openshift-035.png["Figura che mostra il dialogo di input/output o che rappresenta il contenuto scritto"]
+
+
+
+== Piattaforme NetApp
+
+
+
+=== NetApp AFF/ FAS
+
+NetApp fornisce piattaforme di storage all-flash (AFF) e ibride scale-out (FAS) robuste, realizzate su misura con prestazioni a bassa latenza, protezione dei dati integrata e supporto multiprotocollo.
+
+Entrambi i sistemi sono basati sul software di gestione dati NetApp ONTAP , il software di gestione dati più avanzato del settore per una gestione dello storage semplificata, integrata nel cloud e ad alta disponibilità, per garantire la velocità, l'efficienza e la sicurezza di livello aziendale di cui il tuo data fabric ha bisogno.
+
+Per ulteriori informazioni sulle piattaforme NETAPP AFF/ FAS , fare clic su https://docs.netapp.com/platstor/index.jsp["Qui"] .
+
+
+
+=== ONTAP Select
+
+ONTAP Select è una distribuzione software-defined di NetApp ONTAP che può essere distribuita su un hypervisor nel tuo ambiente. Può essere installato su VMware vSphere o su KVM e fornisce tutte le funzionalità e l'esperienza di un sistema ONTAP basato su hardware.
+
+Per maggiori informazioni su ONTAP Select, clicca https://docs.netapp.com/us-en/ontap-select/["Qui"] .
+
+
+
+=== Cloud Volumes ONTAP
+
+NetApp Cloud Volumes ONTAP è una versione distribuita nel cloud di NetApp ONTAP , disponibile per l'implementazione in numerosi cloud pubblici, tra cui: Amazon AWS, Microsoft Azure e Google Cloud.
+
+Per ulteriori informazioni su Cloud Volumes ONTAP, fare clic su https://docs.netapp.com/us-en/occm/#discover-whats-new["Qui"] .
+
+
+
+=== Amazon FSx ONTAP
+
+Amazon FSx ONTAP fornisce storage condiviso completamente gestito nel cloud AWS con le diffuse funzionalità di gestione e accesso ai dati di ONTAP. Per ulteriori informazioni su Amazon FSx ONTAP, fare clic su https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/what-is-fsx-ontap.html["Qui"] .
+
+
+
+=== Azure NetApp Files
+
+Azure NetApp Files è un servizio di archiviazione file nativo di Azure, di prima parte, di classe enterprise e ad alte prestazioni. Fornisce volumi come servizio per il quale è possibile creare account NetApp , pool di capacità e volumi. È inoltre possibile selezionare i livelli di servizio e di prestazione e gestire la protezione dei dati. Puoi creare e gestire condivisioni di file ad alte prestazioni, altamente disponibili e scalabili utilizzando gli stessi protocolli e strumenti che conosci e su cui fai affidamento in locale. Per ulteriori informazioni su Azure NetApp Files, fare clic su https://learn.microsoft.com/en-us/azure/azure-netapp-files/["Qui"] .
+
+
+
+=== Google Cloud NetApp Volumes
+
+Google Cloud NetApp Volumes è un servizio di archiviazione dati basato su cloud completamente gestito che offre funzionalità avanzate di gestione dei dati e prestazioni altamente scalabili. Consente di spostare le applicazioni basate su file su Google Cloud. Supporta i protocolli Network File System (NFSv3 e NFSv4.1) e Server Message Block (SMB) integrati, quindi non è necessario riprogettare le applicazioni e si può continuare a ottenere uno storage persistente per le applicazioni. Per ulteriori informazioni su Google Cloud NetApp VolumesP, fare clic su https://cloud.google.com/netapp/volumes/docs/discover/overview["Qui"] .

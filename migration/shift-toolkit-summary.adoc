@@ -1,0 +1,161 @@
+---
+sidebar: sidebar 
+permalink: migration/shift-toolkit-summary.html 
+keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, hyper-v, proxmox 
+summary:  
+---
+= Passaggi successivi dopo la conversione o la migrazione delle VM tramite Shift Toolkit
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver convertito o migrato le VM utilizzando Shift Toolkit, rivedere le principali attività post-migrazione per convalidare il nuovo ambiente.  È possibile verificare lo stato del sistema, eseguire operazioni di pulizia e risolvere problemi comuni utilizzando esempi dettagliati.
+
+
+
+== Conclusione
+
+Il toolkit NetApp Shift aiuta gli amministratori a convertire rapidamente e senza problemi le VM da VMware a Hyper-V. Può anche convertire solo i dischi virtuali tra i diversi hypervisor.  Pertanto, Shift Toolkit ti fa risparmiare diverse ore di lavoro ogni volta che vuoi spostare carichi di lavoro da un hypervisor all'altro.  Le organizzazioni possono ora ospitare ambienti multi-hypervisor senza doversi preoccupare se i carichi di lavoro sono vincolati a un singolo hypervisor.  Questa funzionalità aumenta la flessibilità e riduce i costi di licenza, i vincoli e gli impegni verso un singolo fornitore.
+
+
+
+== Prossimi passi
+
+Sfrutta il potenziale di Data ONTAP scaricando il pacchetto Shift toolkit e inizia a migrare o convertire le macchine virtuali o i file su disco per semplificare e ottimizzare le migrazioni.
+
+Per saperne di più su questo processo, segui la procedura dettagliata:
+
+.Guida dettagliata di Shift Toolkit
+video::6bf11896-3219-4ba7-9a00-b2d800d47144[panopto,width=360]
+
+
+== Risoluzione dei problemi e problemi noti
+
+. Lo script di attivazione per l'impostazione dell'indirizzo IP e la rimozione degli strumenti VMware non riesce per la VM Windows con il seguente errore: la credenziale non è valida
++
+[listing]
+----
+Error message:
+
+Enter-PSSession : The credential is invalid.
+
+Potential causes:
+
+The guest credentials couldn't be validated
+
+a. The supplied credentials were incorrect
+b. There are no user accounts in the guest
+----
+. La macchina virtuale Windows riscontra errori BSOD
++
+*NOTA:* Questo non è un problema del toolkit Shift, ma è correlato all'ambiente.
+
++
+[listing]
+----
+Error message:
+
+Bluescreen error during initial boot after migration.
+
+Potential cause:
+
+Local group policy setup to block the installation of applications including new drivers for Microsoft Hyper-V.
+
+a. Update the policy to allow installation of drivers.
+----
+. Nessun datastore elencato durante il tentativo di creare un gruppo di risorse
++
+[listing]
+----
+Error message:
+
+Mount paths are empty while getting volumes for mountpaths for site.
+
+Potential causes:
+
+The NFS volume used as a datastore is using v4.1
+
+a. Shift toolkit filters out NFS v3 datastores during the resource group creation. NFS 4.1 or 4.2 is not supported in the current release.
+----
+. Impossibile accedere all'interfaccia utente di Shift Toolkit dopo aver abilitato SSL.
++
+[listing]
+----
+Error message:
+
+Login failed, Network error
+
+Potential causes:
+
+MongoDB service not running
+Using Firefox browser to access Shift UI
+
+a. Ensure Mongo service is running
+b. Use Google Chrome or IE to access Shift UI.
+----
+. Impossibile migrare le VM con la crittografia abilitata.
++
+[listing]
+----
+Error message:
+
+Boot failure on Hyper-V side
+
+Potential causes:
+
+VMDK encrytped using vSphere encryption
+
+a. Decrypt the VMDK inside VMware and retry the operation.
+----
+
+
+
+
+== Appendice
+
+
+
+=== Ruolo ONTAP personalizzato per il toolkit Shift
+
+Creare un ruolo ONTAP con privilegi minimi in modo che non sia necessario utilizzare il ruolo di amministratore ONTAP per eseguire operazioni in Shift Toolkit.  Questi ruoli minimi sono richiesti a livello SVM sul lato di archiviazione ONTAP .
+
+
+NOTE: È possibile utilizzare anche vsadmin.
+
+image:shift-toolkit-084.png["Figura che mostra il dialogo di input/output o che rappresenta il contenuto scritto"]
+
+Utilizzare ONTAP System Manager per creare il ruolo.
+
+Eseguire i seguenti passaggi in ONTAP System Manager:
+
+*Crea un ruolo personalizzato:*
+
+* Per creare un ruolo personalizzato a livello di SVM, selezionare Archiviazione > VM di archiviazione > SVM richiesta > Impostazioni > Utenti e ruoli.
+* Selezionare l'icona della freccia (→) accanto a Utenti e Ruoli.
+* Selezionare +Aggiungi in Ruoli.
+* Definisci le regole per il ruolo e fai clic su Salva.
+
+
+*Assegna il ruolo all'utente del toolkit Shift:*
+
+Eseguire i seguenti passaggi nella pagina Utenti e ruoli:
+
+* Selezionare Aggiungi icona + sotto Utenti.
+* Selezionare il nome utente richiesto e selezionare il ruolo creato nel passaggio precedente nel menu a discesa Ruolo.
+* Fare clic su Salva.
+
+
+Una volta fatto, utilizzare l'utente creato sopra durante la configurazione dei siti di origine e di destinazione nell'interfaccia utente di Shift Toolkit.
+
+
+
+=== Ruolo di autorizzazioni minime richieste su VMware
+
+Per migrare le macchine virtuali da VMware vSphere utilizzando Shift Toolkit, creare un utente RBAC con i privilegi indicati di seguito tramite Amministrazione > Controllo accessi > Ruoli.
+
+image:shift-toolkit-085.png["Figura che mostra il dialogo di input/output o che rappresenta il contenuto scritto"]
