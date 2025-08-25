@@ -63,7 +63,7 @@ Per ulteriori informazioni sull'utilizzo di un ambiente vSphere esistente, fare 
 
 Il cluster vSphere aggiuntivo sul dominio di gestione può essere distribuito con le seguenti opzioni:
 
-* Avere un cluster aggiuntivo nell'ambiente vSphere e utilizzare lo strumento di importazione brownfield VCF per convertire l'ambiente vSphere nel dominio di gestione. https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/create-vvols-datastore.html["ONTAP tools for VMware vSphere"] https://docs.netapp.com/us-en/ontap/san-admin/provision-storage.html["Gestore di sistema o API ONTAP"] può essere utilizzato per distribuire il datastore VMFS nel cluster vSphere.
+* Avere un cluster aggiuntivo nell'ambiente vSphere e utilizzare lo strumento di importazione brownfield VCF per convertire l'ambiente vSphere nel dominio di gestione. https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/create-datastore.html["ONTAP tools for VMware vSphere"] https://docs.netapp.com/us-en/ontap/san-admin/provision-storage.html["Gestore di sistema o API ONTAP"] può essere utilizzato per distribuire il datastore VMFS nel cluster vSphere.
 * Utilizzare l'API SDDC per distribuire cluster aggiuntivi.  Gli host vSphere devono avere configurato il datastore VMFS.  Utilizzo https://docs.netapp.com/us-en/ontap/san-admin/provision-storage.html["Gestore di sistema o API ONTAP"] per distribuire LUN sugli host vSphere.
 * Utilizzare l'interfaccia utente di SDDC Manager per distribuire cluster aggiuntivi.  Tuttavia, questa opzione crea solo datastore VSAN fino alla versione 5.2.x.
 

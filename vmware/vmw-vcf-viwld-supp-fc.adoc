@@ -72,7 +72,7 @@ Per distribuire ONTAP Tools e utilizzarlo per creare un datastore VMFS sul domin
 
 * link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-vcenter.html["Registra il carico di lavoro VI vCenter per abilitare il plugin vCenter"]
 * link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["Definisci il backend di archiviazione utilizzando l'interfaccia client vSphere"]
-* link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/create-vvols-datastore.html["Provisioning VMFS su FC"]
+* link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/create-datastore.html["Provisioning VMFS su FC"]
 
 
 
