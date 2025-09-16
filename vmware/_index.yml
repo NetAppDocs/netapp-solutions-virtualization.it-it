@@ -14,10 +14,6 @@ indexpage:
       url: vmw-getting-started-overview.html
     - title: Informazioni sulle piattaforme NetApp per VMware
       url: vmw-getting-started-ntap-options.html
-    - title: Opzioni di progettazione VCF 9 con ONTAP
-      url: vmw-vcf-design.html
-    - title: Distribuzione VCF 9 con ONTAP
-      url: vmw-vcf-deployment.html
     - title: Blog
       url: "../blogs.html"
     - title: Video
@@ -26,6 +22,10 @@ indexpage:
     links:
     - title: Informazioni su VMware Cloud Foundation e ONTAP
       url: vmw-vcf-overview.html
+    - title: Opzioni di progettazione VCF 9 con ONTAP
+      url: vmw-vcf-design.html
+    - title: Distribuzione VCF 9 con ONTAP
+      url: vmw-vcf-deployment.html
     - title: Proteggi i carichi di lavoro VCF con SnapCenter
       url: vmw-vcf-protect-sc.html
     - title: Proteggi i datastore VMware con BlueXP
