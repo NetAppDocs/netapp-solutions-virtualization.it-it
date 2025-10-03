@@ -1,0 +1,56 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-viwld-supp-nfs-vvols-network.html 
+keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc 
+summary: Configurare la rete NFS sugli host ESXi nei domini di gestione VMware Cloud Foundation per abilitare la connettività ai sistemi di archiviazione ONTAP .  Creerai gruppi di porte distribuiti con separazione VLAN, configurerai il teaming uplink per la ridondanza e imposterai gli adattatori VMkernel su ciascun host ESXi per stabilire percorsi NFS dedicati per le funzionalità di failover. 
+---
+= Configurare la rete per NFS su host ESXi in un dominio di carico di lavoro VCF VI
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurare la rete NFS sugli host ESXi nei domini di gestione VMware Cloud Foundation per abilitare la connettività ai sistemi di archiviazione ONTAP .  Creerai gruppi di porte distribuiti con separazione VLAN, configurerai il teaming uplink per la ridondanza e imposterai gli adattatori VMkernel su ciascun host ESXi per stabilire percorsi NFS dedicati per le funzionalità di failover.
+
+Eseguire i seguenti passaggi sul cluster VI Workload Domain utilizzando il client vSphere. In questo caso viene utilizzato vCenter Single Sign-On in modo che il client vSphere sia comune tra i domini di gestione e di carico di lavoro.
+
+
+
+== Passaggio 1: creare un gruppo di porte distribuito per il traffico NFS
+
+Completare i seguenti passaggi per creare un nuovo gruppo di porte distribuito affinché la rete trasporti il traffico NFS.
+
+.Passi
+. Dal client vSphere, accedere a *Inventario > Rete* per il dominio del carico di lavoro.  Passare allo switch distribuito esistente e scegliere l'azione per creare *Nuovo gruppo di porte distribuite...*.
+. Nella procedura guidata *Nuovo gruppo di porte distribuite*, inserisci un nome per il nuovo gruppo di porte e fai clic su *Avanti* per continuare.
+. Nella pagina *Configura impostazioni*, compila tutte le impostazioni. Se si utilizzano le VLAN, assicurarsi di fornire l'ID VLAN corretto. Fare clic su *Avanti* per continuare.
+. Nella pagina *Pronto per il completamento*, rivedere le modifiche e fare clic su *Fine* per creare il nuovo gruppo di porte distribuite.
+. Una volta creato il gruppo di porte, accedi al gruppo di porte e seleziona l'azione *Modifica impostazioni...*.
+. Nella pagina *Gruppo di porte distribuite - Modifica impostazioni*, vai a *Teaming e failover* nel menu a sinistra. Abilitare il teaming per gli uplink da utilizzare per il traffico NFS assicurandosi che siano tutti insieme nell'area *Uplink attivi*. Sposta tutti gli uplink non utilizzati in *Uplink non utilizzati*.
+. Ripetere questo processo per ogni host ESXi nel cluster.
+
+
+
+
+== Passaggio 2: creare un adattatore VMkernel su ciascun host ESXi
+
+Creare un adattatore VMkernel su ciascun host ESXi nel dominio del carico di lavoro.
+
+.Passi
+. Dal client vSphere, passare a uno degli host ESXi nell'inventario del dominio del carico di lavoro. Dalla scheda *Configura* seleziona *Schede VMkernel* e fai clic su *Aggiungi rete...* per iniziare.
+. Nella finestra *Seleziona tipo di connessione*, seleziona *Scheda di rete VMkernel* e fai clic su *Avanti* per continuare.
+. Nella pagina *Seleziona dispositivo di destinazione*, seleziona uno dei gruppi di porte distribuiti per NFS creati in precedenza.
+. Nella pagina *Proprietà porta*, mantenere le impostazioni predefinite (nessun servizio abilitato) e fare clic su *Avanti* per continuare.
+. Nella pagina *Impostazioni IPv4*, compilare *Indirizzo IP*, *Maschera di sottorete* e fornire un nuovo indirizzo IP del gateway (solo se richiesto). Fare clic su *Avanti* per continuare.
+. Rivedi le tue selezioni nella pagina *Pronto per il completamento* e fai clic su *Fine* per creare l'adattatore VMkernel.
+
+
+
+
+== Cosa succederà ora?
+
+Dopo aver configurato la rete per NFS su tutti gli host ESXi nel dominio del carico di lavoro,link:vmw-vcf-viwld-supp-nfs-vvols-storage.html["configurare l'archiviazione per NFS vVols"] .

@@ -1,0 +1,54 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-mgmt-supplemental-iscsi-svm-lifs.html 
+keywords: netapp, vmware, cloud, foundation, vcf, iscsi, deploy, ontap tools 
+summary: 'Creare una macchina virtuale di archiviazione (SVM) con più interfacce logiche (LIF) per fornire connettività iSCSI per i domini di gestione VMware Cloud Foundation.  Configurerai l"SVM con il supporto del protocollo iSCSI e imposterai più LIF su reti Ethernet separate per abilitare il multipathing e il failover per prestazioni e disponibilità ottimali.' 
+---
+= Creare SVM e LIF per datastore iSCSI in un dominio di gestione VCF
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Creare una macchina virtuale di archiviazione (SVM) con più interfacce logiche (LIF) per fornire connettività iSCSI per i domini di gestione VMware Cloud Foundation.  Configurerai l'SVM con il supporto del protocollo iSCSI e imposterai più LIF su reti Ethernet separate per abilitare il multipathing e il failover per prestazioni e disponibilità ottimali.
+
+Per aggiungere nuovi LIF a un SVM esistente, fare riferimento alla documentazione ONTAP :link:https://docs.netapp.com/us-en/ontap/networking/create_a_lif.html["Creare ONTAP LIF"^] .
+
+.Passi
+. Da ONTAP System Manager, vai su *VM di archiviazione* nel menu a sinistra e fai clic su *+ Aggiungi* per iniziare.
++
+image:vmware-vcf-asa-001.png["Fare clic su +Aggiungi per iniziare a creare SVM"]
+
++
+{nbsp}
+
+. Nella procedura guidata *Aggiungi VM di archiviazione*, fornire un *Nome* per la SVM, selezionare lo *Spazio IP* e quindi, in *Protocollo di accesso*, fare clic sulla scheda *iSCSI* e selezionare la casella per *Abilitare iSCSI*.
++
+image:vmware-vcf-asa-002.png["Aggiungi procedura guidata VM di archiviazione - abilita iSCSI"]
+
++
+{nbsp}
+
+. Nella sezione *Interfaccia di rete* compilare *Indirizzo IP*, *Maschera di sottorete* e *Dominio di broadcast e porta* per il primo LIF. Per i LIF successivi, è possibile utilizzare impostazioni individuali oppure abilitare la casella di controllo per utilizzare impostazioni comuni per tutti i LIF rimanenti.
++
+
+NOTE: Per il multipathing e il failover su più percorsi, creare almeno due LIF per nodo di archiviazione in reti Ethernet separate per tutte le SVM nelle configurazioni iSCSI.
+
++
+image:vmware-vcf-asa-003.png["Compila le informazioni di rete per i LIF"]
+
++
+{nbsp}
+
+. Scegliere se abilitare l'account di amministrazione della VM di archiviazione (per ambienti multi-tenancy), quindi fare clic su *Salva* per creare la SVM.
++
+image:vmware-vcf-asa-004.png["Abilita l'account SVM e termina"]
+
+
+
+
+
+== Cosa succederà ora?
+
+Dopo aver creato SVM e LIF,link:vmw-vcf-mgmt-supplemental-iscsi-network.html["configurare la rete per iSCSI sugli host ESXi"] .

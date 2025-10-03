@@ -1,0 +1,37 @@
+= 
+:allow-uri-read: 
+
+
+. Dal client vSphere, accedere a *Inventario > Rete* per il dominio del carico di lavoro.  Passare allo switch distribuito esistente e scegliere l'azione per creare *Nuovo gruppo di porte distribuite...*.
++
+image:vmware-vcf-asa-022.png["Scegli di creare un nuovo gruppo di porte"]
+
++
+{nbsp}
+
+. Nella procedura guidata *Nuovo gruppo di porte distribuite*, inserisci un nome per il nuovo gruppo di porte e fai clic su *Avanti* per continuare.
+. Nella pagina *Configura impostazioni*, compila tutte le impostazioni. Se si utilizzano le VLAN, assicurarsi di fornire l'ID VLAN corretto. Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-023.png["Compila l'ID VLAN"]
+
++
+{nbsp}
+
+. Nella pagina *Pronto per il completamento*, rivedere le modifiche e fare clic su *Fine* per creare il nuovo gruppo di porte distribuite.
+. Ripetere questa procedura per creare un gruppo di porte distribuito per la seconda rete iSCSI utilizzata e assicurarsi di aver immesso l'*ID VLAN* corretto.
+. Una volta creati entrambi i gruppi di porte, passare al primo gruppo di porte e selezionare l'azione *Modifica impostazioni...*.
++
+image:vmware-vcf-asa-024.png["DPG - modifica impostazioni"]
+
++
+{nbsp}
+
+. Nella pagina *Gruppo di porte distribuite - Modifica impostazioni*, vai su *Teaming e failover* nel menu a sinistra e fai clic su *uplink2* per spostarlo in basso a *Uplink non utilizzati*.
++
+image:vmware-vcf-asa-025.png["sposta uplink2 in non utilizzato"]
+
+. Ripetere questo passaggio per il secondo gruppo di porte iSCSI.  Questa volta, però, sposta *uplink1* in *Uplink non utilizzati*.
++
+image:vmware-vcf-asa-026.png["sposta uplink1 in non utilizzato"]
+
+

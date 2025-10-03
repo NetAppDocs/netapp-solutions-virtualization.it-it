@@ -1,0 +1,337 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-vm-dp-using-vgs.html 
+keywords: OpenShift, OCP, Trident, Trident protect, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization,Data Protection, Data Management for VMs, VM protection, Volume Group Snapshots 
+summary: Proteggi le VM in Red Hat OpenShift Virtualization utilizzando gli snapshot del gruppo di volumi Trident per garantire backup coerenti con gli arresti anomali e un ripristino rapido.  Questa procedura illustra come configurare, creare snapshot e ripristinare più dischi VM utilizzando Kubernetes e NetApp ONTAP. 
+---
+= Proteggere le VM in Red Hat OpenShift Virtualization con gli snapshot del gruppo di volumi Trident
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurare gli snapshot del gruppo di volumi per proteggere le VM in Red Hat OpenShift Virtualization utilizzando Trident 25.06 e lo storage NetApp ONTAP .  Questa procedura include l'installazione di Trident con supporto iSCSI, la configurazione dei backend ONTAP e delle classi di archiviazione, la creazione di una VM con più dischi persistenti e l'implementazione di snapshot del gruppo di volumi che garantiscano l'acquisizione simultanea di snapshot di tutti i dischi della VM per operazioni di ripristino affidabili.
+
+Volume Group Snapshots è una funzionalità di Kubernetes che risolve i problemi di coerenza quando si acquisiscono snapshot di più PersistentVolumeClaim (PVC) di container o VM.
+
+Questa funzionalità consente di creare snapshot di più PVC contemporaneamente, coerenti con gli arresti anomali.  Questa funzionalità è in versione Beta nella versione v1.32 di Kubernetes.  Trident supporta questa funzionalità Beta a partire dalla versione Trident 25.06 (al momento solo per il protocollo iSCSI).
+
+Per supportare la funzionalità Volume Group Snapshots, Kubernetes introduce tre nuovi oggetti API:
+
+* *VolumeGroupSnapshotClass:* Creato dagli amministratori del cluster per descrivere come devono essere creati gli snapshot dei gruppi di volumi.
+* *VolumeGroupSnapshot:* richiesto dagli utenti di Kubernetes per creare uno snapshot del gruppo di volumi per più PVC.
+* *VolumeGroupSnapshotContent:* Creato dal controller snapshot per i VolumeGroupSnapshot creati dinamicamente.
+
+
+Trident 25.06 rileva automaticamente i nuovi CRD (specificati per la funzionalità Volume Group Snapshot) per abilitare i gate delle funzionalità pertinenti nei sidecar Trident CSI.
+
+
+NOTE: Trident supporta gli snapshot dei gruppi di volumi solo per il protocollo iSCSI nella versione 25.06.
+
+
+
+== Passaggio 1: installare OpenShift 4.19 e abilitare FeatureGate per gli snapshot del gruppo di volumi
+
+Installa il cluster OpenShift 4.19 con Kubernetes versione 1.32.  Questa versione eleva la funzionalità Volume Group Snapshot allo stato Beta.  Le versioni successive di OpenShift potrebbero includere versioni di Kubernetes successive alla v1.32, che supportano anch'esse questa funzionalità.
+
+.Passi
+. Installa OpenShift Cluster versione 4.19 seguendo le istruzioni nella documentazione di Red Hat: https://docs.openshift.com/container-platform/4.19/installing/index.html["Installazione di OpenShift Container Platform"] .
+. Verificare la versione di Kubernetes nel cluster OpenShift.
++
+L'immagine seguente mostra OpenShift Cluster v4.19 installato con Kubernetes v1.32.
+
++
+image:redhat-openshift-ocpv-vgs-001.png["Cluster OpenShift con K8s V1.32"]
+
+. Attivare FeatureGate per VolumeGroupSnapshot tramite la console Web di OpenShift: accedere a *Amministrazione -> Definizioni risorse personalizzate*.
+. Cerca e clicca su *FeatureGate*.
+. Fare clic sulla scheda *Istanze* e selezionare l'istanza *Cluster*.
+. Selezionare la scheda *YAML* e modificare l'oggetto FeatureGate/cluster per includere VolumeGroupSnapshot nell'elenco abilitato in *customNoUpgrade*.
++
+image:redhat-openshift-ocpv-vgs-002.png["Abilita FeatureGate VolumeGroupSnapshot"]
+
+
+
+
+
+== Passaggio 2: installare e configurare Trident 25.06 per gli snapshot del gruppo di volumi
+
+La funzionalità Volume Group Snapshot è supportata da Trident solo per il protocollo iSCSI in Trident 25.06.  NOTA: è necessario installare Trident versione 25.06.1 per abilitare il protocollo iSCSI su OpenShift Cluster 4.19.
+
+Installa Trident e configura l'infrastruttura di archiviazione necessaria per abilitare gli snapshot dei gruppi di volumi per le tue VM.  Ciò include la configurazione di una connessione backend iSCSI a ONTAP, la definizione di classi di archiviazione per volumi persistenti VM e la configurazione di classi di snapshot sia individuali che di gruppo.
+
+
+NOTE: È consigliabile impostare come predefinite sia la classe di archiviazione Trident sia la classe snapshot, in modo da poter sfruttare il rapido meccanismo FlexCloning dagli snapshot dell'immagine golden durante la creazione di nuove VM.
+
+.Prima di iniziare
+* Assicurarsi che Feature Gate sia attivo per VolumeGroupSnapshots.
+* Utilizzare node-prep per installare gli strumenti iSCSI.
+
+
+.Passi
+. Installa Trident utilizzando il seguente comando:
++
+image:redhat-openshift-ocpv-vgs-003.png["Installa Trident con iscsi nodeprep"]
+
+. Verificare che siano installati i CRD richiesti per VolumeGroupSnapshots.
++
+image:redhat-openshift-ocpv-vgs-004.png["CRD richiesti disponibili"]
+
+. Creare il backend iSCSI Trident utilizzando la seguente definizione YAML.
++
+[source, yaml]
+----
+#tbc-iscsi.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tbc-iscsi-secret
+type: Opaque
+stringData:
+  username: admin
+  password: <passwd to log into ONTAP ClI>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: tbc-iscsi
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  managementLIF: <mgmt-lif>
+  backendName: tbc-iscsi
+  svm: openshift
+  storagePrefix: openshift-iscsi
+  defaults:
+    formatOptions: "-E nodiscard"
+    nameTemplate: "{{ .config.StoragePrefix }}_{{ .volume.Namespace }}_{{ .volume.RequestName }}"
+  credentials:
+    name: tbc-iscsi-secret
+----
+. Creare la classe di archiviazione iSCSI utilizzando la seguente definizione YAML.
++
+[source, yaml]
+----
+# sc-iscsi.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-iscsi
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-san"
+  provisioningType: "thin"
+  fsType: ext4
+  snapshots: "true"
+reclaimPolicy: "Delete"
+allowVolumeExpansion: true
+----
+. Creare l'oggetto VolumeSnapshotClass utilizzando la seguente definizione YAML.
++
+[source, yaml]
+----
+# snapshotclass.yaml
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: trident-snapshotclass
+driver: csi.trident.netapp.io
+deletionPolicy: Retain
+----
++
+image:redhat-openshift-ocpv-vgs-005.png["Classe di archiviazione e classe di snapshot del volume"]
+
+. Imposta i valori predefiniti per la classe di archiviazione e VolumeSnapshotClass nel cluster.
++
+[source, cli]
+----
+kubectl patch storageclass <storage-class-name> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+----
++
+[source, cli]
+----
+kubectl patch volumesnapshotclass <volumesnapshotclass-name> --type=merge -p '{"metadata":{"annotations":{"snapshot.storage.kubernetes.io/is-default-class":"true"}}}'
+----
+. Creare un oggetto VolumeGroupSnapshotClass utilizzando la seguente definizione YAML.
++
+[source, cli]
+----
+apiVersion: groupsnapshot.storage.k8s.io/v1beta1
+kind: VolumeGroupSnapshotClass
+metadata:
+  name: trident-groupsnapshotclass
+  annotations:
+    kubernetes.io/description: "Trident group snapshot class"
+driver: csi.trident.netapp.io
+deletionPolicy: Delete
+----
++
+image:redhat-openshift-ocpv-vgs-006.png["Classe Snapshot del gruppo di volumi"]
+
+
+
+
+
+== Passaggio 3: installare OpenShift Virtualization e creare una VM di prova con più dischi
+
+Installa OpenShift Virtualization Operator per abilitare le funzionalità di gestione delle VM nel tuo cluster.  Dopo l'installazione, creare una macchina virtuale di prova con più dischi persistenti per dimostrare la funzionalità di snapshot del gruppo di volumi.
+
+.Passi
+. Installa OpenShift Virtualization Operator.
++
+
+NOTE: Questa operazione deve essere eseguita dopo aver impostato la classe di archiviazione predefinita e la classe Snapshot utilizzando Trident , in modo che le immagini golden siano rese disponibili come VolumeSnapshot nel cluster utilizzando Trident CSI.
+
+. Verificare che le immagini golden siano presenti negli snapshot del volume.
++
+image:redhat-openshift-ocpv-vgs-007.png["Immagini dorate negli snapshot del volume"]
+
+. Crea una VM dal modello predefinito.  Aggiungere altri 2 dischi per la VM.  (Un disco radice e 2 dischi aggiuntivi).
++
+image:redhat-openshift-ocpv-vgs-008.png["VM con 3 PVC"]
+
+. Controllare i volumi corrispondenti nel backend ONTAP .
++
+Il volume del disco radice è un volume flex-clone dello snapshot con l'immagine golden.  Gli altri 2 volumi per i 2 dischi aggiuntivi delle VM sono volumi FlexVol .
+
+. Accedere alla VM utilizzando lo strumento virtctl.
+. Formattare e montare i 2 dischi come mostrato di seguito:
++
+image:redhat-openshift-ocpv-vgs-009.png["Dischi VM"]
+
+
+
+
+
+== Passaggio 4: etichettare i dischi della VM per la protezione degli snapshot di gruppo
+
+Gli snapshot dei gruppi di volumi utilizzano selettori di etichette per identificare quali PVC appartengono insieme, garantendo che tutti i dischi VM correlati vengano acquisiti simultaneamente nello stesso momento.
+
+.Passi
+. Etichettare i PVC utilizzando la stessa chiave/valore e verificarli.
++
+[source, cli]
+----
+#oc label pvc fedora-vm1 consistencygroup=group1
+persistentvolumeclaim/fedora-vm1 labeled
+# oc label pvc dv-fedora-vm1-disk1-ulsgg2 consistencygroup=group1
+persistentvolumeclaim/dv-fedora-vm1-disk1-ulsgg2 labeled
+# oc label pvc dv-fedora-vm1-disk2-86oq76 consistencygroup=group1
+persistentvolumeclaim/dv-fedora-vm1-disk2-86oq76 labeled
+----
+. Controllare le etichette dei PVC.
++
+[source, cli]
+----
+# oc get pvc fedora-vm1 -o jsonpath='{.metadata.labels.consistencygroup'}
+group1
+# oc get pvc dv-fedora-vm1-disk1-ulsgg2 -o jsonpath='{.metadata.labels.consistencygroup'}
+group1
+# oc get pvc dv-fedora-vm1-disk2-86oq76 -o jsonpath='{.metadata.labels.consistencygroup'}
+group1
+----
+. Creare un VolumeGroupSnapshot che rilevi automaticamente tutti i PVC etichettati utilizzando la seguente definizione YAML.
++
+[source, yaml]
+----
+#vgs.yaml
+apiVersion: groupsnapshot.storage.k8s.io/v1beta1
+kind: VolumeGroupSnapshot
+metadata:
+  name: vgs1
+spec:
+  volumeGroupSnapshotClassName: trident-groupsnapshotclass
+  source:
+    selector:
+      matchLabels:
+        consistencygroup: group1
+----
++
+[source, cli]
+----
+# oc create -f vgs1.yaml
+volumegroupsnapshot.groupsnapshot.storage.k8s.io/vgs1 created
+----
++
+image:redhat-openshift-ocpv-vgs-010.png["VGS creato"]
+
++
+.Risultato
+Verrà creato uno snapshot di tutti i PVC con la coppia chiave/valore etichettata **consistencygroup: group1**.  Trident VolumeGroupSnapshots utilizza il gruppo di coerenza ONTAP nel backend ONTAP .
+
+
+
+
+NOTE: Trident VolumeGroupSnapshots utilizza il gruppo di coerenza (CG) ONTAP nel backend ONTAP .  Se si utilizza l'API REST, viene creato un CG con tutti i volumi appartenenti alla VM (raggruppati in base alle etichette), viene eseguito uno snapshot di ciascun volume in modo coerente e quindi il CG viene eliminato.  A seconda del momento, potresti essere in grado di vedere il gruppo di coerenza creato ed eliminato in ONTAP.
+
+L'immagine seguente mostra il gruppo di coerenza creato e poi eliminato in ONTAP:
+
+image:redhat-openshift-ocpv-vgs-011.png["Gruppo di coerenza ONTAP"]
+
+
+
+== Passaggio 5: ripristinare i dischi della VM dagli snapshot
+
+Questo passaggio convalida che gli snapshot possano ripristinare correttamente i dati della VM quando necessario.  Supponiamo di aver perso il `sample.txt` file da ciascuno dei due dischi dati.
+
+image:redhat-openshift-ocpv-vgs-012.png["file persi"]
+
+
+NOTE: Sebbene abbiamo creato uno snapshot di un gruppo di volumi come singola unità, possiamo eseguire il ripristino solo da uno snapshot individuale.
+
+Trident fornisce un rapido ripristino del volume in loco da uno snapshot utilizzando *TridentActionSnapshotRestore (TASR) CR*.  Questa CR funziona come un'azione Kubernetes imperativa e non persiste dopo il completamento dell'operazione.
+
+.Passi
+. Arrestare la VM.
+. Ripristinare il contenuto del primo disco/PVC con il relativo snapshot utilizzando lo YAML come mostrato di seguito.
++
+[source, yaml]
+----
+# cat tasr1.yaml
+apiVersion: trident.netapp.io/v1
+kind: TridentActionSnapshotRestore
+metadata:
+  name: trident-snap-disk1
+  namespace: default
+spec:
+  pvcName: dv-fedora-vm1-disk1-ulsgg2
+  volumeSnapshotName: snapshot-4d47c9f45423bfca625a0f1b6c5a5ec456ac59d3e583157be919bb7237317c65
+----
++
+[source, cli]
+----
+# oc create -f tasr1.yaml
+tridentactionsnapshotrestore.trident.netapp.io/trident-snap created
+----
+. Allo stesso modo, creare un altro oggetto TASR per il secondo disco utilizzando il PVC e il relativo snapshot.
++
+[source, yaml]
+----
+# cat tasr2.yaml
+apiVersion: trident.netapp.io/v1
+kind: TridentActionSnapshotRestore
+metadata:
+  name: trident-snap-disk2
+  namespace: default
+spec:
+  pvcName: dv-fedora-vm1-disk2-86oq76
+  volumeSnapshotName: snapshot-afb4c4833460e233c4e86f1108c921b86a6f4d0eb182e99e579081ff6f743f56
+----
++
+[source, cli]
+----
+# oc create -f tasr2.yaml
+----
+. Verificare che l'operazione di ripristino mostri lo stato di riuscita.
++
+image:redhat-openshift-ocpv-vgs-013.png["TASR ha avuto successo"]
+
+. Ora avvia la VM, accedi e verifica che il file sample.txt sia di nuovo sui dischi.
++
+image:redhat-openshift-ocpv-vgs-014.png["istantanee ripristinate"]
+
+

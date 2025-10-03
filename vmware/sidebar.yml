@@ -71,18 +71,58 @@ entries:
       url: "/vmware/vmw-vcf-viwld-principal-nfs.html"
   - title: Espandi VCF con spazio di archiviazione supplementare
     entries:
-    - title: Informazioni sull'espansione dello spazio di archiviazione
+    - title: Scopri come espandere lo spazio di archiviazione
       url: "/vmware/vmw-vcf-expand.html"
     - title: Espandi i domini di gestione con iSCSI
-      url: "/vmware/vmw-vcf-mgmt-supplemental-iscsi.html"
+      entries:
+      - title: Flusso di lavoro di distribuzione
+        url: "/vmware/vmw-vcf-mgmt-supplemental-iscsi.html"
+      - title: Requisiti di revisione
+        url: "/vmware/vmw-vcf-mgmt-supplemental-iscsi-requirements.html"
+      - title: Creare SVM e LIF
+        url: "/vmware/vmw-vcf-mgmt-supplemental-iscsi-svm-lifs.html"
+      - title: Configurare la rete
+        url: "/vmware/vmw-vcf-mgmt-supplemental-iscsi-network.html"
+      - title: Configurare l'archiviazione
+        url: "/vmware/vmw-vcf-mgmt-supplemental-iscsi-storage.html"
     - title: Espandi i domini di gestione con FC
       url: "/vmware/vmw-vcf-mgmt-supplemental-fc.html"
     - title: Espandi i domini del carico di lavoro VI con vVols iSCSI
-      url: "/vmware/vmw-vcf-viwld-supp-iscsi-vvols.html"
+      entries:
+      - title: Flusso di lavoro di distribuzione
+        url: "/vmware/vmw-vcf-viwld-supp-iscsi-vvols.html"
+      - title: Requisiti di revisione
+        url: "/vmware/vmw-vcf-viwld-supp-iscsi-vvols-requirements.html"
+      - title: Creare SVM e LIF
+        url: "/vmware/vmw-vcf-viwld-supp-iscsi-vvols-svm-lifs.html"
+      - title: Configurare la rete
+        url: "/vmware/vmw-vcf-viwld-supp-iscsi-vvols-network.html"
+      - title: Configurare l'archiviazione
+        url: "/vmware/vmw-vcf-viwld-supp-iscsi-vvols-storage.html"
     - title: Espandi i domini del carico di lavoro VI con vVols NFS
-      url: "/vmware/vmw-vcf-viwld-supp-nfs-vvols.html"
+      entries:
+      - title: Flusso di lavoro di distribuzione
+        url: "/vmware/vmw-vcf-viwld-supp-nfs-vvols.html"
+      - title: Requisiti di revisione
+        url: "/vmware/vmw-vcf-viwld-supp-nfs-vvols-requirements.html"
+      - title: Creare SVM e LIF
+        url: "/vmware/vmw-vcf-viwld-supp-nfs-vvols-svm-lifs.html"
+      - title: Configurare la rete
+        url: "/vmware/vmw-vcf-viwld-supp-nfs-vvols-network.html"
+      - title: Configurare l'archiviazione
+        url: "/vmware/vmw-vcf-viwld-supp-nfs-vvols-storage.html"
     - title: Espandi i domini del carico di lavoro VI con NVMe/TCP
-      url: "/vmware/vmw-vcf-viwld-supp-nvme.html"
+      entries:
+      - title: Flusso di lavoro di distribuzione
+        url: "/vmware/vmw-vcf-viwld-supp-nvme.html"
+      - title: Requisiti di revisione
+        url: "/vmware/vmw-vcf-viwld-supp-nvme-requirements.html"
+      - title: Creare SVM e LIF
+        url: "/vmware/vmw-vcf-viwld-supp-nvme-svm-lifs.html"
+      - title: Configurare la rete
+        url: "/vmware/vmw-vcf-viwld-supp-nvme-network.html"
+      - title: Configurare l'archiviazione
+        url: "/vmware/vmw-vcf-viwld-supp-nvme-storage.html"
     - title: Espandi i domini del carico di lavoro VI con FC
       url: "/vmware/vmw-vcf-viwld-supp-fc.html"
   - title: Proteggi VCF con SnapCenter

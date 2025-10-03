@@ -1,0 +1,173 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-viwld-supp-nvme-network.html 
+keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc, iscsi 
+summary: 'Configurare la rete per l"archiviazione NVMe su TCP (NVMe/TCP) sugli host ESXi in un dominio di carico di lavoro VI.  Creerai gruppi di porte distribuiti per il traffico NVMe, configurerai adattatori VMkernel su ciascun host ESXi e aggiungerai un adattatore NVMe/TCP per abilitare connettività affidabile e multipathing.' 
+---
+= Configurare la rete per NVMe/TCP su host ESXi in un dominio di carico di lavoro VCF VI
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurare la rete per l'archiviazione NVMe su TCP (NVMe/TCP) sugli host ESXi in un dominio di carico di lavoro VI.  Creerai gruppi di porte distribuiti per il traffico NVMe, configurerai adattatori VMkernel su ciascun host ESXi e aggiungerai un adattatore NVMe/TCP per abilitare connettività affidabile e multipathing.
+
+Eseguire i seguenti passaggi sul cluster del dominio del carico di lavoro VI utilizzando il client vSphere. In questo caso viene utilizzato vCenter Single Sign-On, quindi il client vSphere è comune sia al dominio di gestione che a quello del carico di lavoro.
+
+
+
+== Passaggio 1: creare gruppi di porte distribuiti per il traffico NVME/TCP
+
+Completare i seguenti passaggi per creare un nuovo gruppo di porte distribuito per ciascuna rete NVMe/TCP.
+
+.Passi
+. Dal client vSphere, accedere a *Inventario > Rete* per il dominio del carico di lavoro.  Passare allo switch distribuito esistente e scegliere l'azione per creare *Nuovo gruppo di porte distribuite...*.
++
+image:vmware-vcf-asa-022.png["Scegli di creare un nuovo gruppo di porte"]
+
++
+{nbsp}
+
+. Nella procedura guidata *Nuovo gruppo di porte distribuite*, inserisci un nome per il nuovo gruppo di porte e fai clic su *Avanti* per continuare.
+. Nella pagina *Configura impostazioni*, compila tutte le impostazioni. Se si utilizzano le VLAN, assicurarsi di fornire l'ID VLAN corretto. Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-023.png["Compila l'ID VLAN"]
+
++
+{nbsp}
+
+. Nella pagina *Pronto per il completamento*, rivedere le modifiche e fare clic su *Fine* per creare il nuovo gruppo di porte distribuite.
+. Ripetere questa procedura per creare un gruppo di porte distribuito per la seconda rete NVMe/TCP utilizzata e assicurarsi di aver immesso l'*ID VLAN* corretto.
+. Dopo aver creato entrambi i gruppi di porte, passare al primo gruppo di porte e selezionare l'azione *Modifica impostazioni...*.
++
+image:vmware-vcf-asa-077.png["DPG - modifica impostazioni"]
+
++
+{nbsp}
+
+. Nella pagina *Gruppo di porte distribuite - Modifica impostazioni*, vai su *Teaming e failover* nel menu a sinistra e fai clic su *uplink2* per spostarlo in basso a *Uplink non utilizzati*.
++
+image:vmware-vcf-asa-078.png["sposta uplink2 in non utilizzato"]
+
+. Ripetere questo passaggio per il secondo gruppo di porte NVMe/TCP. Questa volta, sposta *uplink1* in basso a *Uplink non utilizzati*.
++
+image:vmware-vcf-asa-079.png["sposta l'uplink 1 in non utilizzato"]
+
+
+
+
+
+== Passaggio 2: creare gli adattatori VMkernel su ciascun host ESXi
+
+Creare gli adattatori VMkernel su ciascun host ESXi nel dominio del carico di lavoro.
+
+.Passi
+. Dal client vSphere, passare a uno degli host ESXi nell'inventario del dominio del carico di lavoro.  Dalla scheda *Configura* seleziona *Schede VMkernel* e fai clic su *Aggiungi rete...* per iniziare.
++
+image:vmware-vcf-asa-030.png["Avvia la procedura guidata di aggiunta della rete"]
+
++
+{nbsp}
+
+. Nella finestra *Seleziona tipo di connessione*, seleziona *Scheda di rete VMkernel* e fai clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-008.png["Scegli la scheda di rete VMkernel"]
+
++
+{nbsp}
+
+. Nella pagina *Seleziona dispositivo di destinazione*, seleziona uno dei gruppi di porte distribuite per iSCSI creati in precedenza.
++
+image:vmware-vcf-asa-095.png["Scegli il gruppo di porte di destinazione"]
+
++
+{nbsp}
+
+. Nella pagina *Proprietà porta*, fare clic sulla casella *NVMe/TCP* e fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-096.png["Proprietà della porta VMkernel"]
+
++
+{nbsp}
+
+. Nella pagina *Impostazioni IPv4*, compilare *Indirizzo IP* e *Maschera di sottorete* e fornire un nuovo indirizzo IP del gateway (solo se necessario). Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-097.png["Impostazioni IPv4 di VMkernel"]
+
++
+{nbsp}
+
+. Rivedi le tue selezioni nella pagina *Pronto per il completamento* e fai clic su *Fine* per creare l'adattatore VMkernel.
++
+image:vmware-vcf-asa-098.png["Esaminare le selezioni VMkernel"]
+
++
+{nbsp}
+
+. Ripetere questo processo per creare un adattatore VMkernel per la seconda rete iSCSI.
+
+
+
+
+== Passaggio 3: aggiungere l'adattatore NVMe/TCP
+
+Ogni host ESXi nel cluster del dominio del carico di lavoro deve disporre di un adattatore software NVMe/TCP installato per ogni rete NVMe/TCP stabilita dedicata al traffico di archiviazione.
+
+Per installare gli adattatori NVMe/TCP e rilevare i controller NVMe, completare i seguenti passaggi:
+
+. Nel client vSphere, passare a uno degli host ESXi nel cluster del dominio del carico di lavoro.  Dalla scheda *Configura*, fare clic su *Schede di archiviazione* nel menu.
+. Dal menu a discesa *Aggiungi adattatore software*, seleziona *Aggiungi adattatore NVMe su TCP*.
++
+image:vmware-vcf-asa-099.png["Aggiungi adattatore NVMe/TCP"]
+
++
+{nbsp}
+
+. Nella finestra *Aggiungi adattatore software NVMe su TCP*, accedi al menu a discesa *Scheda di rete fisica* e seleziona la scheda di rete fisica corretta su cui abilitare l'adattatore NVMe.
++
+image:vmware-vcf-asa-100.png["Seleziona l'adattatore fisico"]
+
++
+{nbsp}
+
+. Ripetere questa procedura per la seconda rete assegnata al traffico NVMe/TCP, assegnando l'adattatore fisico corretto.
+. Selezionare uno degli adattatori NVMe/TCP appena installati.  Nella scheda *Controller*, seleziona *Aggiungi controller*.
++
+image:vmware-vcf-asa-101.png["Aggiungi controller"]
+
++
+{nbsp}
+
+. Nella finestra *Aggiungi controller*, seleziona la scheda *Automaticamente* e completa i seguenti passaggi.
++
+.. Immettere un indirizzo IP per una delle interfacce logiche SVM sulla stessa rete dell'adattatore fisico assegnato a questo adattatore NVMe/TCP.
+.. Fare clic sul pulsante *Scopri controller*.
+.. Dall'elenco dei controller rilevati, fare clic sulla casella di controllo per i due controller con indirizzi di rete allineati con questo adattatore NVMe/TCP.
+
+
+. Fare clic su *OK* per aggiungere i controller selezionati.
++
+image:vmware-vcf-asa-102.png["Scopri e aggiungi controller"]
+
++
+{nbsp}
+
+. Dopo alcuni secondi dovresti vedere lo spazio dei nomi NVMe apparire nella scheda Dispositivi.
++
+image:vmware-vcf-asa-103.png["Spazio dei nomi NVMe elencato sotto i dispositivi"]
+
++
+{nbsp}
+
+. Ripetere questa procedura per creare un adattatore NVMe/TCP per la seconda rete stabilita per il traffico NVMe/TCP.
+
+
+
+
+== Cosa succederà ora?
+
+Dopo aver configurato la rete,link:vmw-vcf-viwld-supp-nvme-storage.html["configurare l'archiviazione per NVMe vVols"] .

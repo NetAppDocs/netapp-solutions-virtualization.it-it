@@ -1,0 +1,153 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-mgmt-supplemental-iscsi-storage.html 
+keywords: netapp, vmware, cloud, foundation, vcf, iscsi, create, svm, lif 
+summary: Configurare uno storage iSCSI supplementare per espandere i domini di gestione di VMware Cloud Foundation.  Distribuirai gli strumenti ONTAP , configurerai un datastore iSCSI sul dominio di gestione e migrerai le VM di gestione al nuovo datastore. 
+---
+= Configurare l'archiviazione iSCSI in un dominio di gestione VCF utilizzando gli strumenti ONTAP
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurare uno storage iSCSI supplementare per espandere i domini di gestione di VMware Cloud Foundation.  Distribuirai gli strumenti ONTAP , configurerai un datastore iSCSI sul dominio di gestione e migrerai le VM di gestione al nuovo datastore.
+
+Eseguire i seguenti passaggi sul cluster del dominio di gestione VCF utilizzando il client vSphere.
+
+
+
+== Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
+
+Gli ONTAP tools for VMware vSphere (OTV) vengono distribuiti come appliance VM e forniscono un'interfaccia utente vCenter integrata per la gestione dello storage ONTAP .
+
+.Passi
+. Ottieni l'immagine OVA degli strumenti ONTAP dalink:https://mysupport.netapp.com/site/products/all/details/otv/downloads-tab["Sito di supporto NetApp"] e scaricarlo in una cartella locale.
+. Accedere all'appliance vCenter per il dominio di gestione VCF.
+. Dall'interfaccia dell'appliance vCenter, fare clic con il pulsante destro del mouse sul cluster di gestione e selezionare *Distribuisci modello OVF…*
++
+image:vmware-vcf-aff-021.png["Distribuisci modello OVF..."]
+
++
+{nbsp}
+
+. Nella procedura guidata *Distribuisci modello OVF*, fare clic sul pulsante di opzione *File locale* e selezionare il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
++
+image:vmware-vcf-aff-022.png["Seleziona il file OVA"]
+
++
+{nbsp}
+
+. Per i passaggi da 2 a 5 della procedura guidata, seleziona un nome e una cartella per la VM, seleziona la risorsa di elaborazione, rivedi i dettagli e accetta il contratto di licenza.
+. Per la posizione di archiviazione dei file di configurazione e del disco, selezionare il datastore vSAN del cluster del dominio di gestione VCF.
++
+image:vmware-vcf-aff-023.png["Seleziona il file OVA"]
+
++
+{nbsp}
+
+. Nella pagina *Seleziona rete*, seleziona la rete utilizzata per la gestione del traffico.
++
+image:vmware-vcf-aff-024.png["Seleziona la rete"]
+
++
+{nbsp}
+
+. Nella pagina *Personalizza modello*, inserisci tutte le informazioni richieste:
++
+** Password da utilizzare per l'accesso amministrativo agli strumenti ONTAP .
+** Indirizzo IP del server NTP.
+** Password dell'account di manutenzione degli strumenti ONTAP .
+** Password del database Derby degli strumenti ONTAP .
+** Non selezionare la casella per *Abilitare VMware Cloud Foundation (VCF)*.  La modalità VCF non è richiesta per distribuire storage supplementare.
+** FQDN o indirizzo IP dell'appliance vCenter per il *dominio del carico di lavoro VI*
+** Credenziali per l'appliance vCenter del *VI Workload Domain*
+** Proprietà di rete richieste.
+
+
+. Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-aff-025.png["Personalizza il modello OTV 1"]
+
++
+image:vmware-vcf-asa-035.png["Personalizza il modello OTV 2"]
+
+. Rivedere tutte le informazioni nella pagina *Pronto per il completamento* e fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
+
+
+
+
+== Passaggio 2: aggiungere un sistema di archiviazione
+
+Per aggiungere un sistema di archiviazione utilizzando gli strumenti ONTAP , procedere come segue.
+
+.Passi
+. Nel client vSphere, accedere al menu principale e selezionare *Strumenti NetApp ONTAP *.
++
+image:vmware-vcf-asa-014.png["Vai agli strumenti ONTAP"]
+
+. Una volta in *Strumenti ONTAP *, dalla pagina Introduzione (o da *Sistemi di archiviazione*), fare clic su *Aggiungi* per aggiungere un nuovo sistema di archiviazione.
++
+image:vmware-vcf-asa-015.png["Aggiungi sistema di archiviazione"]
+
++
+{nbsp}
+
+. Fornire l'indirizzo IP e le credenziali del sistema di archiviazione ONTAP e fare clic su *Aggiungi*.
++
+image:vmware-vcf-asa-016.png["Fornire IP e credenziali del sistema ONTAP"]
+
++
+{nbsp}
+
+. Fare clic su *Sì* per autorizzare il certificato del cluster e aggiungere il sistema di archiviazione.
++
+image:vmware-vcf-asa-017.png["Autorizza il certificato del cluster"]
+
+
+
+
+
+== Facoltativo: migrare le VM di gestione al datastore iSCSI
+
+Nei casi in cui si preferisce utilizzare l'archiviazione ONTAP per proteggere le VM di gestione VCF, utilizzare vMotion per migrare le VM al datastore iSCSI appena creato.
+
+.Passi
+. Da vSphere Client, accedere al cluster del dominio di gestione e fare clic sulla scheda *VM*.
+. Selezionare le VM da migrare nel datastore iSCSI, fare clic con il pulsante destro del mouse e selezionare *Migra..*.
++
+image:vmware-vcf-asa-018.png["Seleziona le VM da migrare"]
+
++
+{nbsp}
+
+. Nella procedura guidata *Macchine virtuali - Migrazione*, seleziona *Modifica solo archiviazione* come tipo di migrazione e fai clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-019.png["Seleziona il tipo di migrazione"]
+
++
+{nbsp}
+
+. Nella pagina *Seleziona storage*, seleziona il datastore iSCSi e seleziona *Avanti* per continuare.
++
+image:vmware-vcf-asa-020.png["Seleziona il datastore di destinazione"]
+
++
+{nbsp}
+
+. Rivedi le selezioni e fai clic su *Fine* per avviare la migrazione.
+. Lo stato del trasferimento può essere visualizzato nel riquadro *Attività recenti*.
++
+image:vmware-vcf-asa-021.png["Riquadro delle attività recenti del client vSphere"]
+
+
+
+
+
+== Informazioni aggiuntive
+
+* Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"^] .
+* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us-en/vmware-cis/vcf.html["Documentazione di VMware Cloud Foundation"^] .
+* Per informazioni sull'utilizzo di datastore iSCSI VMFS con VMware, fare riferimento alink:vmw-vmfs-iscsi.html["vSphere VMFS datastore - backend di archiviazione iSCSI con ONTAP"] .
+* Per demo video di questa soluzione, fare riferimento alink:../videos/vmware-videos.html#vmware-datastore-provisioning-with-ontap["Provisioning del datastore VMware"] .
+

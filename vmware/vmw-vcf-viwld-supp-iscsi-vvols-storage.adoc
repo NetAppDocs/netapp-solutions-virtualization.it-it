@@ -1,0 +1,194 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-viwld-supp-iscsi-vvols-storage.html 
+keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc, iscsi 
+summary: 'Configurare l"archiviazione iSCSI vVols in un dominio di carico di lavoro VI utilizzando gli strumenti ONTAP .  Distribuirai gli ONTAP tools for VMware vSphere, registrerai un sistema di storage, creerai un profilo di capacità di storage e fornirai un datastore vVols nel client vSphere.' 
+---
+= Configurare l'archiviazione iSCSI vVols in un dominio di carico di lavoro VCF VI utilizzando gli strumenti ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurare l'archiviazione iSCSI vVols in un dominio di carico di lavoro VI utilizzando gli strumenti ONTAP .  Distribuirai gli ONTAP tools for VMware vSphere, registrerai un sistema di storage, creerai un profilo di capacità di storage e fornirai un datastore vVols nel client vSphere.
+
+
+
+== Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
+
+Per i domini del carico di lavoro VI, gli strumenti ONTAP vengono installati nel cluster di gestione VCF ma registrati con il vCenter associato al dominio del carico di lavoro VI.
+
+Gli ONTAP tools for VMware vSphere vengono distribuiti come appliance VM e forniscono un'interfaccia utente vCenter integrata per la gestione dello storage ONTAP .
+
+.Passi
+. Ottieni l'immagine OVA degli strumenti ONTAP dalink:https://mysupport.netapp.com/site/products/all/details/otv/downloads-tab["Sito di supporto NetApp"] e scaricarlo in una cartella locale.
+. Accedere all'appliance vCenter per il dominio di gestione VCF.
+. Dall'interfaccia dell'appliance vCenter, fare clic con il pulsante destro del mouse sul cluster di gestione e selezionare *Distribuisci modello OVF…*
++
+image:vmware-vcf-aff-021.png["Distribuisci modello OVF..."]
+
++
+{nbsp}
+
+. Nella procedura guidata *Distribuisci modello OVF*, fare clic sul pulsante di opzione *File locale* e selezionare il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
++
+image:vmware-vcf-aff-022.png["Seleziona il file OVA"]
+
++
+{nbsp}
+
+. Per i passaggi da 2 a 5 della procedura guidata, seleziona un nome e una cartella per la VM, seleziona la risorsa di elaborazione, rivedi i dettagli e accetta il contratto di licenza.
+. Per la posizione di archiviazione dei file di configurazione e del disco, selezionare il datastore vSAN del cluster del dominio di gestione VCF.
++
+image:vmware-vcf-aff-023.png["Seleziona il file OVA"]
+
++
+{nbsp}
+
+. Nella pagina *Seleziona rete*, seleziona la rete utilizzata per la gestione del traffico.
++
+image:vmware-vcf-aff-024.png["Seleziona la rete"]
+
++
+{nbsp}
+
+. Nella pagina *Personalizza modello*, inserisci tutte le informazioni richieste:
++
+** Password da utilizzare per l'accesso amministrativo agli strumenti ONTAP .
+** Indirizzo IP del server NTP.
+** Password dell'account di manutenzione degli strumenti ONTAP .
+** Password del database Derby degli strumenti ONTAP .
+** Non selezionare la casella per *Abilitare VMware Cloud Foundation (VCF)*.  La modalità VCF non è richiesta per distribuire storage supplementare.
+** FQDN o indirizzo IP dell'appliance vCenter per il *dominio del carico di lavoro VI*
+** Credenziali per l'appliance vCenter del *VI Workload Domain*
+** Proprietà di rete richieste.
+
+
+. Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-aff-025.png["Personalizza il modello OTV 1"]
+
++
+image:vmware-vcf-asa-035.png["Personalizza il modello OTV 2"]
+
+. Rivedere tutte le informazioni nella pagina *Pronto per il completamento* e fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
+
+
+
+
+== Passaggio 2: aggiungere un sistema di archiviazione
+
+Per aggiungere un sistema di archiviazione utilizzando gli strumenti ONTAP , procedere come segue.
+
+
+NOTE: vVol richiede le credenziali del cluster ONTAP anziché le credenziali SVM. Per ulteriori informazioni, fare riferimento alla documentazione degli ONTAP tools for VMware vSphere : https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere/configure/task_add_storage_systems.html["Aggiungere sistemi di archiviazione"^] .
+
+.Passi
+. Nel client vSphere, accedere al menu principale e selezionare *Strumenti NetApp ONTAP *.
++
+image:vmware-vcf-asa-014.png["Vai agli strumenti ONTAP"]
+
+. Una volta in *Strumenti ONTAP *, dalla pagina Introduzione (o da *Sistemi di archiviazione*), fare clic su *Aggiungi* per aggiungere un nuovo sistema di archiviazione.
++
+image:vmware-vcf-asa-015.png["Aggiungi sistema di archiviazione"]
+
++
+{nbsp}
+
+. Fornire l'indirizzo IP e le credenziali del sistema di archiviazione ONTAP e fare clic su *Aggiungi*.
++
+image:vmware-vcf-asa-016.png["Fornire IP e credenziali del sistema ONTAP"]
+
++
+{nbsp}
+
+. Fare clic su *Sì* per autorizzare il certificato del cluster e aggiungere il sistema di archiviazione.
++
+image:vmware-vcf-asa-017.png["Autorizza il certificato del cluster"]
+
+
+
+
+
+== Passaggio 3: creare un profilo di capacità di archiviazione negli strumenti ONTAP
+
+I profili di capacità di archiviazione descrivono le funzionalità fornite da un array di archiviazione o da un sistema di archiviazione.  Includono definizioni di qualità del servizio e vengono utilizzate per selezionare i sistemi di archiviazione che soddisfano i parametri definiti nel profilo.  È possibile utilizzare uno dei profili forniti oppure crearne di nuovi.
+
+.Passi
+. Negli strumenti ONTAP , seleziona *Profilo capacità di archiviazione* dal menu a sinistra e poi premi *Crea*.
++
+image:vmware-vcf-asa-039.png["Profilo della capacità di archiviazione"]
+
+. Nella procedura guidata *Crea profilo di capacità di archiviazione*, immettere un nome e una descrizione del profilo e fare clic su *Avanti*.
++
+image:vmware-asa-010.png["Aggiungi nome per SCP"]
+
+. Selezionare il tipo di piattaforma e specificare che il sistema di archiviazione deve essere un array SAN All-Flash, impostare *Asymmetric* su false.
++
+image:vmware-asa-011.png["Piattaforma per SCP"]
+
+. Seleziona il protocollo che preferisci oppure seleziona *Qualsiasi* per consentire tutti i protocolli possibili.
+. Fare clic su *Avanti* per continuare.
++
+image:vmware-asa-012.png["Protocollo per SCP"]
+
+. La pagina *prestazioni* consente di impostare la qualità del servizio sotto forma di IOP minimi e massimi consentiti.
++
+image:vmware-asa-013.png["QoS per SCP"]
+
+. Completare la pagina *attributi di archiviazione* selezionando l'efficienza di archiviazione, la prenotazione dello spazio, la crittografia e qualsiasi criterio di suddivisione in livelli, secondo necessità.
++
+image:vmware-asa-014.png["Attributi per SCP"]
+
+. Rivedi il riepilogo e clicca su *Fine* per creare il profilo.
++
+image:vmware-vcf-asa-040.png["Riepilogo per SCP"]
+
+
+
+
+
+== Passaggio 4: creare un datastore vVols negli strumenti ONTAP
+
+Per creare un datastore vVols negli strumenti ONTAP , completare i seguenti passaggi.
+
+.Passi
+. Negli strumenti ONTAP , selezionare *Panoramica* e dalla scheda *Introduzione* fare clic su *Provisioning* per avviare la procedura guidata.
++
+image:vmware-vcf-asa-041.png["Fornitura di datastore"]
+
+. Nella pagina *Generale* della procedura guidata Nuovo datastore, selezionare la destinazione del data center o del cluster vSphere.
+. Selezionare * vVols* come tipo di datastore, immettere un nome per il datastore e selezionare *iSCSI* come protocollo.
+. Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-042.png["Pagina generale"]
+
+. Nella pagina *Sistema di archiviazione*, seleziona un profilo di capacità di archiviazione, il sistema di archiviazione e la VM.
+. Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-043.png["Sistema di archiviazione"]
+
+. Nella pagina *Attributi di archiviazione*, seleziona l'opzione per creare un nuovo volume per il datastore e immetti gli attributi di archiviazione del volume che desideri creare.
+. Fare clic su *Aggiungi* per creare il volume e quindi su *Avanti* per continuare.
++
+image:vmware-vcf-asa-044.png["Attributi di archiviazione"]
+
+. Rivedere il riepilogo e fare clic su *Fine* per avviare il processo di creazione del datastore vVol.
++
+image:vmware-vcf-asa-045.png["Pagina di riepilogo"]
+
+
+
+
+
+== Informazioni aggiuntive
+
+* Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"^] .
+* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf.html["Documentazione di VMware Cloud Foundation"^] .
+* Per informazioni sull'utilizzo di datastore iSCSI VMFS con VMware, fare riferimento alink:vmw-vmfs-iscsi.html["vSphere VMFS datastore - backend di archiviazione iSCSI con ONTAP"] .
+* Per demo video di questa soluzione, fare riferimento alink:../videos/vmware-videos.html#vmware-datastore-provisioning-with-ontap["Provisioning del datastore VMware"] .
+

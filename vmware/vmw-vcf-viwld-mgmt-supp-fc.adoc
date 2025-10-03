@@ -60,7 +60,7 @@ NOTE: Utilizzare l'interfaccia logica FC SVM nella configurazione della zona anz
 
 NetApp consiglia il multipath per le LUN FC.
 
-Per informazioni complete sulla configurazione del canale in fibra sui sistemi di archiviazione ONTAP , fare riferimento a https://docs.netapp.com/us-en/ontap/san-management/index.html["Gestione dello storage SAN"] nella documentazione ONTAP 9.
+Per informazioni complete sulla configurazione di Fibre Channel sui sistemi di archiviazione ONTAP , fare riferimento a https://docs.netapp.com/us-en/ontap/san-management/index.html["Gestione dello storage SAN"] nella documentazione ONTAP 9.
 
 Per ulteriori informazioni sull'utilizzo di VMFS con sistemi di archiviazione ONTAP , fare riferimento alink:vmw-vmfs-deploy.html["Guida alla distribuzione per VMFS"] .
 

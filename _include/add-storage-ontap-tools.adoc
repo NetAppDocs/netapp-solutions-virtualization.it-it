@@ -1,0 +1,28 @@
+= 
+:allow-uri-read: 
+
+
+.Passi
+. Nel client vSphere, accedere al menu principale e selezionare *Strumenti NetApp ONTAP *.
++
+image:vmware-vcf-asa-014.png["Vai agli strumenti ONTAP"]
+
+. Una volta in *Strumenti ONTAP *, dalla pagina Introduzione (o da *Sistemi di archiviazione*), fare clic su *Aggiungi* per aggiungere un nuovo sistema di archiviazione.
++
+image:vmware-vcf-asa-015.png["Aggiungi sistema di archiviazione"]
+
++
+{nbsp}
+
+. Fornire l'indirizzo IP e le credenziali del sistema di archiviazione ONTAP e fare clic su *Aggiungi*.
++
+image:vmware-vcf-asa-016.png["Fornire IP e credenziali del sistema ONTAP"]
+
++
+{nbsp}
+
+. Fare clic su *Sì* per autorizzare il certificato del cluster e aggiungere il sistema di archiviazione.
++
+image:vmware-vcf-asa-017.png["Autorizza il certificato del cluster"]
+
+

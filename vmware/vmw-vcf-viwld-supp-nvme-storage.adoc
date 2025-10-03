@@ -1,0 +1,61 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-viwld-supp-nvme-storage.html 
+keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc, iscsi 
+summary: 'Configurare l"archiviazione vVols NVMe su TCP (NVMe/TCP) in un dominio di carico di lavoro VI.  Distribuirai gli strumenti ONTAP , registrerai un sistema di storage, creerai un profilo di capacità di storage e fornirai un datastore vVols nel client vSphere.' 
+---
+= Configurare l'archiviazione NVMe/TCP vVols in un dominio di carico di lavoro VCF VI
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurare l'archiviazione NVMe/TCP vVols in un dominio di carico di lavoro VMware Cloud Foundation VI.  Distribuirai gli strumenti ONTAP , registrerai un sistema di storage, creerai un profilo di capacità di storage e fornirai un datastore vVols nel client vSphere.
+
+.Passi
+. Nel client vSphere, passare a uno degli host ESXi nel cluster del dominio del carico di lavoro. Dal menu *Azioni* selezionare *Archiviazione > Nuovo datastore...*.
++
+image:vmware-vcf-asa-104.png["Aggiungi adattatore NVMe/TCP"]
+
++
+{nbsp}
+
+. Nella procedura guidata *Nuovo datastore*, selezionare *VMFS* come tipo. Fare clic su *Avanti* per continuare.
+. Nella pagina *Selezione nome e dispositivo*, specificare un nome per il datastore e selezionare lo spazio dei nomi NVMe dall'elenco dei dispositivi disponibili.
++
+image:vmware-vcf-asa-105.png["Selezione del nome e del dispositivo"]
+
++
+{nbsp}
+
+. Nella pagina *Versione VMFS*, selezionare la versione di VMFS per il datastore.
+. Nella pagina *Configurazione partizione*, apportare le modifiche desiderate allo schema di partizione predefinito. Fare clic su *Avanti* per continuare.
++
+image:vmware-vcf-asa-106.png["Configurazione della partizione NVMe"]
+
++
+{nbsp}
+
+. Nella pagina *Pronto per il completamento*, rivedere il riepilogo e fare clic su *Fine* per creare il datastore.
+. Passare al nuovo datastore nell'inventario e fare clic sulla scheda *Host*. Se configurati correttamente, tutti gli host ESXi nel cluster dovrebbero essere elencati e avere accesso al nuovo datastore.
++
+image:vmware-vcf-asa-107.png["Host connessi al datastore"]
+
++
+{nbsp}
+
+
+
+
+
+== Informazioni aggiuntive
+
+* Per ulteriori informazioni sulla configurazione SAN per la ridondanza, fare riferimento alink:https://docs.netapp.com/us-en/ontap/san-config/index.html["Riferimento alla configurazione SAN NetApp"^] .
+* Per ulteriori informazioni sulle considerazioni di progettazione NVMe per i sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap/nvme/support-limitations.html["Configurazione, supporto e limitazioni NVMe"^] .
+* Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"^] .
+* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf.html["Documentazione di VMware Cloud Foundation"^] .
+

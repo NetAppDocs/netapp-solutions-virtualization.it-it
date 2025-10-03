@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-viwld-supp-iscsi-vvols-requirements.html 
+keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc, iscsi 
+summary: 'Per distribuire iSCSI vVols in un dominio di carico di lavoro VMware Cloud Foundation VI, è necessario un sistema di archiviazione ONTAP AFF o ASA completamente configurato, un dominio di gestione VCF completato e un dominio di carico di lavoro VI esistente.  Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per garantire un"integrazione di storage affidabile e ad alte prestazioni.' 
+---
+= Requisiti di distribuzione per iSCSI vVols in un dominio di carico di lavoro VI
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per distribuire iSCSI vVols in un dominio di carico di lavoro VMware Cloud Foundation VI.  È necessario un sistema di archiviazione ONTAP AFF o ASA completamente configurato, un dominio di gestione VCF completato e un dominio di carico di lavoro VI esistente.
+
+
+
+== Requisiti infrastrutturali
+
+Assicurarsi che i seguenti componenti e configurazioni siano presenti.
+
+* Un sistema di archiviazione ONTAP AFF o ASA con porte dati fisiche su switch Ethernet dedicate al traffico di archiviazione.
+* La distribuzione del dominio di gestione VCF è completa e il client vSphere è accessibile.
+* In precedenza è stato distribuito un dominio di carico di lavoro VI.
+
+
+
+
+== Progettazione di rete iSCSI consigliata
+
+È necessario configurare progetti di rete completamente ridondanti per iSCSI.  Il diagramma seguente illustra un esempio di configurazione ridondante.  Fornisce tolleranza agli errori per sistemi di archiviazione, switch, adattatori di rete e sistemi host.  Per ulteriori informazioni, fare riferimento a NetApplink:https://docs.netapp.com/us-en/ontap/san-config/index.html["Riferimento alla configurazione SAN"^] .
+
+image:vmware-vcf-asa-074.png["Progettazione di rete NVMe-tcp"]
+
+{nbsp}
+
+Per il multipathing e il failover su più percorsi, creare almeno due LIF per nodo di archiviazione in reti Ethernet separate per tutte le SVM nelle configurazioni iSCSI.
+
+
+NOTE: Nei casi in cui più adattatori VMkernel sono configurati sulla stessa rete IP, utilizzare il binding delle porte iSCSI software sugli host ESXi per garantire il bilanciamento del carico tra gli adattatori. Fare riferimento all'articolo della Knowledge Baselink:https://knowledge.broadcom.com/external/article?legacyId=2038869["Considerazioni sull'utilizzo del binding delle porte iSCSI software in ESX/ESXi"^] .
+
+
+
+== Cosa succederà ora?
+
+Dopo aver esaminato i requisiti di distribuzione,link:vmw-vcf-viwld-supp-iscsi-vvols-svm-lifs.html["creare SVM e LIF"] .
