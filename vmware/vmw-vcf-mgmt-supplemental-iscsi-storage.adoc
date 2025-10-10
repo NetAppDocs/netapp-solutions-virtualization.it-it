@@ -26,33 +26,37 @@ Gli ONTAP tools for VMware vSphere (OTV) vengono distribuiti come appliance VM e
 . Accedere all'appliance vCenter per il dominio di gestione VCF.
 . Dall'interfaccia dell'appliance vCenter, fare clic con il pulsante destro del mouse sul cluster di gestione e selezionare *Distribuisci modello OVF…*
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-021.png["Distribuisci modello OVF..."]
 
+====
+. Nella procedura guidata *Distribuisci modello OVF*, fai clic sul pulsante di opzione *File locale* e seleziona il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
 +
-{nbsp}
-
-. Nella procedura guidata *Distribuisci modello OVF*, fare clic sul pulsante di opzione *File locale* e selezionare il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
-+
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-022.png["Seleziona il file OVA"]
 
-+
-{nbsp}
-
+====
 . Per i passaggi da 2 a 5 della procedura guidata, seleziona un nome e una cartella per la VM, seleziona la risorsa di elaborazione, rivedi i dettagli e accetta il contratto di licenza.
 . Per la posizione di archiviazione dei file di configurazione e del disco, selezionare il datastore vSAN del cluster del dominio di gestione VCF.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-023.png["Seleziona il file OVA"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Seleziona rete*, seleziona la rete utilizzata per la gestione del traffico.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-024.png["Seleziona la rete"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Personalizza modello*, inserisci tutte le informazioni richieste:
 +
 ** Password da utilizzare per l'accesso amministrativo agli strumenti ONTAP .
@@ -67,12 +71,15 @@ image:vmware-vcf-aff-024.png["Seleziona la rete"]
 
 . Fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-025.png["Personalizza il modello OTV 1"]
 
-+
 image:vmware-vcf-asa-035.png["Personalizza il modello OTV 2"]
 
-. Rivedere tutte le informazioni nella pagina *Pronto per il completamento* e fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
+====
+. Esaminare tutte le informazioni nella pagina *Pronto per il completamento*, quindi fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
 
 
 
@@ -84,26 +91,36 @@ Per aggiungere un sistema di archiviazione utilizzando gli strumenti ONTAP , pro
 .Passi
 . Nel client vSphere, accedere al menu principale e selezionare *Strumenti NetApp ONTAP *.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-014.png["Vai agli strumenti ONTAP"]
 
+====
 . Una volta in *Strumenti ONTAP *, dalla pagina Introduzione (o da *Sistemi di archiviazione*), fare clic su *Aggiungi* per aggiungere un nuovo sistema di archiviazione.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-015.png["Aggiungi sistema di archiviazione"]
 
-+
-{nbsp}
-
+====
 . Fornire l'indirizzo IP e le credenziali del sistema di archiviazione ONTAP e fare clic su *Aggiungi*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-016.png["Fornire IP e credenziali del sistema ONTAP"]
 
-+
-{nbsp}
-
+====
 . Fare clic su *Sì* per autorizzare il certificato del cluster e aggiungere il sistema di archiviazione.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-017.png["Autorizza il certificato del cluster"]
 
+====
 
 
 
@@ -116,30 +133,37 @@ Nei casi in cui si preferisce utilizzare l'archiviazione ONTAP per proteggere le
 . Da vSphere Client, accedere al cluster del dominio di gestione e fare clic sulla scheda *VM*.
 . Selezionare le VM da migrare nel datastore iSCSI, fare clic con il pulsante destro del mouse e selezionare *Migra..*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-018.png["Seleziona le VM da migrare"]
 
-+
-{nbsp}
-
+====
 . Nella procedura guidata *Macchine virtuali - Migrazione*, seleziona *Modifica solo archiviazione* come tipo di migrazione e fai clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-019.png["Seleziona il tipo di migrazione"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Seleziona storage*, seleziona il datastore iSCSi e seleziona *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-020.png["Seleziona il datastore di destinazione"]
 
-+
-{nbsp}
-
+====
 . Rivedi le selezioni e fai clic su *Fine* per avviare la migrazione.
 . Lo stato del trasferimento può essere visualizzato nel riquadro *Attività recenti*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-021.png["Riquadro delle attività recenti del client vSphere"]
 
+====
 
 
 

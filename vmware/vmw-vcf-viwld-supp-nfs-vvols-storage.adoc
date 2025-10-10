@@ -29,33 +29,37 @@ Gli ONTAP tools for VMware vSphere vengono distribuiti come appliance VM e forni
 . Accedere all'appliance vCenter per il dominio di gestione VCF.
 . Dall'interfaccia dell'appliance vCenter, fare clic con il pulsante destro del mouse sul cluster di gestione e selezionare *Distribuisci modello OVF…*
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-021.png["Distribuisci modello OVF..."]
 
+====
+. Nella procedura guidata *Distribuisci modello OVF*, fai clic sul pulsante di opzione *File locale* e seleziona il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
 +
-{nbsp}
-
-. Nella procedura guidata *Distribuisci modello OVF*, fare clic sul pulsante di opzione *File locale* e selezionare il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
-+
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-022.png["Seleziona il file OVA"]
 
-+
-{nbsp}
-
+====
 . Per i passaggi da 2 a 5 della procedura guidata, seleziona un nome e una cartella per la VM, seleziona la risorsa di elaborazione, rivedi i dettagli e accetta il contratto di licenza.
 . Per la posizione di archiviazione dei file di configurazione e del disco, selezionare il datastore vSAN del cluster del dominio di gestione VCF.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-023.png["Seleziona il file OVA"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Seleziona rete*, seleziona la rete utilizzata per la gestione del traffico.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-024.png["Seleziona la rete"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Personalizza modello*, inserisci tutte le informazioni richieste:
 +
 ** Password da utilizzare per l'accesso amministrativo agli strumenti ONTAP .
@@ -70,12 +74,15 @@ image:vmware-vcf-aff-024.png["Seleziona la rete"]
 
 . Fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-025.png["Personalizza il modello OTV 1"]
 
-+
 image:vmware-vcf-asa-035.png["Personalizza il modello OTV 2"]
 
-. Rivedere tutte le informazioni nella pagina *Pronto per il completamento* e fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
+====
+. Esaminare tutte le informazioni nella pagina *Pronto per il completamento*, quindi fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
 
 
 
@@ -90,26 +97,36 @@ NOTE: vVol richiede le credenziali del cluster ONTAP anziché le credenziali SVM
 .Passi
 . Nel client vSphere, accedere al menu principale e selezionare *Strumenti NetApp ONTAP *.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-014.png["Vai agli strumenti ONTAP"]
 
+====
 . Una volta in *Strumenti ONTAP *, dalla pagina Introduzione (o da *Sistemi di archiviazione*), fare clic su *Aggiungi* per aggiungere un nuovo sistema di archiviazione.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-015.png["Aggiungi sistema di archiviazione"]
 
-+
-{nbsp}
-
+====
 . Fornire l'indirizzo IP e le credenziali del sistema di archiviazione ONTAP e fare clic su *Aggiungi*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-016.png["Fornire IP e credenziali del sistema ONTAP"]
 
-+
-{nbsp}
-
+====
 . Fare clic su *Sì* per autorizzare il certificato del cluster e aggiungere il sistema di archiviazione.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-017.png["Autorizza il certificato del cluster"]
 
+====
 
 
 
@@ -120,6 +137,13 @@ Completare i seguenti passaggi per distribuire un datastore ONTAP in esecuzione 
 
 .Passi
 . Negli strumenti ONTAP selezionare *Panoramica* e dalla scheda *Introduzione* fare clic su *Provisioning* per avviare la procedura guidata.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-asa-041.png["Fornitura di datastore"]
+
+====
 . Nella pagina *Generale* della procedura guidata Nuovo datastore, selezionare la destinazione del data center o del cluster vSphere.
 . Selezionare *NFS* come tipo di datastore, immettere un nome per il datastore e selezionare il protocollo.
 . Scegliere se utilizzare volumi FlexGroup e se utilizzare un file di capacità di archiviazione per il provisioning.
@@ -128,9 +152,37 @@ Completare i seguenti passaggi per distribuire un datastore ONTAP in esecuzione 
 
 NOTE: Selezionando *Distribuisci i dati del datastore nel cluster*, il volume sottostante verrà creato come volume FlexGroup , il che impedisce l'utilizzo dei profili di capacità di archiviazione. Fare riferimento a https://docs.netapp.com/us-en/ontap/flexgroup/supported-unsupported-config-concept.html["Configurazioni supportate e non supportate per i volumi FlexGroup"^] per ulteriori informazioni sull'utilizzo di FlexGroup Volumes.
 
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-042.png["Pagina generale"]
+
+====
 . Nella pagina *Sistema di archiviazione*, selezionare un profilo di capacità di archiviazione, il sistema di archiviazione e l'SVM. Fare clic su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-043.png["Sistema di archiviazione"]
+
+====
 . Nella pagina *Attributi di archiviazione*, seleziona l'aggregato da utilizzare, quindi fai clic su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-044.png["Attributi di archiviazione"]
+
+====
 . Rivedere il *Riepilogo* e fare clic su *Fine* per iniziare a creare il datastore NFS.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-045.png["Riepilogo e conclusione della revisione"]
+
+====
 
 
 
@@ -141,14 +193,56 @@ Per creare un datastore vVols negli strumenti ONTAP , completare i seguenti pass
 
 .Passi
 . Negli strumenti ONTAP , selezionare *Panoramica* e dalla scheda *Introduzione* fare clic su *Provisioning* per avviare la procedura guidata.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-asa-041.png["Fornitura di datastore"]
+
+====
 . Nella pagina *Generale* della procedura guidata Nuovo datastore, selezionare la destinazione del data center o del cluster vSphere.
 . Selezionare * vVols* come tipo di datastore, immettere un nome per il datastore e selezionare *NFS* come protocollo.
 . Fare clic su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-046.png["Pagina generale"]
+
+====
 . Nella pagina *Sistema di archiviazione*, selezionare un profilo di capacità di archiviazione, il sistema di archiviazione e l'SVM.
 . Fare clic su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-043.png["Sistema di archiviazione"]
+
+====
 . Nella pagina *Attributi di archiviazione*, seleziona *Crea nuovi volumi* e immetti gli attributi di archiviazione del volume da creare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-047.png["Attributi di archiviazione"]
+
+====
 . Fare clic su *Aggiungi* per creare il volume e quindi su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-048.png["Attributi di archiviazione - Avanti"]
+
+====
 . Rivedere la pagina *Riepilogo* e fare clic su *Fine* per avviare il processo di creazione del datastore vVol.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-049.png["Pagina di riepilogo"]
+
+====
 
 
 

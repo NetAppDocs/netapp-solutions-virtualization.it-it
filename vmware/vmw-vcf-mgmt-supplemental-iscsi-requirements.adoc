@@ -14,7 +14,7 @@ summary: 'Esaminare i requisiti per l"aggiunta di un datastore iSCSI come storag
 
 
 [role="lead"]
-Esaminare i requisiti per l'aggiunta di datastore iSCSI come storage supplementare a un dominio di gestione VMware Cloud Foundation (VCF).  Per distribuire iSCSI vVols in un dominio di gestione VMware Cloud Foundation, è necessario un sistema di archiviazione ONTAP AFF o ASA completamente configurato e un dominio di gestione VCF distribuito.
+Esaminare i requisiti per l'aggiunta di datastore iSCSI come storage supplementare a un dominio di gestione VMware Cloud Foundation (VCF).
 
 
 

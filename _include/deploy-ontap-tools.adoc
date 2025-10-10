@@ -6,33 +6,37 @@
 . Accedere all'appliance vCenter per il dominio di gestione VCF.
 . Dall'interfaccia dell'appliance vCenter, fare clic con il pulsante destro del mouse sul cluster di gestione e selezionare *Distribuisci modello OVF…*
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-021.png["Distribuisci modello OVF..."]
 
+====
+. Nella procedura guidata *Distribuisci modello OVF*, fai clic sul pulsante di opzione *File locale* e seleziona il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
 +
-{nbsp}
-
-. Nella procedura guidata *Distribuisci modello OVF*, fare clic sul pulsante di opzione *File locale* e selezionare il file OVA degli strumenti ONTAP scaricato nel passaggio precedente.
-+
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-022.png["Seleziona il file OVA"]
 
-+
-{nbsp}
-
+====
 . Per i passaggi da 2 a 5 della procedura guidata, seleziona un nome e una cartella per la VM, seleziona la risorsa di elaborazione, rivedi i dettagli e accetta il contratto di licenza.
 . Per la posizione di archiviazione dei file di configurazione e del disco, selezionare il datastore vSAN del cluster del dominio di gestione VCF.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-023.png["Seleziona il file OVA"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Seleziona rete*, seleziona la rete utilizzata per la gestione del traffico.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-024.png["Seleziona la rete"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Personalizza modello*, inserisci tutte le informazioni richieste:
 +
 ** Password da utilizzare per l'accesso amministrativo agli strumenti ONTAP .
@@ -47,10 +51,13 @@ image:vmware-vcf-aff-024.png["Seleziona la rete"]
 
 . Fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-aff-025.png["Personalizza il modello OTV 1"]
 
-+
 image:vmware-vcf-asa-035.png["Personalizza il modello OTV 2"]
 
-. Rivedere tutte le informazioni nella pagina *Pronto per il completamento* e fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
+====
+. Esaminare tutte le informazioni nella pagina *Pronto per il completamento*, quindi fare clic su *Fine* per iniziare a distribuire l'appliance degli strumenti ONTAP .
 

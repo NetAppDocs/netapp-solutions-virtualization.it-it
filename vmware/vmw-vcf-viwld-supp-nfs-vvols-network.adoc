@@ -26,11 +26,39 @@ Completare i seguenti passaggi per creare un nuovo gruppo di porte distribuito a
 
 .Passi
 . Dal client vSphere, accedere a *Inventario > Rete* per il dominio del carico di lavoro.  Passare allo switch distribuito esistente e scegliere l'azione per creare *Nuovo gruppo di porte distribuite...*.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-asa-022.png["Scegli di creare un nuovo gruppo di porte"]
+
+====
 . Nella procedura guidata *Nuovo gruppo di porte distribuite*, inserisci un nome per il nuovo gruppo di porte e fai clic su *Avanti* per continuare.
 . Nella pagina *Configura impostazioni*, compila tutte le impostazioni. Se si utilizzano le VLAN, assicurarsi di fornire l'ID VLAN corretto. Fare clic su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-asa-023.png["Compila l'ID VLAN"]
+
+====
 . Nella pagina *Pronto per il completamento*, rivedere le modifiche e fare clic su *Fine* per creare il nuovo gruppo di porte distribuite.
 . Una volta creato il gruppo di porte, accedi al gruppo di porte e seleziona l'azione *Modifica impostazioni...*.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-037.png["DPG - modifica impostazioni"]
+
+====
 . Nella pagina *Gruppo di porte distribuite - Modifica impostazioni*, vai a *Teaming e failover* nel menu a sinistra. Abilitare il teaming per gli uplink da utilizzare per il traffico NFS assicurandosi che siano tutti insieme nell'area *Uplink attivi*. Sposta tutti gli uplink non utilizzati in *Uplink non utilizzati*.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-038.png["DPG - uplink di squadra"]
+
+====
 . Ripetere questo processo per ogni host ESXi nel cluster.
 
 
@@ -42,11 +70,46 @@ Creare un adattatore VMkernel su ciascun host ESXi nel dominio del carico di lav
 
 .Passi
 . Dal client vSphere, passare a uno degli host ESXi nell'inventario del dominio del carico di lavoro. Dalla scheda *Configura* seleziona *Schede VMkernel* e fai clic su *Aggiungi rete...* per iniziare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-asa-030.png["Avvia la procedura guidata di aggiunta della rete"]
+
+====
 . Nella finestra *Seleziona tipo di connessione*, seleziona *Scheda di rete VMkernel* e fai clic su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-asa-008.png["Scegli la scheda di rete VMkernel"]
+
+====
 . Nella pagina *Seleziona dispositivo di destinazione*, seleziona uno dei gruppi di porte distribuiti per NFS creati in precedenza.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-039.png["Scegli il gruppo di porte di destinazione"]
+
+====
 . Nella pagina *Proprietà porta*, mantenere le impostazioni predefinite (nessun servizio abilitato) e fare clic su *Avanti* per continuare.
 . Nella pagina *Impostazioni IPv4*, compilare *Indirizzo IP*, *Maschera di sottorete* e fornire un nuovo indirizzo IP del gateway (solo se richiesto). Fare clic su *Avanti* per continuare.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-040.png["Impostazioni IPv4 di VMkernel"]
+
+====
 . Rivedi le tue selezioni nella pagina *Pronto per il completamento* e fai clic su *Fine* per creare l'adattatore VMkernel.
++
+.Mostra esempio
+[%collapsible]
+====
+image:vmware-vcf-aff-041.png["Esaminare le selezioni VMkernel"]
+
+====
 
 
 

@@ -4,45 +4,51 @@
 
 . Dal client vSphere, passare a uno degli host ESXi nell'inventario del dominio del carico di lavoro. Dalla scheda *Configura* seleziona *Schede VMkernel* e fai clic su *Aggiungi rete...* per iniziare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-030.png["Avvia la procedura guidata di aggiunta della rete"]
 
-+
-{nbsp}
-
+====
 . Nella finestra *Seleziona tipo di connessione* seleziona *Scheda di rete VMkernel* e fai clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-008.png["Scegli la scheda di rete VMkernel"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Seleziona dispositivo di destinazione*, seleziona uno dei gruppi di porte distribuite per iSCSI creati in precedenza.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-031.png["Scegli il gruppo di porte di destinazione"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Proprietà porta*, mantenere le impostazioni predefinite e fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-032.png["Proprietà della porta VMkernel"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Impostazioni IPv4*, compilare *Indirizzo IP*, *Maschera di sottorete* e fornire un nuovo indirizzo IP del gateway (solo se richiesto). Fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-033.png["Impostazioni IPv4 di VMkernel"]
 
-+
-{nbsp}
-
+====
 . Rivedi le tue selezioni nella pagina *Pronto per il completamento* e fai clic su *Fine* per creare l'adattatore VMkernel.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-034.png["Esaminare le selezioni VMkernel"]
 
-+
-{nbsp}
-
+====
 . Ripetere questo processo per creare un adattatore VMkernel per la seconda rete iSCSI.
 

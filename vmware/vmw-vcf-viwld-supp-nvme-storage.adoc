@@ -19,35 +19,39 @@ Configurare l'archiviazione NVMe/TCP vVols in un dominio di carico di lavoro VMw
 .Passi
 . Nel client vSphere, passare a uno degli host ESXi nel cluster del dominio del carico di lavoro. Dal menu *Azioni* selezionare *Archiviazione > Nuovo datastore...*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-104.png["Aggiungi adattatore NVMe/TCP"]
 
-+
-{nbsp}
-
+====
 . Nella procedura guidata *Nuovo datastore*, selezionare *VMFS* come tipo. Fare clic su *Avanti* per continuare.
 . Nella pagina *Selezione nome e dispositivo*, specificare un nome per il datastore e selezionare lo spazio dei nomi NVMe dall'elenco dei dispositivi disponibili.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-105.png["Selezione del nome e del dispositivo"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Versione VMFS*, selezionare la versione di VMFS per il datastore.
 . Nella pagina *Configurazione partizione*, apportare le modifiche desiderate allo schema di partizione predefinito. Fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-106.png["Configurazione della partizione NVMe"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Pronto per il completamento*, rivedere il riepilogo e fare clic su *Fine* per creare il datastore.
 . Passare al nuovo datastore nell'inventario e fare clic sulla scheda *Host*. Se configurati correttamente, tutti gli host ESXi nel cluster dovrebbero essere elencati e avere accesso al nuovo datastore.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-107.png["Host connessi al datastore"]
 
-+
-{nbsp}
-
+====
 
 
 

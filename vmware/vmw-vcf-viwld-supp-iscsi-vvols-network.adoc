@@ -25,38 +25,49 @@ Utilizzare il client vSphere con vCenter Single Sign-On per eseguire questi pass
 Completare i seguenti passaggi per creare un nuovo gruppo di porte distribuite per ciascuna rete iSCSI.
 
 .Passi
-. Dal client vSphere, accedere a *Inventario > Rete* per il dominio del carico di lavoro.  Passare allo switch distribuito esistente e scegliere l'azione per creare *Nuovo gruppo di porte distribuite...*.
+. Dal client vSphere, accedere a *Inventario > Rete* per il dominio del carico di lavoro. Passare allo switch distribuito esistente e scegliere l'azione per creare un nuovo *gruppo di porte distribuite...*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-022.png["Scegli di creare un nuovo gruppo di porte"]
 
-+
-{nbsp}
-
-. Nella procedura guidata *Nuovo gruppo di porte distribuite*, inserisci un nome per il nuovo gruppo di porte e fai clic su *Avanti* per continuare.
+====
+. Nella procedura guidata *Nuovo gruppo di porte distribuite*, immettere un nome per il nuovo gruppo di porte, quindi fare clic su *Avanti* per continuare.
 . Nella pagina *Configura impostazioni*, compila tutte le impostazioni. Se si utilizzano le VLAN, assicurarsi di fornire l'ID VLAN corretto. Fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-023.png["Compila l'ID VLAN"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Pronto per il completamento*, rivedere le modifiche e fare clic su *Fine* per creare il nuovo gruppo di porte distribuite.
 . Ripetere questa procedura per creare un gruppo di porte distribuito per la seconda rete iSCSI utilizzata e assicurarsi di aver immesso l'*ID VLAN* corretto.
 . Una volta creati entrambi i gruppi di porte, passare al primo gruppo di porte e selezionare l'azione *Modifica impostazioni...*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-024.png["DPG - modifica impostazioni"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Gruppo di porte distribuite - Modifica impostazioni*, vai su *Teaming e failover* nel menu a sinistra e fai clic su *uplink2* per spostarlo in basso a *Uplink non utilizzati*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-025.png["sposta uplink2 in non utilizzato"]
 
+====
 . Ripetere questo passaggio per il secondo gruppo di porte iSCSI.  Questa volta, però, sposta *uplink1* in *Uplink non utilizzati*.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-026.png["sposta uplink1 in non utilizzato"]
 
+====
 
 
 
@@ -68,46 +79,52 @@ Eseguire i seguenti passaggi su ciascun host ESXi nel dominio del carico di lavo
 .Passi
 . Dal client vSphere, passare a uno degli host ESXi nell'inventario del dominio del carico di lavoro. Dalla scheda *Configura* seleziona *Schede VMkernel* e fai clic su *Aggiungi rete...* per iniziare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-030.png["Avvia la procedura guidata di aggiunta della rete"]
 
-+
-{nbsp}
-
+====
 . Nella finestra *Seleziona tipo di connessione* seleziona *Scheda di rete VMkernel* e fai clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-008.png["Scegli la scheda di rete VMkernel"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Seleziona dispositivo di destinazione*, seleziona uno dei gruppi di porte distribuite per iSCSI creati in precedenza.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-031.png["Scegli il gruppo di porte di destinazione"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Proprietà porta*, mantenere le impostazioni predefinite e fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-032.png["Proprietà della porta VMkernel"]
 
-+
-{nbsp}
-
+====
 . Nella pagina *Impostazioni IPv4*, compilare *Indirizzo IP*, *Maschera di sottorete* e fornire un nuovo indirizzo IP del gateway (solo se richiesto). Fare clic su *Avanti* per continuare.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-033.png["Impostazioni IPv4 di VMkernel"]
 
-+
-{nbsp}
-
+====
 . Rivedi le tue selezioni nella pagina *Pronto per il completamento* e fai clic su *Fine* per creare l'adattatore VMkernel.
 +
+.Mostra esempio
+[%collapsible]
+====
 image:vmware-vcf-asa-034.png["Esaminare le selezioni VMkernel"]
 
-+
-{nbsp}
-
+====
 . Ripetere questo processo per creare un adattatore VMkernel per la seconda rete iSCSI.
 
 

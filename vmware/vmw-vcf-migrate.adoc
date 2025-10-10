@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-migrate.html 
 keywords: vmware, vcf, migrate, import 
-summary:  
+summary: 'La conversione di un ambiente vSphere con datastore Fibre Channel o NFS esistenti su ONTAP implica l"integrazione dell"infrastruttura attuale in una moderna architettura cloud privata.' 
 ---
-= Scopri come convertire un ambiente vSphere con datastore esistenti in VCF
+= Scopri come convertire un ambiente vSphere con datastore esistenti in un dominio di gestione VCF
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,12 +14,45 @@ summary:
 
 
 [role="lead"]
-La conversione di un ambiente vSphere con datastore esistenti in esecuzione su ONTAP in un ambiente VMware Cloud Foundation (VCF) implica l'integrazione dell'infrastruttura attuale in una moderna architettura cloud privata.
+La conversione di un ambiente vSphere con datastore Fibre Channel o NFS esistenti su ONTAP implica l'integrazione dell'infrastruttura attuale in una moderna architettura cloud privata.
 
-Questo processo sfrutta la flessibilità dell'archiviazione ONTAP per un accesso e una gestione dei dati senza interruzioni.  Una volta stabilito il dominio di gestione VCF, gli amministratori possono importare in modo efficiente altri ambienti vSphere nell'ecosistema VCF.  Questa integrazione migliora l'utilizzo delle risorse, semplifica la gestione del cloud privato e garantisce una transizione fluida con un'interruzione minima dei carichi di lavoro esistenti.
+
+
+== Panoramica della soluzione
+
+Questa soluzione dimostra come i datastore FC o NFS esistenti in vSphere diventano storage principale quando il cluster viene convertito in un dominio di gestione VCF.
+
+Questo processo trae vantaggio dalla robustezza e dalla flessibilità dell'archiviazione ONTAP per garantire un accesso e una gestione dei dati senza interruzioni.  Dopo aver stabilito un dominio di gestione VCF tramite il processo di conversione, gli amministratori possono importare in modo efficiente altri ambienti vSphere, compresi quelli che utilizzano sia datastore FC che NFS, nell'ecosistema VCF.
+
+Questa integrazione non solo migliora l'utilizzo delle risorse, ma semplifica anche la gestione dell'infrastruttura cloud privata, garantendo una transizione fluida con un'interruzione minima dei carichi di lavoro esistenti.
+
+
+
+== Panoramica dell'architettura
+
+L'architettura degli strumenti ONTAP si integra perfettamente con gli ambienti VMware, sfruttando un framework modulare e scalabile che include i servizi degli strumenti ONTAP , il plug-in vSphere e le API REST per consentire una gestione efficiente dello storage, l'automazione e la protezione dei dati.
+
+Gli ONTAP tools for VMware vSphere possono essere installati in configurazioni HA o non HA.
+
+image::vmware-vcf-import-nfs-010.png[Architettura degli strumenti ONTAP]
+
+
+
+== Soluzioni supportate per la conversione di un ambiente vSphere
 
 Per i dettagli tecnici sulla conversione di un'istanza vCenter, fare riferimento alle seguenti soluzioni.
 
-* link:vmw-vcf-mgmt-nfs.html["Convertire l'istanza vCenter esistente in dominio di gestione VCF (NFS)"]
-* link:vmw-vcf-mgmt-fc.html["Convertire l'istanza vCenter (datastore FC) in dominio di gestione VCF"]
+* link:vmw-vcf-mgmt-nfs.html["Convertire un'istanza vCenter nel dominio di gestione VCF (datastore NFS)"]
+* link:vmw-vcf-mgmt-fc.html["Convertire l'istanza vCenter nel dominio di gestione VCF (datastore FC)"]
+
+
+
+
+== Informazioni aggiuntive
+
+* Per demo video di queste soluzioni, fare riferimento alink:../videos/vmware-videos.html#vmware-datastore-provisioning-with-ontap["Provisioning del datastore VMware con ONTAP"] .
+* Per una panoramica del processo di conversione, fare riferimento a https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2/map-for-administering-vcf-5-2/importing-existing-vsphere-environments-admin/convert-or-import-a-vsphere-environment-into-vmware-cloud-foundation-admin.html["Convertire un ambiente vSphere in un dominio di gestione o importare un ambiente vSphere come dominio di carico di lavoro VI in VMware Cloud Foundation"] .
+* Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] .
+* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf.html["Documentazione di VMware Cloud Foundation"] .
+* Per informazioni sullo storage supportato e altre considerazioni sulla conversione o l'importazione di vSphere in VCF 5.2, fare riferimento a https://techdocs.broadcom.com/fr/fr/vmware-cis/vcf/vcf-5-2-and-earlier/5-2/considerations-before-converting-or-importing-existing-vsphere-environments-into-vcf.html["Considerazioni prima di convertire o importare ambienti vSphere esistenti in VMware Cloud Foundation"] .
 
