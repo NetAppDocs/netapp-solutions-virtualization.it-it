@@ -1,0 +1,349 @@
+---
+sidebar: sidebar 
+permalink: migration/shift-toolkit-settings.html 
+keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, hyper-v, proxmox 
+summary: 'Configura le impostazioni avanzate in Shift Toolkit per gestire l"autenticazione CredSSP, abilitare la registrazione e il debug, accedere alle API REST e impostare le notifiche e-mail per i processi di migrazione.' 
+---
+= Configura le impostazioni avanzate in Shift Toolkit
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configura le impostazioni avanzate in Shift Toolkit per gestire l'autenticazione CredSSP, abilitare la registrazione e il debug, accedere alle API REST e impostare le notifiche e-mail per i processi di migrazione.
+
+Per accedere alle impostazioni avanzate, fare clic sull'icona *Impostazioni* nella barra degli strumenti in alto.
+
+image::shift-toolkit-250.png[Icona Impostazioni nella barra degli strumenti di Shift Toolkit]
+
+
+
+== Fornitore di servizi di sicurezza delle credenziali (CredSSP)
+
+Shift Toolkit utilizza Credential Security Service Provider (CredSSP) per gestire i trasferimenti di credenziali durante il processo di conversione.  Il server Shift esegue script sul sistema operativo guest della macchina virtuale in fase di conversione, passando le credenziali tramite un "doppio salto" dal server Shift al sistema operativo guest tramite il server Hyper-V.
+
+image::shift-toolkit-251.png[Impostazioni di configurazione CredSSP]
+
+
+
+=== Configurare il server Shift come client CredSSP
+
+La procedura guidata Impostazioni avanzate configura automaticamente il server Shift come client CredSSP, consentendogli di delegare le credenziali ai server Hyper-V.
+
+
+
+==== Dietro le quinte
+
+Shift Toolkit esegue i seguenti comandi e configurazioni di policy per configurarsi come client:
+
+*Comandi eseguiti:*
+
+* `Set-Item WSMan:\localhost\Client\TrustedHosts -Value "fqdn-of-hyper-v-host"`
+* `Enable-WSManCredSSP -Role client -DelegateComputer "fqdn-of-hyper-v-host"`
+
+
+*Criteri di gruppo configurati:*
+
+* Configurazione computer > Modelli amministrativi > Sistema > Delega credenziali > Consenti delega di nuove credenziali con autenticazione server solo NTLM
++
+Abilita questa policy e aggiungi `wsman/fqdn-of-hyper-v-host` .
+
+
+
+
+
+=== Configurare il server Hyper-V come server CredSSP
+
+Utilizzare il `Enable-WSManCredSSP` cmdlet sul server Hyper-V per configurarlo come server CredSSP, consentendogli di ricevere credenziali dal server Shift.
+
+.Passi
+. Sull'host Hyper-V in cui le VM verranno fornite dal server Shift Toolkit, aprire una sessione di Windows PowerShell come amministratore.
+. Eseguire i seguenti comandi:
++
+[listing]
+----
+Enable-PSRemoting
+Enable-WSManCredSSP -Role server
+----
+
+
+
+
+== Registrazione e debug
+
+Shift Toolkit include una registrazione predefinita con un periodo di conservazione di 30 giorni.  Su richiesta del supporto, è possibile commutare la registrazione in modalità debug per la risoluzione dei problemi.
+
+image::shift-toolkit-252.png[Impostazioni di configurazione della registrazione]
+
+
+
+== Spavalderia
+
+La pagina Swagger nelle impostazioni avanzate consente di interagire con le API REST di Shift Toolkit.
+
+image::shift-toolkit-253.png[Interfaccia della documentazione API Swagger]
+
+L'API REST di Shift Toolkit fornisce accesso programmatico alle funzionalità di migrazione, conversione e automazione.  Le API sono organizzate in base al flusso di lavoro funzionale per aiutarti a trovare rapidamente le risorse necessarie per attività specifiche.
+
+image::shift-toolkit-254.png[Categorie di risorse API]
+
+
+
+=== API di autenticazione e configurazione
+
+Utilizzare queste API per stabilire connessioni, gestire gli utenti e configurare l'autenticazione per il server Shift Toolkit.
+
+*Sessione*
+
+Gestisci l'autenticazione degli utenti e ottieni token di autorizzazione per le richieste API:
+
+* Inizia una sessione
+* Convalidare una sessione
+* Ottieni tutti gli ID di sessione
+* Termina una sessione
+
+
+*Utente*
+
+Gestisci account utente e autorizzazioni:
+
+* Aggiungi un utente
+* Ottieni tutti gli utenti
+* Cambia password utente
+* Accetta l'EULA
+
+
+*CredSSP*
+
+Configurare il fornitore di servizi di sicurezza delle credenziali per la delega delle credenziali:
+
+* Abilita CredSSP
+* Ottieni lo stato CredSSP
+
+
+*Connettore*
+
+Gestire le connessioni ai componenti dell'infrastruttura:
+
+* Aggiungi un connettore
+* Ottieni i dettagli di tutti i connettori
+* Aggiorna i dettagli del connettore tramite ID
+* Ottieni i dettagli del connettore tramite ID
+
+
+*Inquilino*
+
+Gestisci configurazioni multi-tenant:
+
+* Aggiungi un inquilino
+* Ottieni tutti gli inquilini
+
+
+
+
+=== API di gestione delle infrastrutture
+
+Utilizza queste API per configurare e scoprire i tuoi ambienti di origine e di destinazione.
+
+*Sito*
+
+Gestire i siti di migrazione e i relativi ambienti virtuali e di archiviazione:
+
+* Ottieni il conteggio dei siti
+* Ottieni tutti i dettagli del sito
+* Aggiungi un sito
+* Ottieni i dettagli del sito tramite ID
+* Elimina un sito tramite ID
+* Aggiungi un ambiente virtuale a un sito
+* Aggiungere un ambiente di archiviazione a un sito
+* Ottieni i dettagli dell'ambiente virtuale per un sito
+* Aggiorna i dettagli dell'ambiente virtuale per un sito
+* Elimina i dettagli dell'ambiente virtuale per un sito
+* Ottieni i dettagli dell'ambiente di archiviazione per un sito
+* Aggiorna i dettagli dell'ambiente di archiviazione per un sito
+* Elimina i dettagli dell'ambiente di archiviazione per un sito
+
+
+*Scoperta*
+
+Scopri e inventaria le VM e le risorse nei siti di origine e di destinazione:
+
+* Scopri il sito di origine
+* Ottieni tutte le richieste di scoperta per il sito di origine
+* Scopri il sito di destinazione
+* Ottieni tutte le richieste di scoperta per il sito di destinazione
+* Ottieni i passaggi di individuazione per il sito di origine in base all'ID
+* Ottieni i passaggi di individuazione per il sito di destinazione in base all'ID
+
+
+
+
+=== API di gestione delle risorse e delle VM
+
+Utilizza queste API per inventariare, organizzare e gestire le VM e le risorse per la migrazione.
+
+*VM*
+
+Interroga e gestisci macchine virtuali:
+
+* Ottieni VM per un sito e un ambiente virtuale nella sorgente
+* Ottieni VM non protette per un sito e un ambiente virtuale
+* Ottieni il conteggio delle VM
+* Ottieni il conteggio delle VM protette
+
+
+*Risorsa*
+
+Visualizza l'utilizzo e la disponibilità delle risorse:
+
+* Ottieni dettagli sulle risorse per un sito e un ambiente virtuale
+* Ottieni il conteggio delle risorse del sito di origine
+
+
+*Gruppo di risorse*
+
+Organizzare le VM in gruppi di protezione per la migrazione:
+
+* Ottieni il conteggio del gruppo di protezione
+* Ottieni tutti i dettagli del gruppo di protezione
+* Aggiungi un gruppo di protezione
+* Ottieni i dettagli del gruppo di protezione tramite ID
+* Elimina un gruppo di protezione tramite ID
+* Aggiorna i dettagli del gruppo di protezione tramite ID
+* Ottieni le VM di un gruppo di protezione tramite ID
+* Ottieni progetti contenenti il gruppo di protezione
+
+
+
+
+=== API di migrazione e ripristino
+
+Utilizza queste API per eseguire migrazioni, monitorare la conformità e gestire le operazioni di ripristino.
+
+*Progetto*
+
+Definire e gestire i progetti di migrazione:
+
+* Ottieni il conteggio dei progetti
+* Ottieni tutti i dettagli del progetto
+* Aggiungi un progetto
+* Ottieni i dettagli del progetto tramite ID
+* Elimina il progetto per ID
+* Aggiorna i dettagli del progetto per l'ID
+* Ottieni le VM di un progetto
+* Ottieni lo stato di alimentazione delle VM presenti nel progetto
+
+
+*Conformità*
+
+Verificare la prontezza e la compatibilità prima della migrazione:
+
+* Ottieni il risultato del controllo di conformità per un progetto
+* Ottieni lo stato finale del controllo di conformità per un progetto
+* Aggiungi il controllo di conformità su richiesta per un progetto
+
+
+*Esecuzione*
+
+Monitorare l'esecuzione dei processi di migrazione e conversione:
+
+* Ottieni tutti i dettagli dell'esecuzione
+* Ottieni i dettagli dell'esecuzione in corso
+* Ottieni il conteggio delle esecuzioni
+* Ottieni il conteggio delle esecuzioni in corso
+* Ottieni i passaggi per l'ID di esecuzione
+
+
+*Recupero*
+
+Eseguire e gestire le operazioni di migrazione e ripristino:
+
+* Aggiungi una nuova richiesta di esecuzione per un progetto
+* Aggiungi una richiesta di ripetizione dell'esecuzione per un progetto
+* Ottieni gli stati di esecuzione di tutti i progetti
+* Ottieni lo stato di esecuzione per l'ID del progetto
+
+
+
+
+=== API di automazione
+
+Utilizza queste API per estendere e automatizzare le funzionalità di Shift Toolkit.
+
+*Blocco di script*
+
+Accedi ed esegui gli script di automazione:
+
+* Ottieni tutti i metadati degli script
+* Ottieni i metadati dello script tramite ID
+* Ottieni tutti i metadati di aggiornamento
+* Esegui script
+
+
+
+
+== Blocco di script e automazione
+
+Il blocco di script all'interno di Shift Toolkit fornisce un codice di esempio per aiutarti ad automatizzare, integrare e sviluppare funzionalità utilizzando API interne ed esterne.  Sfoglia e scarica gli esempi nella sezione Esempi di codice, scritti dal team di automazione di Shift Toolkit e dai membri della community.  Utilizza questi esempi per iniziare con attività di automazione, gestione o integrazione.
+
+image::shift-toolkit-255.png[Interfaccia del blocco di script]
+
+image::shift-toolkit-256.png[Esempi di codice disponibili]
+
+L'esempio seguente mostra uno script di PowerShell che elimina un lavoro specifico all'interno dell'interfaccia utente di Shift Toolkit.  Sebbene questa funzionalità non sia disponibile tramite il flusso di lavoro standard, può essere realizzata utilizzando il blocco di script.  Lo script è disponibile anche come script batch, che può essere facilmente scaricato ed eseguito.
+
+image::shift-toolkit-257.png[Esempio di script PowerShell per l'eliminazione dei processi]
+
+L'obiettivo del blocco di script è fornire script di esempio per le operazioni iniziali e in corso su hypervisor specifici utilizzando le API di Shift Toolkit e le rispettive API pubblicate sugli hypervisor.
+
+L'obiettivo del blocco di script è fornire script di esempio per le operazioni iniziali e in corso su hypervisor specifici utilizzando le API di Shift Toolkit e le rispettive API pubblicate sugli hypervisor.
+
+
+
+== Notifiche e avvisi via e-mail
+
+Configura le notifiche e-mail per inviare avvisi sui processi di individuazione, conversione o migrazione a destinatari specifici.  Sono disponibili anche le notifiche dell'interfaccia utente (avvisi all'interno dell'interfaccia) e vengono archiviate per 7 giorni.
+
+Accedi alle impostazioni di notifica via email da Impostazioni > Impostazioni piattaforma > Configurazione email.
+
+.Passi
+. Accedi all'interfaccia utente di Shift Toolkit.
+. Vai su Impostazioni > Impostazioni piattaforma.
+. Seleziona Notifiche e-mail e aggiorna i dettagli SMTP:
++
+** Indirizzo del server SMTP
+** Porta
+** Nome utente
+** Password
+
+
+. Aggiorna il campo destinatario e seleziona gli eventi dalle categorie disponibili.
+. Fare clic su *Applica*.
+
+
+image::shift-toolkit-258.png[Impostazioni di configurazione delle notifiche e-mail]
+
+Lo screenshot mostra la ripartizione per ogni categoria di notifica ed evento.
+
+
+NOTE: In questa versione, la notifica via e-mail utilizza l'autenticazione SMTP di base e SendGrid.  Una versione futura supporterà l'autenticazione moderna.
+
+
+NOTE: In questa versione, la notifica via e-mail utilizza l'autenticazione SMTP di base e SendGrid.  Una versione futura supporterà l'autenticazione moderna.
+
+
+
+== Capacità di interruzione e ripristino
+
+Shift Toolkit offre la possibilità di annullare un lavoro in esecuzione in qualsiasi fase del flusso di lavoro.  Quando un lavoro viene annullato, tutti i componenti orfani vengono automaticamente ripuliti, tra cui:
+
+* Spegnimento delle VM sull'hypervisor se erano accese
+* Rimozione delle voci del disco dal qtree appropriato
+* Eliminazione delle richieste di volume persistenti (PVC)
+
+
+Poiché Shift Toolkit non modifica in alcun modo la VM di origine, il rollback è semplice: basta accendere la VM di origine.  Non sono necessarie altre azioni di rollback.

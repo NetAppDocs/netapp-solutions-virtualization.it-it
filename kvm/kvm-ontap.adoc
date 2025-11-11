@@ -122,29 +122,32 @@ In sostanza, l'utilizzo di Libvirt con ONTAP consente di combinare la flessibili
 
 Per l'archiviazione basata su file sono applicabili pool di archiviazione di tipo dir e netfs.
 
-[cols="20% 10% 10% 10% 10% 10% 10% 10%"]
+[cols="30%, 10%, 10% ,10%, 10%, 10,% 10%, 10%"]
 |===
-| Protocollo di archiviazione | direzione | fs | netfs | logico | disco | iscsi | iscsi-diretto | mpath 
+| Protocollo di archiviazione | direzione | fs | netfs | logico | disco | iscsi 
 
 
-| PMI/CIFS | SÌ | NO | SÌ | NO | NO | NO | NO | NO 
+| iscsi-diretto | mpath | PMI/CIFS | SÌ | NO | SÌ | NO 
 
 
-| NFS | SÌ | NO | SÌ | NO | NO | NO | NO | NO 
+| NO | NO | NO | NO | NFS | SÌ | NO 
 |===
 Con netfs, libvirt monterà il file system e le opzioni di montaggio supportate sono limitate.  Con il pool di archiviazione dir, il montaggio del file system deve essere gestito esternamente sull'host. A tale scopo è possibile utilizzare fstab o automounter.  Per utilizzare automounter, è necessario installare il pacchetto autofs.  Autofs è particolarmente utile per montare condivisioni di rete su richiesta, il che può migliorare le prestazioni del sistema e l'utilizzo delle risorse rispetto ai montaggi statici in fstab.  Smonta automaticamente le azioni dopo un periodo di inattività.
 
 In base al protocollo di archiviazione utilizzato, convalidare l'installazione dei pacchetti richiesti sull'host.
 
-[cols="40% 20% 20% 20%"]
+[cols="40%, 20,% 20%, 20%"]
 |===
-| Protocollo di archiviazione | Fedora | Debian | Pac-Man 
+| Protocollo di archiviazione | Fedora | Debian 
 
 
-| PMI/CIFS | samba-client/cifs-utils | smbclient/cifs-utils | smbclient/cifs-utils 
+| Pac-Man | PMI/CIFS | samba-client/cifs-utils 
 
 
-| NFS | nfs-utils | nfs-comune | nfs-utils 
+| smbclient/cifs-utils | smbclient/cifs-utils | NFS 
+
+
+| nfs-utils | nfs-comune | nfs-utils 
 |===
 NFS è una scelta popolare grazie al suo supporto nativo e alle sue prestazioni in Linux, mentre SMB è un'opzione valida per l'integrazione con gli ambienti Microsoft.  Controllare sempre la matrice di supporto prima di utilizzarla in produzione.
 
@@ -241,7 +244,7 @@ Un tipo di pool di directory viene spesso utilizzato sopra un file system cluste
 
 Verificare che l'host abbia installati i pacchetti necessari in base al protocollo di archiviazione utilizzato.
 
-[cols="40% 20% 20% 20%"]
+[cols="40%, 20%, 20%, 20%"]
 |===
 | Protocollo di archiviazione | Fedora | Debian | Pac-Man 
 

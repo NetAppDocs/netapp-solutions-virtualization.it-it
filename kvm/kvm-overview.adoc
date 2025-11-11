@@ -132,30 +132,30 @@ In sintesi, libvirt fornisce un livello di gestione completo per gli aspetti di 
 
 I dischi della VM possono essere forniti dinamicamente sul pool di archiviazione oppure possono essere forniti in anticipo per la VM dall'amministratore dell'archiviazione.  libvirt supporta vari tipi di pool.  Ecco l'elenco dei tipi di pool applicabili insieme al protocollo di archiviazione supportato.  La scelta più diffusa è dir. Poi netfs e logical. iscsi e iscsi-direct utilizzano un singolo target e non offrono tolleranza agli errori. mpath offre percorsi multipli, ma non allocati dinamicamente.  In vSphere viene utilizzato più come mappatura dei dispositivi raw.  Per i protocolli di file (NFS/SMB/CIFS), le opzioni di montaggio possono essere specificate in https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/managing_file_systems/mounting-file-systems-on-demand#the-autofs-service["automontante"] oppure viene utilizzato il tipo fstab e dir pool.  Nel caso di protocolli a blocchi (iSCSI, FC, NVMe-oF), viene utilizzato un file system condiviso come ocfs2 o gfs2.
 
-[cols="20% 10% 10% 10% 10% 10% 10% 10%"]
+[cols="20%, 10%, 10%, 10%, 10%, 10%, 10%, 10%"]
 |===
-| Protocollo di archiviazione | direzione | fs | netfs | logico | disco | iscsi | iscsi-diretto | mpath 
+| Protocollo di archiviazione | direzione | fs | netfs | logico | disco | iscsi | iscsi-diretto 
 
 
-| PMI/CIFS | SÌ | NO | SÌ | NO | NO | NO | NO | NO 
+| mpath | PMI/CIFS | SÌ | NO | SÌ | NO | NO | NO 
 
 
-| NFS | SÌ | NO | SÌ | NO | NO | NO | NO | NO 
+| NO | NO | NFS | SÌ | NO | SÌ | NO | NO 
 
 
-| iSCSI | SÌ | SÌ | NO | SÌ | SÌ | SÌ | SÌ | SÌ 
+| NO | NO | NO | iSCSI | SÌ | SÌ | NO | SÌ 
 
 
-| FC | SÌ | SÌ | NO | SÌ | SÌ | NO | NO | SÌ 
+| SÌ | SÌ | SÌ | SÌ | FC | SÌ | SÌ | NO 
 
 
-| NVMe-oF | SÌ | SÌ | NO | SÌ | SÌ | NO | NO | No^1^ 
+| SÌ | SÌ | NO | NO | SÌ | NVMe-oF | SÌ | SÌ 
 |===
 *Note:* 1 - Potrebbe essere necessaria una configurazione aggiuntiva.
 
 In base al protocollo di archiviazione utilizzato, è necessario che sull'host siano disponibili pacchetti aggiuntivi.  Ecco un esempio di elenco.
 
-[cols="40% 20% 20% 20%"]
+[cols="40%, 20%, 20%, 20%"]
 |===
 | Protocollo di archiviazione | Fedora | Debian | Pac-Man 
 

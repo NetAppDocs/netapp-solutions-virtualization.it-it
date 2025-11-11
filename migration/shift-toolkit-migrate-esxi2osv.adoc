@@ -1,0 +1,545 @@
+---
+sidebar: sidebar 
+permalink: migration/shift-toolkit-migrate-esxi2osv.html 
+keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, redhat, osv 
+summary: 'Migrare le VM da VMware ESXi a Red Hat OpenShift Virtualization utilizzando Shift Toolkit preparando le VM, convertendo i formati dei dischi e configurando l"ambiente di destinazione.' 
+---
+= Migrazione delle VM da VMware ESXi a Red Hat OpenShift Virtualization
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Migrare le VM da VMware ESXi a Red Hat OpenShift Virtualization utilizzando Shift Toolkit preparando le VM, convertendo i formati dei dischi e configurando l'ambiente di destinazione.
+
+Shift Toolkit consente la migrazione delle VM tra piattaforme di virtualizzazione tramite la conversione del formato del disco e la riconfigurazione della rete nell'ambiente di destinazione.
+
+
+
+== Prima di iniziare
+
+Prima di iniziare la migrazione, verificare che siano soddisfatti i seguenti prerequisiti.
+
+.Requisiti di Red Hat OpenShift Virtualization
+* Endpoint del cluster OpenShift con i seguenti operatori installati:
++
+** Operatore di virtualizzazione OpenShift
+** Driver NetApp Trident CSI
+** Stato del Nuovo Messico
+
+
+* NetApp Trident CSI configurato con backend e classi di storage appropriati
+* NodeNetworkConfigurationPolicy e NetworkAttachmentDefinitions (NAD) configurati con le VLAN appropriate
+* Il cluster OpenShift è raggiungibile dalla rete con le voci del file host correnti
+* Privilegi di livello amministratore sul cluster
+* File Kubeconfig scaricato
+
+
+.Requisiti VMware
+* I VMDK vengono posizionati su volumi individuali (imitando i VMDK in una struttura PVC/PV) utilizzando svmotion
++
+
+NOTE: Questa limitazione verrà rimossa nella prossima versione in cui sarà possibile utilizzare il driver NAS-economy per il provisioning PVC.
+
+* Gli strumenti VMware sono in esecuzione sulle VM guest
+* Le VM da migrare sono in stato RUNNING per la preparazione
+* Le VM devono essere spente prima di attivare la migrazione
+* La rimozione degli strumenti VMware avviene sull'hypervisor di destinazione una volta accese le VM
+
+
+.Requisiti della VM guest
+* Per le VM Windows: utilizzare le credenziali di amministratore locale
+* Per le VM Linux: utilizzare un utente con autorizzazioni per eseguire comandi sudo senza richiesta di password
+* Per le VM Windows: montare l'ISO VirtIO sulla VM (scaricare dalink:https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.271-1/virtio-win-0.1.271.iso["Qui"] )
++
+
+NOTE: Lo script di preparazione utilizza il pacchetto .msi per installare i driver e qemu-guest-agents.
+
+
+
+
+
+== Passaggio 1: aggiungere il sito di destinazione (OpenShift)
+
+Aggiungere l'ambiente di virtualizzazione OpenShift di destinazione a Shift Toolkit.
+
+.Passi
+. Fare clic su *Aggiungi nuovo sito* e selezionare *Destinazione*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-100.png[Seleziona la destinazione]
+
+====
+. Inserisci i dettagli del sito di destinazione:
++
+** *Nome del sito*: Fornisci un nome per il sito
+** *Hypervisor*: Seleziona OpenShift
+** *Posizione del sito*: seleziona l'opzione predefinita
+** *Connettore*: seleziona la selezione predefinita
+
+
+. Fare clic su *Continua*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-101.png[Dettagli del sito di destinazione]
+
+====
+. Inserisci i dettagli di OpenShift:
++
+** *Endpoint*: FQDN dell'endpoint del cluster OpenShift (ad esempio, api.demomigsno.demoval.com)
+** *Carica il file Kubeconfig*: usa il file kubeconfig con autorizzazioni minime
++
+
+NOTE: L'estensione del file deve essere yaml.
+
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-102.png[Dettagli di destinazione OpenShift]
+
+====
+
+
+. Fare clic su *Crea sito*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-103.png[Creazione di destinazione OpenShift]
+
+====
++
+
+NOTE: Il volume di origine e quello di destinazione saranno gli stessi poiché la conversione del formato del disco avviene a livello di volume all'interno dello stesso volume.
+
+
+
+
+
+== Passaggio 2: creare gruppi di risorse
+
+Organizzare le VM in gruppi di risorse per preservare l'ordine di avvio e le configurazioni del ritardo di avvio.
+
+.Prima di iniziare
+Assicurarsi che i VMDK delle VM vengano spostati nei singoli volumi del datastore su un ONTAP SVM appena creato.
+
+.Passi
+. Vai a *Gruppi di risorse* e clicca su *Crea nuovo gruppo di risorse*.
+. Seleziona il sito di origine dal menu a discesa e fai clic su *Crea*.
+. Fornisci i dettagli del gruppo di risorse e seleziona il flusso di lavoro:
++
+** *Migrazione basata su cloni*: esegue la migrazione end-to-end dall'hypervisor di origine a quello di destinazione
+** *Conversione basata su clonazione*: converte il formato del disco nel tipo di hypervisor selezionato
+
+
+. Fare clic su *Continua*.
+. Selezionare le VM utilizzando l'opzione di ricerca.
++
+
+NOTE: La selezione delle VM per i gruppi di risorse si basa sulla macchina virtuale e non a livello di datastore.
+
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-104.png[Datastore associati alla macchina virtuale]
+
+====
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-105.png[Dettagli del datastore della VM]
+
+====
+. Aggiorna i dettagli della migrazione:
++
+** Seleziona *Sito di destinazione*
+** Seleziona *Voce di destinazione OpenShift*
+** Seleziona la classe di archiviazione
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-106.png[Dettagli sulla migrazione]
+
+====
++
+
+NOTE: Se è presente un solo TBC, il backend Trident verrà mappato automaticamente al volume sorgente; tuttavia, se sono presenti più TBC, è possibile selezionare il backend.
+
+
+
+. Configurare l'ordine di avvio e il ritardo di avvio per tutte le VM selezionate:
++
+** *1*: Prima VM ad accendersi
+** *3*: Predefinito
+** *5*: Ultima VM ad accendersi
+
+
+. Fare clic su *Crea gruppo di risorse*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-107.png[Configurazione dei dettagli della migrazione]
+
+====
+
+
+.Risultato
+Il gruppo di risorse è stato creato ed è pronto per la configurazione del blueprint.
+
+
+
+== Fase 3: creare un progetto di migrazione
+
+Creare un progetto per definire il piano di migrazione, inclusi i mapping della piattaforma, la configurazione di rete e le impostazioni della VM.
+
+.Passi
+. Vai su *Progetti* e clicca su *Crea nuovo progetto*.
+. Fornire un nome per il progetto e configurare i mapping degli host:
++
+** Selezionare *Sito di origine* e vCenter associato
+** Seleziona *Sito di destinazione* e la destinazione OpenShift associata
+** Configurare il cluster e la mappatura degli host
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-108.png[Dettagli del progetto]
+
+====
+
+
+. Selezionare i dettagli del gruppo di risorse e fare clic su *Continua*.
+. Imposta l'ordine di esecuzione per i gruppi di risorse se esistono più gruppi.
+. Configurare la mappatura di rete sulle reti logiche appropriate.
++
+
+NOTE: Le definizioni degli allegati di rete dovrebbero essere già predisposte all'interno del cluster OpenShift con le opzioni VLAN e trunk appropriate.  Per la migrazione di prova, selezionare "Non configurare la rete" per evitare conflitti di rete nella produzione; assegnare manualmente le impostazioni di rete dopo la conversione.
+
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-109.png[Mappatura della rete]
+
+====
+. Esaminare le mappature delle classi di archiviazione e del backend (selezionate automaticamente in base alla selezione della VM).
++
+
+NOTE: Assicurarsi che i VMDK siano trasferiti in anticipo ai singoli volumi, in modo che la macchina virtuale possa essere creata e accesa dal PVC.
+
+. In Dettagli VM, seleziona i dettagli di configurazione e fornisci le credenziali dell'account di servizio per ciascun tipo di sistema operativo:
++
+** *Windows*: utilizzare un utente con privilegi di amministratore locale (è possibile utilizzare anche le credenziali di dominio)
+** *Linux*: utilizzare un utente in grado di eseguire comandi sudo senza richiesta di password
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-110.png[Selezione della configurazione]
+
+====
++
+
+NOTE: La selezione della configurazione consente di selezionare il formato dell'immagine del disco, ignorare l'override prepareVM e scegliere se dividere il volume dal padre.  Per impostazione predefinita, la clonazione divisa è disabilitata e il flusso di lavoro utilizza il formato RAW.
+
+
+
+. Configurare le impostazioni IP:
++
+** *Non configurare*: opzione predefinita
+** *Mantieni IP*: Mantieni gli stessi IP del sistema sorgente
+** *DHCP*: assegna DHCP alle VM di destinazione
++
+Assicurarsi che le VM siano accese durante la fase prepareVM e che VMware Tools sia installato.
+
+
+
+. Configurare le impostazioni della VM:
++
+** Ridimensiona i parametri CPU/RAM (facoltativo)
+** Modificare l'ordine di avvio e il ritardo di avvio
+** *Accensione*: seleziona per accendere le VM dopo la migrazione (predefinito: ON)
+** *Rimuovi strumenti VMware*: Rimuovi VMware Tools dopo la conversione (predefinito: selezionato)
+** *Firmware VM*: BIOS > BIOS ed EFI > EFI (automatico)
+** *Conserva MAC*: conserva gli indirizzi MAC per i requisiti di licenza
++
+
+NOTE: Se è necessario mantenere il nome dell'interfaccia mantenendo l'indirizzo MAC, assicurarsi che vengano create le regole udev appropriate sulla VM di origine.
+
+** *Sostituzione dell'account di servizio*: specificare un account di servizio separato, se necessario
+
+
+. Fare clic su *Continua*.
+. (Facoltativo) Pianifica la migrazione selezionando una data e un'ora.
++
+
+NOTE: Pianificare le migrazioni con almeno 30 minuti di anticipo per consentire la preparazione della VM.
+
+. Fare clic su *Crea progetto*.
+
+
+.Risultato
+Shift Toolkit avvia un processo prepareVM che esegue script sulle VM di origine per prepararle alla migrazione.
+
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-111.png[Macchine virtuali preparate per la migrazione]
+
+====
+Il processo di preparazione:
+
+* Inietta script per aggiornare i driver VirtIO, installare qemu-agent, rimuovere gli strumenti VMware, eseguire il backup dei dettagli IP e aggiornare fstab
+* Utilizza PowerCLI per connettersi alle VM guest (Linux o Windows) e aggiornare i driver VirtIO
+* Per le VM Windows: memorizza gli script in `C:\NetApp`
+* Per le VM Linux: memorizza gli script in `/NetApp` E `/opt`
+
+
+
+NOTE: Per tutti i sistemi operativi VM supportati, Shift Toolkit installa automaticamente i driver VirtIO necessari prima della conversione del disco per garantire un avvio corretto dopo la conversione.
+
+Una volta completato correttamente prepareVM, lo stato del progetto viene aggiornato in "PrepareVM completato".  La migrazione verrà ora eseguita all'ora programmata oppure potrà essere avviata manualmente facendo clic sull'opzione *Migra*.
+
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-112.png[Stato completo di PrepareVM]
+
+====
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-113.png[Progetto pronto per la migrazione]
+
+====
+
+
+== Passaggio 4: eseguire la migrazione
+
+Avvia il flusso di lavoro di migrazione per convertire le VM da VMware ESXi a OpenShift Virtualization.
+
+.Prima di iniziare
+Tutte le VM vengono spente correttamente in base al programma di manutenzione pianificato.
+
+.Passi
+. Nel progetto, fare clic su *Migra*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-114.png[Fasi della migrazione]
+
+====
+. Shift Toolkit esegue i seguenti passaggi:
++
+** Elimina gli snapshot esistenti per tutte le VM nel blueprint
+** Attiva gli snapshot della VM all'origine
+** Attiva l'istantanea del volume prima della conversione del disco
+** Clona i singoli volumi
+** Converte VMDK in formato RAW per ogni VMDK
++
+Shift Toolkit trova automaticamente tutti i VMDK associati a ciascuna VM, incluso il disco di avvio primario.
+
+
+
+
+
+
+NOTE: Se sono presenti più file VMDK, ogni VMDK verrà convertito.  In questa versione (v4.0), ogni VMDK deve essere posizionato su un volume/datastore individuale.
+
+* Pulisce i volumi per avere solo il file disk.img
++
+Una volta convertita l'immagine del disco della macchina virtuale in formato RAW, Shift Toolkit pulisce i volumi, rinomina il file raw in disk.img e assegna le autorizzazioni necessarie.
+
+* Importa i volumi come PVC utilizzando l'importazione Trident
++
+I volumi vengono quindi importati come PVC utilizzando le API NetApp Trident .
+
+* Crea VM utilizzando file yaml specifici per VM
++
+Una volta importati i PVC e posizionati i PV, Shift Toolkit utilizza OC CLI per creare ogni VM in base al sistema operativo utilizzando file yaml.
+
+
+
+
+NOTE: Le VM vengono create con lo spazio dei nomi "Default".
+
+* Accende le VM sulla destinazione
++
+A seconda del sistema operativo della VM, Shift Toolkit assegna automaticamente l'opzione di avvio della VM insieme alle interfacce del controller di archiviazione.  Per le distribuzioni Linux viene utilizzato VirtIO o VirtIO SCSI.  Per Windows, la VM si accende con l'interfaccia SATA, quindi lo script pianificato installa automaticamente i driver VirtIO e modifica l'interfaccia in VirtIO.
+
+* Registra le reti su ogni VM
++
+Le reti vengono assegnate in base alla selezione del progetto.
+
+* Rimuove gli strumenti VMware e assegna indirizzi IP utilizzando cron job
+
+
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-115.png[Migrazione della VM Red Hat OpenShift]
+
+====
+
+
+== Utilizzare Migration Toolkit per la virtualizzazione con Shift Toolkit
+
+Questa sezione descrive come utilizzare Migration Toolkit for Virtualization (MTV) con NetApp Shift Toolkit per una migrazione senza problemi a Red Hat OpenShift Virtualization.
+
+.Prima di iniziare
+Assicurarsi che siano soddisfatti i seguenti prerequisiti:
+
+* Cluster OpenShift con operatore OpenShift Virtualization e driver NetApp Trident CSI installati
+* MTV 2.9.4 (che include la modalità di conversione)
+* link:https://mysupport.netapp.com/site/tools/tool-eula/netapp-shift-toolkit/download["Kit di strumenti per il cambio"]installato
++
+
+NOTE: Poiché viene utilizzata solo l'API di Shift Toolkit, non è necessario configurare gruppi di risorse o progetti di Shift Toolkit.
+
+* Privilegi di livello amministratore sul cluster OpenShift
+* Un'istanza Linux con tridentctl e lo strumento da riga di comando OC installati
++
+** Kubeconfig esportato o accesso OC eseguito per connettersi al cluster
+** Scarica lo script denominato "OpenShift-MTV" da Shift Toolkit UI (*Impostazioni > Accesso sviluppatore > Blocco script*)
+** Decomprimi il file: `unzip openshift-mtv.zip`
+** Assicurati che Python3 sia installato: `dnf install python3`
+** Installa OpenJDK 8 o versione successiva: `yum install java-1.8.0-openjdk`
+** Requisiti di installazione: `pip install -r requirements.txt`
+
+
+* *Requisiti della macchina virtuale per MTV*: i VMDK per una macchina virtuale devono essere posizionati su volumi individuali.  Per una VM con 3 dischi, ogni disco dovrebbe trovarsi sul proprio volume individuale (mappatura del datastore alla struttura PVC).  Questa operazione deve essere eseguita manualmente utilizzando Storage Vmotion.
+
+
+.Passi
+. Crea piani di migrazione utilizzando MTV.
++
+Per sfruttare la rapida conversione VMDK, creare un piano di migrazione per le VM e assicurarsi che i seguenti parametri siano presenti nel file YAML:
+
++
+** `targetNamespace: default`
+** `type: conversion`
+** `storage: {}`
++
+
+NOTE: Il piano deve essere creato in anticipo per garantire che le impostazioni IP di conservazione siano configurate da MTV.
+
+
+
+. Mappare le VM da vCenter e i volumi sullo storage ONTAP .
++
+Utilizzare lo script per creare i PVC necessari e importarli nel cluster OpenShift.  I PVC devono avere le seguenti etichette e annotazioni:
+
++
+*Etichette:*
+
++
+** vmID e vmUUID nel PVC (Forklift cerca questi valori)
++
+*Annotazione:*
+
+** Il nome del disco vmdk per `forklift.konveyor.io/disk-source`
++
+Lo script assicura che questi attributi siano impostati per ogni PVC e aggiorna i permessi disk.img:
+
+** `"owner": { "id": 107 }`
+** `"group": { "id": 107 }`
+** `"mode": "0655"`
+
+
+. Aggiorna il file JSON con i seguenti dettagli:
++
+** * Cluster ONTAP *: può essere un SVM; è possibile utilizzare vsadmin.  Imposta splitclone su "False" se il volume clone non necessita di distacco immediato
+** *vCenter*: diritti RBAC minimi per individuare le VM e i file VMDK associati
+** * Classe di archiviazione Trident *: dovrebbe essere il backend NFS con la versione corretta in yaml
+** *OpenShift*: specifica il nome del progetto (come esempio viene utilizzato il nome predefinito)
++
+
+NOTE: Mantenere i restanti valori come predefiniti.
+
+
+
+. Una volta soddisfatti i prerequisiti, eseguire `python3 main.py` per creare PVC e importarli nell'OpenShift Cluster.
+. Una volta importati i PVC, avviare la migrazione tramite MTV per creare la VM con le specifiche appropriate.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-116.png[Esecuzione di script Python]
+
+====
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-117.png[Risultati in Shift Toolkit]
+
+====
+. Convertire VMDK con MTV.
++
+Lo script trova automaticamente tutti i VMDK associati a ciascuna VM, incluso il disco di avvio primario.
+
++
+
+NOTE: Se sono presenti più file VMDK, ogni VMDK verrà convertito.
+
+. Carica l'immagine RAW su OpenShift Virtualization.
++
+Lo script utilizza Trident CSI per importare i volumi come PVC nel cluster.  Il file PVC yaml è popolato con etichette e annotazioni.
+
+. Crea una macchina virtuale con MTV.
++
+Dopo l'importazione, chiamare il piano MTV per avviare la migrazione.  L'interfaccia utente viene visualizzata come "fredda", ma in base alle specifiche yaml di conversione, MTV verifica ogni PVC e vmID/vmUUID, li mappa e inizializza la migrazione.
+
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-118.png[Stato di migrazione]
+
+====
++
+
+NOTE: Le VM vengono create nel progetto "Default" per le macchine virtuali, ma questo può essere modificato nel file YAML del piano di migrazione MTV.
+
+. Avviare la VM per la prima volta con MTV.
++
+A seconda del sistema operativo della VM, MTV assegna automaticamente l'opzione di avvio della VM insieme alle interfacce del controller di archiviazione.
+
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-119.png[Storia delle migrazioni]
+
+====
++
+Migrazione completata in 6 minuti per una VM con disco dati da 1,5 TB (suddiviso su 3 PVC).  Ciò dimostra un approccio semplificato e a basso impatto per il re-homing delle VM tramite storage ONTAP .
+
++
+
+NOTE: Prima di iniziare con questa specifica integrazione, contatta il team del tuo account Red Hat.
+
+
+
+
+
+== Dimostrazione video
+
+Il seguente video illustra il processo descritto in questa soluzione.
+
+.Migrazione zero touch da ESX a Oracle Linux Virtualization Manager (OLVM)
+video::7e2abc5e-2919-43d6-a5c2-b3760100adaf[panopto]

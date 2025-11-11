@@ -14,7 +14,7 @@ summary:
 
 
 [role="lead"]
-NetApp Shift Toolkit è un prodotto autonomo progettato per semplificare e accelerare le migrazioni di VM tra hypervisor, come VMware ESXi e Microsoft Hyper-V. Supporta anche conversioni a livello di disco tra diversi formati di dischi virtuali.
+NetApp Shift Toolkit è un prodotto autonomo progettato per semplificare e accelerare le migrazioni delle VM tra hypervisor, come VMware ESXi, Microsoft Hyper-V, Oracle Linux Virtualization Manager, Redhat OpenShift e altri.  Supporta anche conversioni a livello di disco tra vari formati di dischi virtuali.
 
 
 
@@ -28,27 +28,31 @@ Grazie al toolkit NetApp Shift, la migrazione delle macchine virtuali (VM) non �
 
 == Panoramica del toolkit
 
-Il toolkit NetApp Shift è una soluzione con interfaccia utente grafica (GUI) facile da usare che consente di migrare macchine virtuali (VM) tra diversi hypervisor e di convertire i formati dei dischi virtuali.  Utilizza la tecnologia NetApp FlexClone per convertire rapidamente i dischi rigidi delle VM.  Inoltre, il toolkit gestisce la creazione e la configurazione delle VM di destinazione.
+Il toolkit NetApp Shift è una soluzione con interfaccia utente grafica (GUI) facile da usare che consente di migrare macchine virtuali (VM) tra diversi hypervisor e di convertire i formati dei dischi virtuali. Utilizza la tecnologia NetApp FlexClone® per convertire rapidamente i dischi rigidi delle VM. Inoltre, il toolkit gestisce la creazione e la configurazione delle VM di destinazione.
 
 Il toolkit Shift offre flessibilità in un ambiente multi-hypervisor supportando la conversione bidirezionale tra i seguenti hypervisor:
 
 * Da VMware ESXi a Microsoft Hyper-V
-* Da Microsoft Hyper-V a VMware ESXi (prossima versione)
+* Da Microsoft Hyper-V a VMware ESXi
+* Da VMWare ESXi a Oracle Linux Virtualization Manager (OLVM)
+* Virtualizzazione da VMWare ESXi a Red Hat OpenShift
 
 
 Shift Toolkit supporta conversioni a livello di disco di dischi virtuali tra hypervisor per i seguenti formati di disco:
 
 * Da VMware ESX a Microsoft Hyper-V (formato da disco macchina virtuale [VMDK] a disco rigido virtuale [VHDX])
+* Da Microsoft Hyper-V a VMware ESX (formato del disco rigido virtuale [VHDX] su disco della macchina virtuale [VMDK])
 * Hypervisor compatibili con VMware ESX e KVM (da VMDK a QCOW2)
+* Hypervisor compatibili con VMware ESX e KVM (da VMDK a RAW)
 
 
-image:shift-toolkit-001.png["Figura che mostra il dialogo di input/output o che rappresenta il contenuto scritto"]
+image::shift-toolkit-001.png[Panoramica del NetApp Shift Toolkit]
 
-È possibile scaricare il toolkit Shiftlink:https://mysupport.netapp.com/site/tools/tool-eula/netapp-shift-toolkit["Qui"] ed è disponibile solo per i sistemi Windows.
+È possibile scaricare il toolkit Shiftlink:https://mysupport.netapp.com/site/tools/tool-eula/vm-data-collector["Qui"] ed è disponibile solo per i sistemi Windows.
 
 
 
-=== Vantaggi della portabilità della VM
+== Vantaggi della portabilità della VM
 
 ONTAP è ideale per qualsiasi hypervisor e in qualsiasi iperscalare.  Con tecnologia FlexClone .  La portabilità delle VM in pochi minuti è una realtà, piuttosto che dover attendere tempi di inattività più lunghi o accontentarsi di opzioni pass-through.
 
@@ -62,29 +66,20 @@ Kit di strumenti per il cambio:
 
 
 
-=== Come funziona Shift Toolkit
+== Come funziona Shift Toolkit
 
 Al momento della conversione, Shift Toolkit si connette agli host VMware ESXi e Microsoft Hyper-V e allo storage NetApp condiviso.  Il toolkit Shift sfrutta FlexClone per convertire i dischi rigidi delle VM da un hypervisor all'altro utilizzando tre tecnologie NetApp chiave:
 
-* Volume singolo e protocolli multipli
-+
-Con NetApp ONTAP è possibile utilizzare facilmente più protocolli per accedere a un singolo volume.  Ad esempio, VMware ESXi può accedere a un volume abilitato con il protocollo NFS (Network File System) e Microsoft Hyper-V può accedere allo stesso volume con il protocollo CIFS/SMB.
+* Singolo volume e più protocolli Con NetApp ONTAP, è possibile utilizzare facilmente più protocolli per accedere a un singolo volume. Ad esempio, VMware ESXi può accedere a un volume abilitato con il protocollo NFS (Network File System) e Microsoft Hyper-V può accedere allo stesso volume con il protocollo CIFS/SMB.
+* Tecnologia FlexClone FlexClone consente la clonazione rapida di interi file o volumi senza dover copiare i dati. I blocchi comuni sul sistema di archiviazione sono condivisi tra più file o volumi. Di conseguenza, i dischi VM di grandi dimensioni possono essere clonati molto rapidamente.
+* Conversione del disco VM NetApp PowerShell Toolkit e Shift Toolkit contengono un gran numero di flussi di lavoro che possono essere utilizzati per eseguire varie azioni su un controller di storage NetApp . Sono inclusi cmdlet di PowerShell che convertono i dischi virtuali in formati diversi. Ad esempio, VMware VMDK può essere convertito in Microsoft VHDX e viceversa. Queste conversioni vengono eseguite con FlexClone, che consente la clonazione e la conversione molto rapide dei formati dei dischi in un unico passaggio.
 
-* Tecnologia FlexClone
-+
-FlexClone consente la clonazione rapida di interi file o volumi senza alcuna copia dei dati.  I blocchi comuni sul sistema di archiviazione sono condivisi tra più file o volumi.  Di conseguenza, i dischi VM di grandi dimensioni possono essere clonati molto rapidamente.
 
-* Conversione del disco VM
-+
-NetApp PowerShell Toolkit e Shift Toolkit contengono un gran numero di flussi di lavoro che possono essere utilizzati per eseguire varie azioni su un controller di storage NetApp .  Sono inclusi cmdlet di PowerShell che convertono i dischi virtuali in formati diversi.  Ad esempio, VMware VMDK può essere convertito in Microsoft VHDX e viceversa.  Queste conversioni vengono eseguite con FlexClone, che consente la clonazione e la conversione molto rapide dei formati dei dischi in un unico passaggio.
+image::shift-toolkit-002.png[Diagramma di come funziona NetApp Shift Toolkit]
 
 
 
-image:shift-toolkit-002.png["Figura che mostra il dialogo di input/output o che rappresenta il contenuto scritto"]
-
-
-
-==== Protocolli e metodi di comunicazione
+=== Protocolli e metodi di comunicazione
 
 Shift Toolkit utilizza i seguenti protocolli durante le operazioni di conversione o migrazione.
 
@@ -92,3 +87,25 @@ Shift Toolkit utilizza i seguenti protocolli durante le operazioni di conversion
 * VI Java (openJDK), VMware PowerCLI - Utilizzato per comunicare con VMware ESXi.
 * Modulo Windows PowerShell: utilizzato per comunicare con Microsoft Hyper-V.
 
+
+I firewall devono abilitare il traffico sulle seguenti porte:
+
+[cols="20%, 10%, 25%, 20%, 25%"]
+|===
+| Porta | Protocollo | Fonte | Destinazione | Scopo 
+
+
+| 443 | TCP | Nodo del toolkit di spostamento | VMware vCenter | Inventario VMware 
+
+
+| 443 | TCP | Nodo del toolkit di spostamento | Nodi VMware ESXi | Dipendenza Invoke-vmscript (instradata) 
+
+
+| 443 | TCP | Nodo del toolkit di spostamento | Hypervisor di destinazione | Inventario target 
+
+
+| 443 | TCP | Nodo del toolkit di spostamento | Sistema ONTAP | Accesso ONTAP 
+
+
+| 5985/5986 | HTTP | Nodo del toolkit di spostamento | Host Hyper-V | WinRM 
+|===

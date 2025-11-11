@@ -1,0 +1,52 @@
+---
+sidebar: sidebar 
+permalink: migration/shift-toolkit-monitor.html 
+keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, hyper-v, proxmox 
+summary: Utilizza la dashboard di monitoraggio dei lavori di Shift Toolkit per monitorare le operazioni di migrazione, conversione e blueprint in tempo reale, consentendo agli amministratori di identificare rapidamente lo stato dei lavori e risolvere i problemi. 
+---
+= Monitora i processi di migrazione con la dashboard di Shift Toolkit
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Utilizza la dashboard di monitoraggio dei lavori di Shift Toolkit per monitorare le operazioni di migrazione, conversione e blueprint in tempo reale, consentendoti di identificare rapidamente lo stato dei lavori e risolvere i problemi.
+
+
+
+== Dashboard di monitoraggio dei lavori
+
+La dashboard di monitoraggio dei lavori fornisce una visualizzazione centralizzata di tutte le operazioni attive e completate all'interno di Shift Toolkit.  Utilizza questa dashboard per monitorare l'avanzamento dei tuoi lavori di migrazione, conversione e blueprint.
+
+image::shift-toolkit-190.png[Dashboard di monitoraggio dei lavori che mostra i lavori attivi in Shift Toolkit]
+
+La dashboard mostra le informazioni chiave per ogni lavoro:
+
+* Tipo di lavoro (migrazione, conversione o progetto)
+* Stato attuale (in esecuzione, riuscito, fallito o parzialmente fallito)
+* Indicatori di avanzamento e percentuale di completamento
+* Numero di VM elaborate
+* Orari di inizio e fine
+
+
+
+
+== Comprendere lo stato del lavoro
+
+L'interfaccia intuitiva consente di valutare rapidamente lo stato di tutte le operazioni e di identificare i lavori che richiedono attenzione.
+
+image::shift-toolkit-191.png[Dettagli sullo stato del lavoro nella dashboard di Shift Toolkit]
+
+Gli indicatori di stato del lavoro ti aiutano a comprendere l'esito di ogni operazione:
+
+* *Riuscito*: tutte le VM nel lavoro sono state completate senza errori
+* *Non riuscito*: il lavoro ha riscontrato errori e non è stato possibile completarlo
+* *Parzialmente fallito*: alcune VM sono state completate correttamente mentre altre hanno riscontrato errori
+* *In esecuzione*: il lavoro è attualmente in corso
+
+
+Utilizzare le informazioni sullo stato per stabilire le priorità degli sforzi di risoluzione dei problemi e garantire flussi di lavoro di migrazione fluidi.
