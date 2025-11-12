@@ -14,7 +14,7 @@ summary: Migra le VM dai datastore basati su SAN ai NAS prima di convertirle con
 
 
 [role="lead"]
-Migra le VM dai datastore basati su SAN ai NAS prima di convertirle con Shift Toolkit, utilizzando VMware Storage vMotion e Hyper-V Storage Live Migration per mantenere la continuità aziendale.
+Migra le VM dai datastore basati su SAN ai NAS prima di convertirle con Shift Toolkit, utilizzando VMware Storage vMotion e Storage Live Migration per mantenere la continuità aziendale.
 
 
 
@@ -32,14 +32,14 @@ image::shift-toolkit-260.png[Diagramma del flusso di lavoro di migrazione che mo
 
 Il processo di migrazione si compone di tre fasi principali:
 
-.Migrazione da SAN a NAS (ambiente VMware)*
+.Migrazione da SAN a NAS (ambiente VMware)
 Utilizzare VMware vSphere Storage vMotion per migrare le VM e i relativi dischi dal datastore SAN a un datastore NFS.  Questa operazione può essere eseguita senza tempi di inattività della VM.
 
-.Converti le VM con Shift Toolkit*
-Dopo che le VM risiedono sul datastore NFS, Shift Toolkit utilizza la tecnologia NetApp FlexClone per convertire le VM da VMware ESXi a Hyper-V. Le VM convertite e i relativi dischi vengono posizionati su una condivisione CIFS accessibile dall'host Hyper-V.
+.Convertire le VM con Shift Toolkit
+Dopo che le VM risiedono nel datastore NFS, Shift Toolkit utilizza la tecnologia NetApp FlexClone per convertire le VM da VMware ESXi a qualsiasi hypervisor. Le VM convertite e i relativi dischi vengono posizionati su un qtree accessibile dal rispettivo host hypervisor.
 
-.Torna alla migrazione su SAN (ambiente Hyper-V)*
-Dopo la conversione, utilizzare Hyper-V Storage Live Migration per spostare le VM convertite e i relativi dischi dalla condivisione CIFS a un Cluster Shared Volume (CSV) abilitato per SAN.  Ciò consente di gestire l'infrastruttura SAN nell'ambiente Hyper-V.
+.Tornare a SAN
+Dopo la conversione, utilizzare la migrazione dello storage per spostare le VM convertite e i relativi dischi dal qtree a un volume abilitato per SAN. Ciò consente di gestire l'infrastruttura SAN nel rispettivo ambiente hypervisor.
 
 
 
