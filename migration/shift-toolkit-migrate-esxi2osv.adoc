@@ -405,7 +405,7 @@ Assicurarsi che siano soddisfatti i seguenti prerequisiti:
 
 * Cluster OpenShift con operatore OpenShift Virtualization e driver NetApp Trident CSI installati
 * MTV 2.9.4 (che include la modalità di conversione)
-* link:https://mysupport.netapp.com/site/tools/tool-eula/netapp-shift-toolkit/download["Kit di strumenti per il cambio"]installato
+* link:https://mysupport.netapp.com/site/tools/tool-eula/netapp-shift-toolkit["Kit di strumenti per il cambio"]installato
 +
 
 NOTE: Poiché viene utilizzata solo l'API di Shift Toolkit, non è necessario configurare gruppi di risorse o progetti di Shift Toolkit.

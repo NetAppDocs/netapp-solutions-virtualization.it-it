@@ -48,7 +48,7 @@ Shift Toolkit supporta conversioni a livello di disco di dischi virtuali tra hyp
 
 image::shift-toolkit-001.png[Panoramica del NetApp Shift Toolkit]
 
-È possibile scaricare il toolkit Shiftlink:https://mysupport.netapp.com/site/tools/tool-eula/vm-data-collector["Qui"] ed è disponibile solo per i sistemi Windows.
+È possibile scaricare il toolkit Shiftlink:https://mysupport.netapp.com/site/tools/tool-eula/netapp-shift-toolkit["Qui"] ed è disponibile solo per i sistemi Windows.
 
 
 

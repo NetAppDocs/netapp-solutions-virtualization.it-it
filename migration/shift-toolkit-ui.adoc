@@ -22,17 +22,20 @@ Configurare Shift Toolkit per automatizzare la migrazione o la conversione delle
 
 * Utilizzando il browser, accedi all'interfaccia utente di Shift Toolkit inserendo `http://<IP address specified during installation>:3001`
 +
-Nota: per un'esperienza ottimale, utilizzare Google Chrome o Internet Explorer.
+
+NOTE: Per un'esperienza ottimale, utilizza Google Chrome o Internet Explorer.
 
 * Accedi all'interfaccia utente utilizzando le credenziali predefinite come di seguito: Nome utente: admin Password: admin
 +
 image::shift-toolkit-050.png[Diagramma della schermata di accesso NetApp Shift Toolkit]
 
 +
-Nota: gli amministratori sono tenuti a modificare le proprie credenziali durante l'accesso iniziale.
+
+NOTE: Gli amministratori sono tenuti a modificare le proprie credenziali durante l'accesso iniziale.
 
 +
-Nota: dopo la modifica obbligatoria della password, è possibile modificare anche le credenziali di amministratore utilizzando l'opzione "Cambia password" dopo aver effettuato l'accesso alla GUI.
+
+NOTE: Dopo la modifica obbligatoria della password, è possibile modificare anche le credenziali di amministratore utilizzando l'opzione "Cambia password" dopo aver effettuato l'accesso alla GUI.
 
 +
 image::shift-toolkit-051.png[Diagramma della schermata di modifica della password NetApp Shift Toolkit]
@@ -59,7 +62,8 @@ Il primo passo è scoprire e aggiungere i dettagli dell'hypervisor di origine e 
 
 image::shift-toolkit-053.png[Finestra di dialogo della finestra di dialogo Aggiungi siti di Shift Toolkit]
 
-Nota: i siti possono essere aggiunti anche tramite l'opzione Scopri.
+
+NOTE: I siti possono essere aggiunti anche tramite l'opzione Scopri.
 
 Aggiungere le seguenti piattaforme:
 
@@ -105,9 +109,11 @@ image::shift-toolkit-055.png[Finestra di dialogo della finestra di dialogo Aggiu
 
 Una volta aggiunto, Shift Toolkit eseguirà una rilevazione automatica e visualizzerà le VM insieme alle informazioni sui metadati rilevanti. Shift Toolkit rileverà automaticamente le reti e le VLAN utilizzate dalle VM e le popolerà.
 
-Nota: se vengono apportate modifiche al sito di origine, assicurarsi di eseguire la ricerca per recuperare le informazioni più recenti.  Per farlo, clicca sui 3 punti accanto al nome del sito e poi su "Scopri sito".
 
-Nota: l'inventario delle VM viene aggiornato automaticamente ogni 24 ore.
+NOTE: Se vengono apportate modifiche al sito di origine, assicurarsi di eseguire la scoperta per recuperare le informazioni più recenti. Per farlo, clicca sui 3 punti accanto al nome del sito e poi su "Scopri sito".
+
+
+NOTE: L'inventario delle VM viene aggiornato automaticamente ogni 24 ore.
 
 image::shift-toolkit-056.png[Finestra di dialogo della finestra di dialogo Aggiungi nuovo sito di Shift Toolkit per scoprire un sito]
 
@@ -160,7 +166,8 @@ Selezionare "Accetta certificato autofirmato".
 * Una volta fatto, clicca su "Crea sito"
 
 
-Nota: il sistema di archiviazione di origine e di destinazione deve essere lo stesso, poiché la conversione del formato del disco avviene a livello di volume e all'interno dello stesso volume.
+
+NOTE: Il sistema di archiviazione di origine e di destinazione deve essere lo stesso, poiché la conversione del formato del disco avviene a livello di volume e all'interno dello stesso volume.
 
 image::shift-toolkit-060.png[Finestra di dialogo della finestra di dialogo Aggiungi sito di Shift Toolkit per i dettagli della destinazione]
 
@@ -172,7 +179,8 @@ Il passaggio successivo consiste nel raggruppare le VM richieste nei rispettivi 
 
 Una volta aggiunte le piattaforme, raggruppa le VM che desideri migrare o convertire in gruppi di risorse.  I gruppi di risorse del toolkit Shift consentono di raggruppare un set di VM dipendenti in gruppi logici che contengono i rispettivi ordini di avvio e ritardi di avvio.
 
-Nota: assicurarsi che i Qtree siano predisposti (come indicato nella sezione dei prerequisiti) prima di creare i gruppi di risorse.
+
+NOTE: Prima di creare i gruppi di risorse, assicurarsi che i Qtree siano predisposti (come indicato nella sezione dei prerequisiti).
 
 Per iniziare a creare gruppi di risorse, fare clic sulla voce di menu "Crea nuovo gruppo di risorse".
 
@@ -193,16 +201,19 @@ image::shift-toolkit-062.png[Finestra di dialogo dell'interfaccia utente Crea nu
 . Clicca su “Continua”
 . Selezionare le VM appropriate utilizzando l'opzione di ricerca. L'opzione di filtro predefinita è "Datastore".
 +
-Nota: spostare le VM da convertire o migrare in un datastore designato su un SVM ONTAP appena creato prima della conversione. Ciò consente di isolare il datastore NFS di produzione e il datastore designato può essere utilizzato per lo staging delle macchine virtuali.
+
+NOTE: Spostare le VM da convertire o migrare in un datastore designato su un SVM ONTAP appena creato prima della conversione. Ciò consente di isolare il datastore NFS di produzione e il datastore designato può essere utilizzato per lo staging delle macchine virtuali.
 
 +
-Nota: per l'ambiente OpenShift, i VMDK devono essere riposizionati nei volumi corrispondenti per replicare la struttura PVC (Persistent Volume Claim) utilizzando il driver di archiviazione NAS ONTAP .  Nelle versioni future saranno incorporati ulteriori miglioramenti per sfruttare il driver economico ONTAP NAS.
+
+NOTE: Per l'ambiente OpenShift, i VMDK devono essere riposizionati nei volumi corrispondenti per replicare la struttura PVC (Persistent Volume Claim) utilizzando il driver di archiviazione NAS ONTAP . Nelle versioni future saranno incorporati ulteriori miglioramenti per sfruttare il driver economico ONTAP NAS.
 
 +
 image::shift-toolkit-063.png[Finestra di dialogo dell'interfaccia utente Crea nuovo gruppo di risorse]
 
 +
-Nota: in questo contesto, il menu a discesa dei datastore mostrerà solo i datastore NFSv3. Gli archivi dati NFSv4 non verranno visualizzati.
+
+NOTE: In questo contesto, il menu a discesa dei datastore mostrerà solo i datastore NFSv3. Gli archivi dati NFSv4 non verranno visualizzati.
 
 +
 image::shift-toolkit-064.png[Finestra di dialogo dell'interfaccia utente Crea nuovo gruppo di risorse]
@@ -212,13 +223,16 @@ image::shift-toolkit-064.png[Finestra di dialogo dell'interfaccia utente Crea nu
 image::shift-toolkit-065.png[Finestra di dialogo dell'interfaccia utente Crea nuovo gruppo di risorse]
 
 +
-Nota: assicurarsi che il percorso di destinazione (in cui sono archiviate le VM convertite) sia impostato su un qtree durante la conversione delle VM.  Impostare il percorso di destinazione sul qtree appropriato.
+
+NOTE: Assicurarsi che il percorso di destinazione (in cui sono archiviate le VM convertite) sia impostato su un qtree durante la conversione delle VM. Impostare il percorso di destinazione sul qtree appropriato.
 
 +
-Nota: è possibile creare più qtree e utilizzarli per archiviare i dischi VM convertiti.
+
+NOTE: È possibile creare più qtree e utilizzarli per archiviare i dischi VM convertiti.
 
 +
-Nota: le macchine virtuali possono essere eseguite su datastore distribuiti e Shit Toolkit le rileverà automaticamente; tuttavia, per ogni volume dovrebbe essere mappato un qtree.
+
+NOTE: Le macchine virtuali possono essere eseguite su datastore distribuiti e Shit Toolkit le rileverà automaticamente; tuttavia, per ogni volume dovrebbe essere mappato un qtree.
 
 +
 Possibilità di migrare VM con VMDK distribuiti su più volumi. L'interfaccia utente del toolkit Shift seleziona automaticamente tutti i volumi distribuiti che fanno parte di una VM o delle VM selezionate per quello specifico RG.  Verranno elencati tutti i volumi nella pagina RG in cui eseguiamo il mapping datastore-qtree.
@@ -235,7 +249,8 @@ image::shift-toolkit-067.png[Finestra di dialogo dell'interfaccia utente Crea nu
 image::shift-toolkit-068.png[Finestra di dialogo dell'interfaccia utente Crea nuovo gruppo di risorse]
 
 +
-Nota: nel caso in cui sia necessario modificare il gruppo di risorse per aggiungere o rimuovere macchine virtuali, utilizzare questa opzione accanto al nome del gruppo di risorse e selezionare "Modifica gruppo di risorse".
+
+NOTE: Nel caso in cui sia necessario modificare il gruppo di risorse per aggiungere o rimuovere macchine virtuali, utilizzare questa opzione accanto al nome del gruppo di risorse e selezionare "Modifica gruppo di risorse".
 
 
 
@@ -266,14 +281,16 @@ image::shift-toolkit-071.png[Finestra di dialogo dell'interfaccia utente Crea nu
 image::shift-toolkit-072.png[Finestra di dialogo dell'interfaccia utente Crea nuovi progetti]
 
 +
-Nota: per la migrazione di prova, la selezione predefinita è "Non configurare la rete" e Shift Toolkit non esegue l'assegnazione dell'indirizzo IP.  Una volta convertito il disco e acquistata la macchina virtuale sul rispettivo lato hypervisor, assegnare manualmente gli switch di rete a bolla per evitare qualsiasi collisione con la rete di produzione.
+
+NOTE: Per la migrazione di prova, la selezione predefinita è "Non configurare la rete" e Shift Toolkit non esegue l'assegnazione dell'indirizzo IP. Una volta convertito il disco e acquistata la macchina virtuale sul rispettivo lato hypervisor, assegnare manualmente gli switch di rete a bolla per evitare qualsiasi collisione con la rete di produzione.
 
 +
 image::shift-toolkit-073.png[Finestra di dialogo dell'interfaccia utente Crea nuovi progetti]
 
 . In base alla selezione delle VM, le mappature di archiviazione verranno selezionate automaticamente.
 +
-Nota: assicurarsi che il qtree sia stato predisposto in anticipo e che siano state assegnate le autorizzazioni necessarie affinché la macchina virtuale possa essere creata e accesa.  Nota: nel caso di OpenShift, i PVC vengono creati utilizzando Trident CSI e non è necessario pre-creare qtree.
+
+NOTE: Assicurarsi che il qtree sia stato predisposto in anticipo e che siano state assegnate le autorizzazioni necessarie affinché la macchina virtuale possa essere creata e accesa.  NOTA: nel caso di OpenShift, i PVC vengono creati utilizzando Trident CSI e non è necessario pre-creare qtree.
 
 . Nei dettagli della VM, fornire l'account di servizio e credenziali utente valide per ciascun tipo di sistema operativo.  Viene utilizzato per connettersi alla macchina virtuale per creare ed eseguire determinati script necessari per rimuovere gli strumenti VMware ed eseguire il backup dei dettagli di configurazione IP.
 +
@@ -327,7 +344,8 @@ image::shift-toolkit-075.png[Finestra di dialogo dell'interfaccia utente del gru
 image::shift-toolkit-076.png[Finestra di dialogo dell'interfaccia utente del gruppo di risorse]
 
 +
-Nota: durante la pianificazione, scegliere una data che sia almeno 30 minuti avanti rispetto all'orario corrente di Shift VM. Ciò serve a garantire che il flusso di lavoro abbia tempo sufficiente per preparare le VM all'interno del gruppo di risorse.
+
+NOTE: Durante la pianificazione, scegli una data che sia almeno 30 minuti avanti rispetto all'orario corrente di Shift VM. Ciò serve a garantire che il flusso di lavoro abbia tempo sufficiente per preparare le VM all'interno del gruppo di risorse.
 
 . Una volta creato il progetto, viene avviato un processo prepareVM che esegue automaticamente gli script sulle VM di origine per prepararle alla migrazione
 +
@@ -346,10 +364,12 @@ image::shift-toolkit-078.png[Finestra di dialogo dell'interfaccia utente del gru
 image::shift-toolkit-079.png[Finestra di dialogo dell'interfaccia utente del gruppo di risorse]
 
 +
-Nota: per una VM sorgente Linux che esegue CentOS o Red Hat, Shift Toolkit è intelligente e installa automaticamente i driver Hyper-V necessari. Questi driver devono essere presenti nella VM di origine prima della conversione del disco per garantire che la VM possa avviarsi correttamente dopo la conversione.
+
+NOTE: Per una macchina virtuale sorgente Linux che esegue CentOS o Red Hat, il toolkit Shift è intelligente e installa automaticamente i driver Hyper-V necessari. Questi driver devono essere presenti nella VM di origine prima della conversione del disco per garantire che la VM possa avviarsi correttamente dopo la conversione.
 
 +
-Nota: per informazioni dettagliate, fare riferimento alink:https://access.redhat.com/solutions/3465011["Sistema bloccato in dracut dopo la migrazione di una VM RHEL a Hyper-V"] .
+
+NOTE: Per informazioni dettagliate, fare riferimento alink:https://access.redhat.com/solutions/3465011["Sistema bloccato in dracut dopo la migrazione di una VM RHEL a Hyper-V"] .
 
 +
 Una volta completato correttamente il processo prepareVM (come mostrato nello screenshot qui sotto), le VM sono pronte per la migrazione e lo stato del blueprint verrà aggiornato in "Attivo".
