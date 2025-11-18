@@ -1,0 +1,116 @@
+---
+sidebar: sidebar 
+permalink: migration/shift-toolkit-install-prereqs.html 
+keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, hyper-v, proxmox, install, shift, toolkit, prereqs 
+summary: 'Prima di installare Shift Toolkit, verificare che l"ambiente soddisfi i requisiti hardware, di connettività e di archiviazione ONTAP .' 
+---
+= Requisiti per installare NetApp Shift Toolkit
+:allow-uri-read: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di installare Shift Toolkit, verificare che l'ambiente soddisfi i requisiti hardware, di connettività e di archiviazione ONTAP .
+
+
+
+== Requisiti hardware
+
+Assicurarsi che il server Shift Toolkit soddisfi i seguenti requisiti hardware minimi:
+
+* *CPU*: 4 vCPU
+* *Memoria*: minimo 8 GB
+* *Spazio su disco*: minimo 100 GB (900 MB disponibili per l'installazione)
+
+
+
+
+== Requisiti di connettività
+
+Verificare che siano soddisfatti i seguenti requisiti di connettività:
+
+* Shift Toolkit deve essere installato su un server Windows autonomo (fisico o virtuale)
+* L'hypervisor e l'ambiente di archiviazione devono essere configurati per consentire a Shift Toolkit di interagire con tutti i componenti
+* Per le migrazioni Hyper-V, il server Shift, il server ONTAP CIFS e i server Hyper-V devono trovarsi nello stesso dominio Windows Active Directory
+* Sono supportati più LIF per CIFS e NFS per l'uso con macchine virtuali di archiviazione (SVM) durante le conversioni di VM
+* Per le operazioni CIFS, le impostazioni dell'ora devono essere sincronizzate tra il controller di dominio Windows e il controller di archiviazione ONTAP
+
+
+
+
+== Configurazioni di archiviazione ONTAP
+
+Configurare i componenti di archiviazione ONTAP , tra cui SVM, qtree e condivisioni CIFS, per supportare le migrazioni di Shift Toolkit.
+
+
+
+=== Crea un nuovo SVM (consigliato)
+
+Sebbene Shift Toolkit consenta l'utilizzo di una SVM esistente, NetApp consiglia di creare una SVM dedicata per le operazioni di migrazione.
+
+La creazione di una nuova SVM offre i seguenti vantaggi:
+
+* Isola le operazioni di migrazione dai carichi di lavoro di produzione
+* Garantisce che l'SVM soddisfi i requisiti di Shift Toolkit senza modificare le configurazioni di produzione
+* Semplifica la configurazione per le migrazioni bidirezionali tra VMware e Hyper-V
+
+
+Utilizzare Storage vMotion per spostare le VM in un nuovo datastore NFSv3 designato sulla SVM dedicata senza tempi di inattività. Questo approccio garantisce che le VM migrate non risiedano sulla SVM di produzione.
+
+Utilizzare ONTAP CLI, NetApp PowerShell Toolkit o ONTAP System Manager per creare il nuovo SVM. Per i passaggi dettagliati, fare riferimento alla documentazione ONTAP per link:https://docs.netapp.com/us-en/ontap/smb-config/create-svms-data-access-task.html["provisioning di un nuovo SVM"] con entrambi i protocolli NFS e SMB abilitati.
+
+
+NOTE: Per la migrazione bidirezionale tra VMware e Hyper-V, abilitare entrambi i protocolli NFS e SMB su SVM e volumi forniti.
+
+
+
+=== Requisiti Qtree
+
+Creare qtree sul volume che ospiterà le VM convertite. I Qtree separano e archiviano i file su disco convertiti in base all'hypervisor di destinazione.
+
+*Stile di sicurezza per tipo di migrazione:*
+
+* *ESXi a Hyper-V*: stile di sicurezza NTFS (memorizza i VHDX convertiti)
+* *Hyper-V a ESXi*: stile di sicurezza UNIX (memorizza i VMDK convertiti)
+* *Virtualizzazione da ESXi a OpenShift (QCOW2)*: stile di sicurezza UNIX
+* *ESXi a OLVM (RAW o QCOW2)*: stile di sicurezza UNIX
+
+
+image::shift-toolkit-011.png[Stile di sicurezza Qtree per tipo di migrazione]
+
+Shift Toolkit non verifica gli stili di sicurezza qtree. Crea qtree con lo stile di sicurezza appropriato per l'hypervisor di destinazione e il formato del disco.
+
+Per i passaggi dettagliati, fare riferimento a link:https://docs.netapp.com/us-en/ontap/nfs-config/create-qtree-task.html["Crea un qtree"] nella documentazione ONTAP .
+
+image::shift-toolkit-012.png[Creazione di un qtree con stile di sicurezza]
+
+
+IMPORTANT: Il percorso di destinazione deve trovarsi sullo stesso volume della VM di origine.
+
+
+NOTE: Per OpenShift Virtualization, i file QCOW2 convertiti possono essere facoltativamente posizionati direttamente sul volume senza utilizzare un qtree. Per eseguire questa conversione, utilizzare l'interfaccia utente grafica (GUI) o le API di Shift Toolkit.
+
+
+
+=== Requisiti per le azioni CIFS
+
+Per le migrazioni Hyper-V, creare una condivisione CIFS per archiviare i dati delle VM convertite. Sia la condivisione NFS (VM di origine) sia la condivisione CIFS (VM convertite) devono risiedere sullo stesso volume.
+
+Configurare la condivisione CIFS con le seguenti proprietà:
+
+* SMB 3.0 abilitato (abilitato per impostazione predefinita)
+* Proprietà continuamente disponibile abilitata
+* Criteri di esportazione per SMB disabilitati su SVM
+* Autenticazione Kerberos e NTLMv2 consentita sul dominio
+
+
+Per i passaggi dettagliati, fare riferimento a link:https://docs.netapp.com/us-en/ontap/smb-config/create-share-task.html["Crea una condivisione SMB"] nella documentazione ONTAP . Selezionare la proprietà di disponibilità continua insieme ad altre proprietà predefinite.
+
+image::shift-toolkit-013.png[Creazione di una condivisione CIFS]
+
+image::shift-toolkit-014.png[Conferma della creazione della quota CIFS]
+
+
+NOTE: ONTAP crea la condivisione con l'autorizzazione di condivisione predefinita di Windows: Tutti/Controllo completo.

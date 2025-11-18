@@ -1,0 +1,57 @@
+---
+sidebar: sidebar 
+permalink: migration/shift-toolkit-install-prepare.html 
+keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, hyper-v, proxmox, install, shift, toolkit 
+summary: Preparati a installare NetApp Shift Toolkit assicurandoti che il tuo ambiente soddisfi i prerequisiti e selezionando il pacchetto di installazione appropriato per il tuo scenario di distribuzione. 
+---
+= Prepararsi all'installazione di NetApp Shift Toolkit per l'archiviazione ONTAP
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Preparati a installare NetApp Shift Toolkit assicurandoti che il tuo ambiente soddisfi i prerequisiti e selezionando il pacchetto di installazione appropriato per il tuo scenario di distribuzione.
+
+
+
+== Prima di iniziare
+
+Verifica che il tuo ambiente soddisfi i seguenti requisiti:
+
+* Windows Server 2019, 2022 o 2025
+* Macchina virtuale dedicata per l'installazione di Shift Toolkit
+* Connettività di rete tra ambienti di origine e di destinazione
+* Macchina virtuale in esecuzione su VMware vSphere o Microsoft Hyper-V
+
+
+
+NOTE: Installa Shift Toolkit su una VM dedicata per abilitare la gestione di più hypervisor di origine e di destinazione da un singolo server.
+
+
+
+== Seleziona un pacchetto di installazione
+
+Shift Toolkit è disponibile in due pacchetti di installazione da link:https://mysupport.netapp.com/site/tools/tool-eula/netapp-shift-toolkit["NetApp Toolchest"]:
+
+*Installatore online (~130 MB)*
+
+* Scarica e installa i prerequisiti da Internet durante l'installazione
+* Richiede la connettività Internet durante l'installazione
+* Dimensioni del pacchetto più piccole per un download più veloce
+
+
+*Programma di installazione offline (~1,2 GB)*
+
+* Include tutti i prerequisiti inclusi nel pacchetto
+* Supporta l'installazione su VM senza accesso a Internet
+* Nessuna configurazione proxy richiesta
+* Fornisce un maggiore controllo sul processo di installazione
+
+
+image::shift-toolkit-010.png[Opzioni del pacchetto di installazione di Shift Toolkit]
+
+
+TIP: Utilizzare il programma di installazione offline per ambienti air-gapped o quando è necessario il controllo completo sul processo di installazione senza dipendenze esterne.

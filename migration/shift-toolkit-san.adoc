@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: migration/shift-toolkit-san.html 
-keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, hyper-v, proxmox 
+keywords: netapp, vmware, esxi, vm, migration, openshift, virtualization, hyper-v, proxmox, san, shift, toolkit 
 summary: Migra le VM dai datastore basati su SAN ai NAS prima di convertirle con Shift Toolkit, utilizzando VMware Storage vMotion e Hyper-V Storage Live Migration per mantenere la continuità aziendale. 
 ---
 = Migrazione di VM da ambienti SAN per la conversione con Shift Toolkit
