@@ -60,7 +60,7 @@ Gli host Proxmox VE devono disporre di interfacce FC, Ethernet o altre interfacc
 
 *SAN*
 
-* Estendi il cluster su domini di errore con SnapMirror ActiveSync.
+* Estendi il cluster su domini di errore con SnapMirror ActiveSync. Controllare sempre https://mysupport.netapp.com/matrix/#welcome["Strumento di matrice di interoperabilità"] per le configurazioni supportate.
 * I modelli ASA forniscono multipathing attivo/attivo e failover rapido del percorso.
 * Supporto per i protocolli FC, iSCSI, NVMe-oF.
 * Supporto per l'autenticazione reciproca iSCSI CHAP.
@@ -237,14 +237,7 @@ image:proxmox-ontap-009.png["Navigazione nell'archiviazione NFS"]
 +
 image:proxmox-ontap-010.png["Aggiunta di archiviazione NFS"]
 
-. Per il trunking di sessione, su ogni host Proxmox VE, aggiornare il file /etc/fstab per montare la stessa esportazione NFS utilizzando un indirizzo lif diverso insieme all'opzione max_connect e alla versione NFS.
-+
-image:proxmox-ontap-011.png["voci fstab per il trunk della sessione"]
-
-. Ecco il contenuto in /etc/pve/storage.cfg per NFS.
-+
-image:proxmox-ontap-012.png["file di configurazione di archiviazione per NFS"]
-
+. Per abilitare l'opzione nConnect, vai alla shell su uno qualsiasi dei nodi del cluster e digita pvesm set pvenfs01 --options nconnect=4 dove pvenfs01 è l'ID di archiviazione creato nel passaggio precedente. Si noti che se si prevede di utilizzare la funzionalità di trunking, assicurarsi che venga utilizzato almeno NFS v4.1 e impostare l'opzione trunkdiscovery. pvesm set pvenfs01 --options vers=4.1,trunkdiscovery
 
 
 ====
