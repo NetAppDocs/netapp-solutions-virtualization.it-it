@@ -171,7 +171,7 @@ image:vmware-vcf-asa-021.png["Riquadro delle attività recenti del client vSpher
 == Informazioni aggiuntive
 
 * Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"^] .
-* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us-en/vmware-cis/vcf.html["Documentazione di VMware Cloud Foundation"^] .
+* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf.html["Documentazione di VMware Cloud Foundation"^] .
 * Per informazioni sull'utilizzo di datastore iSCSI VMFS con VMware, fare riferimento alink:vmw-vmfs-iscsi.html["vSphere VMFS datastore - backend di archiviazione iSCSI con ONTAP"] .
 * Per demo video di questa soluzione, fare riferimento alink:../videos/vmware-videos.html#vmware-datastore-provisioning-with-ontap["Provisioning del datastore VMware"] .
 

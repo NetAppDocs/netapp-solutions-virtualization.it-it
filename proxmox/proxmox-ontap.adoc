@@ -37,7 +37,7 @@ Gli host Proxmox VE devono disporre di interfacce FC, Ethernet o altre interfacc
 * Blocco delle copie snapshot a prova di manomissione
 * Supporto per la crittografia
 * FabricPool suddivide i dati inattivi in livelli per l'archivio oggetti.
-* Integrazione BlueXP e CloudInsights.
+* Integrazione NetApp Console e Data Infrastructure Insights .
 * Trasferimento dati scaricato da Microsoft (ODX)
 
 

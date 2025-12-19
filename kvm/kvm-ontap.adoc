@@ -39,7 +39,7 @@ Gli host KVM devono disporre di interfacce FC, Ethernet o altre interfacce suppo
 * Blocco delle copie snapshot a prova di manomissione
 * Supporto per la crittografia
 * FabricPool suddivide i dati inattivi in livelli per l'archivio oggetti.
-* Integrazione di BlueXP e Data Infrastructure Insights .
+* Integrazione NetApp Console e Data Infrastructure Insights .
 * Trasferimento dati scaricato da Microsoft (ODX)
 
 

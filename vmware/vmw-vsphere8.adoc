@@ -20,7 +20,7 @@ La partnership tra NetApp e VMware è l'unica in cui un singolo sistema di stora
 
 == All-Flash moderno e connesso al cloud per vSphere 8
 
-Le implementazioni ONTAP vengono eseguite su una varietà di piattaforme, tra cui appliance progettate da NetApp, hardware di base e nel cloud pubblico.  ONTAP offre storage unificato, indipendentemente dal fatto che l'accesso avvenga tramite protocolli SAN o NAS e in configurazioni che spaziano da flash ad alta velocità a supporti a basso costo fino allo storage basato su cloud.  NetApp offre anche piattaforme flash appositamente progettate per semplificare e segmentare le esigenze di storage senza creare silos.  Inoltre, NetApp offre un software che consente di spostare facilmente i dati tra ambienti locali e cloud.  Infine, NetApp BlueXP fornisce un'unica dashboard per la gestione di tutte queste relazioni e dello spazio di archiviazione.
+Le implementazioni ONTAP vengono eseguite su una varietà di piattaforme, tra cui appliance progettate NetApp, hardware di base e nel cloud pubblico. ONTAP offre storage unificato, indipendentemente dal fatto che si acceda tramite protocolli SAN o NAS e in configurazioni che spaziano da flash ad alta velocità a supporti a basso costo fino allo storage basato su cloud. NetApp offre anche piattaforme flash appositamente progettate per semplificare e segmentare le esigenze di storage senza creare silos. Inoltre, NetApp offre software che consentono di spostare facilmente i dati tra ambienti locali e cloud. Infine, NetApp Console fornisce un'unica dashboard per la gestione di tutte queste relazioni e dello spazio di archiviazione.
 
 * link:https://docs.netapp.com/us-en/ontap-systems-family/intro-family.html["Piattaforme NetApp"^]
 

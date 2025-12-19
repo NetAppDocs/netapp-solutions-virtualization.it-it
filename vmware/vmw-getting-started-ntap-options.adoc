@@ -88,7 +88,7 @@ Con il percorso attivo-attivo, sia le acquisizioni pianificate che quelle non pi
 
 Per maggiori informazioni vedere https://www.netapp.com/pdf.html?item=/media/85671-tr-4968.pdf["TR-4968, NetApp All-SAS Array: disponibilità e integrità dei dati con NetApp ASA"] . {nbsp}
 
-Per informazioni dettagliate vedere il https://www.netapp.com/data-storage/all-flash-san-storage-array["Pagina di destinazione di NetApp ASA"] . {nbsp}
+Per informazioni dettagliate vedere il https://www.netapp.com/asa/["Pagina di destinazione di NetApp ASA"]. {nbsp}
 
 
 

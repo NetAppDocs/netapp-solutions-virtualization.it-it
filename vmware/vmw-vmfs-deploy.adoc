@@ -425,7 +425,7 @@ Grazie all'integrazione con i servizi 1P forniti da NetApp su ogni iperscalare, 
 
 === Disaster Recovery tra siti on-premise
 
-Per maggiori dettagli, visitarelink:https://docs.netapp.com/us-en/netapp-solutions-cloud/vmware/vmw-hybrid-dr-vmfs.html["DR tramite BlueXP DRaaS per datastore VMFS"^]
+Per maggiori dettagli, visitare link:https://docs.netapp.com/us-en/netapp-solutions-cloud/vmware/vmw-hybrid-dr-vmfs.html["DR tramite NetApp Disaster Recovery per datastore VMFS"^]
 
 
 

@@ -30,6 +30,9 @@ entries:
       url: "/migration/shift-toolkit-migrate-hyperv2esxi.html"
     - title: Migrazione delle VM da VMware ESXi a Red Hat OpenShift Virtualization
       url: "/migration/shift-toolkit-migrate-esxi2osv.html"
+    - title: Migrare le VM da VMware ESXi a Red Hat OpenShift Virtualization utilizzando
+        Migration Toolkit for Virtualization
+      url: "/migration/shift-toolkit-migrate-esxi2osvmtv.html"
     - title: Migrazione delle VM da VMware ESXi a Oracle Linux Virtualization Manager
         (OLVM)
       url: "/migration/shift-toolkit-migrate-esxi2olvm.html"

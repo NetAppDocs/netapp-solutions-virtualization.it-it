@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmw-demos-videos.html 
-keywords: vSphere, cloud, hybrid cloud, AWS, Azure, Google cloud, snapmirror cloud, cloud backup service, BlueXP Copy and Sync, FabricPool, ONTAP 
+keywords: vSphere, cloud, hybrid cloud, AWS, Azure, Google cloud, snapmirror cloud, cloud backup service, NetApp Copy and Sync, NetApp Backup and Recovery, FabricPool, ONTAP 
 summary: 'Questa pagina fornisce un"introduzione a video e tutorial.' 
 ---
 = Guarda video e demo sulla virtualizzazione con NetApp
@@ -49,9 +49,9 @@ video::8df4ad1f-83ad-448b-9405-b01200fb2567[panopto,width=360]
 .Soluzioni di protezione dei dati 3-2-1
 [%collapsible%open]
 ====
-Le soluzioni di protezione dei dati 3-2-1 combinano backup primari e secondari in sede, utilizzando la tecnologia SnapMirror , con copie replicate su storage di oggetti tramite BlueXP backup and recovery.
+Le soluzioni di protezione dei dati 3-2-1 combinano backup primari e secondari in sede, utilizzando la tecnologia SnapMirror , con copie replicate su storage di oggetti tramite NetApp Backup and Recovery.
 
-.Protezione dei dati 3-2-1 per datastore VMFS con SnapCenter Plug-in for VMware vSphere e BlueXP Backup e ripristino per macchine virtuali
+.Protezione dei dati 3-2-1 per datastore VMFS con SnapCenter Plug-in for VMware vSphere e NetApp Backup and Recovery per macchine virtuali
 video::7c21f3fc-4025-4d8f-b54c-b0e001504c76[panopto,width=360]
 ====
 .VMware Cloud su AWS con AWS FSx ONTAP
