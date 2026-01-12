@@ -65,7 +65,7 @@ La soluzione VVF supporta sia i carichi di lavoro nativi Kubernetes sia quelli b
 * VMware vSphere
 * VMware vSAN
 * Aria Standard
-* VMware Tanzu Kubernetes Grid Service per vSphere
+* VMware vSphere Kubernetes vSphere
 * Switch distribuito vSphere
 
 

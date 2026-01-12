@@ -31,8 +31,6 @@ indexpage:
       url: vmware-videos.html#azure-vmware-solutions
     - title: VMware Cloud Foundation con NetApp ONTAP
       url: vmware-videos.html#vmware-cloud-foundation-with-netapp-ontap
-    - title: NetApp con VMware Tanzu
-      url: vmware-videos.html#netapp-with-vmware-tanzu
     - title: Cloud Insights NetApp
       url: vmware-videos.html#netapp-cloud-insights
   - title: Virtualizzazione multicloud ibrida

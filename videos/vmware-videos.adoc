@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: videos/vmware-videos.html 
 summary: 'Video e demo che mostrano l"integrazione delle soluzioni VMware con le tecnologie di storage NetApp' 
-keywords: vmware, vsphere, vcf, tanzu, snapcenter, ontap tools, videos, demos 
+keywords: vmware, vsphere, vcf, snapcenter, ontap tools, videos, demos 
 ---
 = Guarda i video sulla virtualizzazione VMware con NetApp
 :hardbreaks:
@@ -14,7 +14,7 @@ keywords: vmware, vsphere, vcf, tanzu, snapcenter, ontap tools, videos, demos
 
 
 [role="lead"]
-Guarda video e demo che illustrano l'integrazione di VMware con le soluzioni di storage NetApp .  Scopri come utilizzare NetApp ONTAP Tools per VMware vSphere, il SnapCenter Plug-in for VMware vSphere, la protezione dei dati 3-2-1 e come NetApp interagisce con VMware Cloud Foundation e Tanzu.
+Guarda video e demo che illustrano l'integrazione di VMware con le soluzioni di storage NetApp . Scopri come utilizzare NetApp ONTAP Tools per VMware vSphere, il SnapCenter Plug-in for VMware vSphere, la protezione dei dati 3-2-1 e come NetApp interagisce con VMware Cloud Foundation e VMware vSphere Foundation.
 
 
 
@@ -88,16 +88,6 @@ video::255640f5-4dff-438c-8d50-b01200f017d1[panopto,width=360]
 video::9b66ac8d-d2b1-4ac4-a33c-b16900f67df6[panopto]
 .Datastore iSCSI come storage supplementare per i domini di gestione VCF
 video::1d0e1af1-40ae-483a-be6f-b156015507cc[panopto]
-
-
-== NetApp con VMware Tanzu
-
-.Come utilizzare vVols con NetApp e VMware Tanzu Basic, parte 1
-video::ZtbXeOJKhrc[youtube,width=360]
-.Come utilizzare vVols con NetApp e VMware Tanzu Basic, parte 2
-video::FVRKjWH7AoE[youtube,width=360]
-.Come utilizzare vVols con NetApp e VMware Tanzu Basic, parte 3
-video::Y-34SUtTTtU[youtube,width=360]
 
 
 == Cloud Insights NetApp
