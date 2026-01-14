@@ -1,0 +1,129 @@
+---
+sidebar: sidebar 
+permalink: proxmox/proxmox-ontap-nvme-tcp.html 
+keywords: netapp, proxmox, proxmox ve, nvme, nvme-tcp, lvm, ontap, storage 
+summary: 'Configurare Logical Volume Manager (LVM) con NVMe su TCP per Proxmox Virtual Environment utilizzando ONTAP. Questa procedura include l"installazione di nvme-cli, la configurazione dell"individuazione, il provisioning dello spazio dei nomi, l"impostazione del sottosistema e la creazione di gruppi di volumi per l"archiviazione condivisa.' 
+---
+= Configurare LVM con NVMe/TCP per Proxmox VE
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurare Logical Volume Manager (LVM) per l'archiviazione condivisa tra gli host Proxmox Virtual Environment (VE) utilizzando il protocollo NVMe su TCP con NetApp ONTAP. Questa configurazione fornisce un accesso allo storage a livello di blocco ad alte prestazioni su reti Ethernet standard utilizzando il moderno protocollo NVMe.
+
+.Pool condiviso LVM con NVMe/TCP tramite ONTAP
+video::80164fe4-06db-4c21-a25d-b22e0179c3d2[panopto,width=360]
+
+
+== Attività iniziali dell'amministratore della virtualizzazione
+
+Completare queste attività iniziali per preparare gli host Proxmox VE per la connettività NVMe/TCP e raccogliere le informazioni necessarie per l'amministratore dello storage.
+
+. Verificare che siano disponibili due interfacce VLAN Linux.
+. Su ogni host Proxmox nel cluster, eseguire il seguente comando per raccogliere le informazioni sull'iniziatore host.
++
+[source, shell]
+----
+nvme show-hostnqn
+----
+. Fornire le informazioni NQN dell'host raccolte all'amministratore dell'archiviazione e richiedere uno spazio dei nomi NVMe della dimensione richiesta.
+
+
+
+
+== Attività dell'amministratore dell'archiviazione
+
+Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza migliore.
+
+. Assicurarsi che l'SVM sia disponibile con il protocollo NVMe abilitato. Fare riferimento a link:https://docs.netapp.com/us-en/ontap/san-admin/create-nvme-namespace-subsystem-task.html["Documentazione sulle attività NVMe su ONTAP 9"].
+. Creare lo spazio dei nomi NVMe.
++
+.Mostra esempio
+[%collapsible]
+====
+image:proxmox-ontap-nvme-tcp-001.png["creazione dello spazio dei nomi nvme"]
+
+====
+. Creare il sottosistema e assegnare gli NQN host (se si utilizza la CLI). Seguire il link di riferimento sopra.
+. Assicurarsi che la protezione anti-ransomware sia abilitata nella scheda sicurezza.
+. Notificare all'amministratore della virtualizzazione che lo spazio dei nomi NVMe è stato creato.
+
+
+
+
+== Attività finali dell'amministratore della virtualizzazione
+
+Completare queste attività per configurare lo spazio dei nomi NVMe come storage LVM condiviso in Proxmox VE.
+
+. Passare a una shell su ciascun host Proxmox VE nel cluster e creare il file /etc/nvme/discovery.conf. Aggiorna i contenuti specifici per il tuo ambiente.
++
+[source, shell]
+----
+root@pxmox01:~# cat /etc/nvme/discovery.conf
+# Used for extracting default parameters for discovery
+#
+# Example:
+# --transport=<trtype> --traddr=<traddr> --trsvcid=<trsvcid> --host-traddr=<host-traddr> --host-iface=<host-iface>
+
+-t tcp -l 1800 -a 172.21.118.153
+-t tcp -l 1800 -a 172.21.118.154
+-t tcp -l 1800 -a 172.21.119.153
+-t tcp -l 1800 -a 172.21.119.154
+----
+. Accedi al sottosistema NVMe.
++
+[source, shell]
+----
+nvme connect-all
+----
+. Ispezionare e raccogliere i dettagli del dispositivo.
++
+[source, shell]
+----
+nvme list
+nvme netapp ontapdevices
+nvme list-subsys
+lsblk -l
+----
+. Creare il gruppo di volumi.
++
+[source, shell]
+----
+vgcreate pvens02 /dev/mapper/<device id>
+----
+. Utilizzo dell'interfaccia utente di gestione in `https:<proxmox node>:8006`, fare clic su Datacenter, selezionare Storage, fare clic su Aggiungi e selezionare LVM.
++
+.Mostra esempio
+[%collapsible]
+====
+image:proxmox-ontap-nvme-tcp-002.png["navigazione di archiviazione lvm"]
+
+====
+. Fornire il nome dell'ID di archiviazione, scegliere il gruppo di volumi esistente e selezionare il gruppo di volumi appena creato con la CLI. Seleziona l'opzione condivisa. Con Proxmox VE 9 e versioni successive, abilitare `Allow Snapshots as Volume-Chain` opzione, visibile quando la casella di controllo Avanzate è abilitata.
++
+.Mostra esempio
+[%collapsible]
+====
+image:proxmox-ontap-nvme-tcp-003.png["lvm su vg esistente"]
+
+====
+. Di seguito è riportato un esempio di file di configurazione dell'archiviazione per LVM tramite NVMe/TCP:
++
+.Mostra esempio
+[%collapsible]
+====
+image:proxmox-ontap-nvme-tcp-004.png["configurazione lvm su nvme tcp"]
+
+====
++
+Con Proxmox VE 9 e versioni successive, il file di configurazione dell'archiviazione include l'opzione aggiuntiva `snapshot-as-volume-chain 1` Quando `Allow Snapshots as Volume-Chain` è abilitato.
+
+
+
+
+NOTE: Il pacchetto nvme-cli include nvmef-autoconnect.service, che può essere abilitato per connettersi automaticamente alle destinazioni all'avvio. Per maggiori dettagli, fare riferimento alla documentazione nvme-cli.

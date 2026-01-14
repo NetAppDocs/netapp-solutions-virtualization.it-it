@@ -10,18 +10,38 @@ indexpage:
   tiles:
   - title: Iniziare
     links:
-    - title: Informazioni su Proxmox VE
+    - title: Scopri di più su Proxmox VE
       url: proxmox-overview.html
-    - title: Fornire storage ONTAP per Proxmox VE
+  - title: Fornire storage ONTAP per Proxmox VE
+    links:
+    - title: Architettura Proxmox VE e ONTAP
+      url: proxmox-ontap-architecture.html
+    - title: Tipi di archiviazione supportati
+      url: proxmox-storage-types.html
+    - title: Linee guida per la distribuzione
+      url: proxmox-deploy-guidelines.html
+    - title: Configurare i protocolli di archiviazione
       url: proxmox-ontap.html
+  - title: Proteggere i carichi di lavoro di Proxmox VE
+    links:
+    - title: Architettura del server di backup Proxmox
+      url: proxmox-pbs-architecture.html
+    - title: Requisiti e considerazioni sulla distribuzione
+      url: proxmox-pbs-requirements.html
+    - title: Configurare la protezione dei dati con Proxmox Backup Server
+      url: proxmox-wkld-dp-pbs.html
   - title: Risorse aggiuntive
     links:
-    - title: NetApp Storage e NVMe-oF per prestazioni rivoluzionarie negli ambienti
+    - title: Storage NetApp e NVMe-oF per prestazioni rivoluzionarie negli ambienti
         di virtualizzazione Proxmox
       url: https://www.credativ.de/en/blog/credativ-inside/netapp-storage-and-nvme-of-for-breakthrough-performance-in-proxmox-virtualization-environments/
+    - title: Linux Bridge vs Open vSwitch per Proxmox VE
+      url: https://community.netapp.com/t5/Tech-ONTAP-Blogs/Networking-with-Proxmox-VE/ba-p/465060
     - title: Documentazione Proxmox VE
       url: https://pve.proxmox.com/pve-docs/chapter-sysadmin.html#external_metric_server
     - title: Eseguire il backup e il ripristino di Proxmox VE
       url: https://pve.proxmox.com/pve-docs/chapter-vzdump.html
     - title: Conservazione per Proxmox VE
       url: https://pve.proxmox.com/pve-docs/chapter-pvesm.html
+    - title: Proxmox VE con storage SolidFire
+      url: https://community.netapp.com/t5/SolidFire-and-HCI/Proxmox-VE-with-SolidFire-NetApp-HCI/td-p/461937

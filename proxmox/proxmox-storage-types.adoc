@@ -1,0 +1,94 @@
+---
+sidebar: sidebar 
+permalink: proxmox/proxmox-storage-types.html 
+keywords: netapp, proxmox, proxmox ve, ontap, storage, nfs, smb, cifs, iscsi, fc, nvme, content types, vm disks, backups, templates 
+summary: Proxmox VE supporta più tipi di archiviazione con ONTAP , tra cui NFS e SMB per i protocolli NAS e FC, iSCSI e NVMe-oF per i protocolli SAN. Ogni protocollo supporta diversi tipi di contenuto, tra cui dischi VM, backup, volumi di container, immagini ISO e modelli. 
+---
+= Tipi di archiviazione supportati per Proxmox Virtual Environment
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Proxmox Virtual Environment (VE) supporta più protocolli di archiviazione con NetApp ONTAP, tra cui NFS e SMB per NAS e FC, iSCSI e NVMe-oF per SAN. Ogni protocollo supporta diversi tipi di contenuto Proxmox VE, tra cui dischi VM, backup, volumi di container, immagini ISO e modelli.
+
+
+
+== Supporto del protocollo NAS
+
+I protocolli NAS (NFS e SMB) supportano tutti i tipi di contenuto Proxmox VE e in genere vengono configurati una sola volta a livello di data center. Le VM guest possono utilizzare formati di disco raw, qcow2 o VMDK su storage NAS. Gli snapshot ONTAP possono essere resi visibili ai client per accedere a copie di dati in un dato momento.
+
+
+
+== Supporto del protocollo SAN
+
+I protocolli SAN (FC, iSCSI e NVMe-oF) sono in genere configurati per host e supportano i tipi di contenuto di immagini di contenitori e dischi VM in Proxmox VE. Le VM guest possono utilizzare formati di disco raw, VMDK o qcow2 su storage a blocchi.
+
+
+
+== Matrice di compatibilità del tipo di archiviazione
+
+[cols="25% 15% 15% 15% 15% 15%"]
+|===
+| Tipo di contenuto | NFS | PMI/CIFS | FC | iSCSI | NVMe-oF 
+
+
+| Backup | SÌ | SÌ  a| 
+No^1^
+ a| 
+No^1^
+ a| 
+No^1^
+
+
+
+| Dischi VM | SÌ | SÌ  a| 
+Sì^2^
+ a| 
+Sì^2^
+ a| 
+Sì^2^
+
+
+
+| Volumi TC | SÌ | SÌ  a| 
+Sì^2^
+ a| 
+Sì^2^
+ a| 
+Sì^2^
+
+
+
+| Immagini ISO | SÌ | SÌ  a| 
+No^1^
+ a| 
+No^1^
+ a| 
+No^1^
+
+
+
+| Modelli CT | SÌ | SÌ  a| 
+No^1^
+ a| 
+No^1^
+ a| 
+No^1^
+
+
+
+| Frammenti | SÌ | SÌ  a| 
+No^1^
+ a| 
+No^1^
+ a| 
+No^1^
+
+|===
+*Note:*
+
+. Richiede il file system del cluster per creare la cartella condivisa e utilizzare il tipo di archiviazione Directory.
+. Utilizzare il tipo di archiviazione LVM.
+

@@ -15,6 +15,29 @@ Scopri le novità nelle soluzioni di virtualizzazione.
 
 
 
+== 15 gennaio 2026
+
+* Aggiornato il contenuto della soluzione Proxmox VE per riflettere la versione Proxmox VE 9.
+* Aggiunte istruzioni per abilitare la protezione anti-ransomware sui volumi utilizzati per l'archiviazione Proxmox VE.
+* Aggiunte istruzioni per utilizzare FC e NVMe/FC come protocollo di archiviazione per Proxmox VE.
++
+** link:proxmox/proxmox-ontap.html["Fornire storage ONTAP per l'ambiente virtuale Proxmox"]
+
+
+* Aggiunta l'integrazione ONTAP per Proxmox Backup Server.
++
+** link:proxmox/proxmox-wkld-dp-pbs.html["Proteggere i carichi di lavoro in esecuzione su Proxmox VE utilizzando Proxmox Backup Server e NetApp ONTAP"]
+
+
+* Aggiunte linee guida di distribuzione per l'integrazione ONTAP con Proxmox VE.
++
+** link:proxmox/proxmox-deploy-guidelines.html["Linee guida per la distribuzione di NetApp ONTAP per l'ambiente virtuale Proxmox"]
+
+
+
+
+
+
 == 12 novembre 2025
 
 * Forniti i link di download corretti per NetApp Shift Toolkit

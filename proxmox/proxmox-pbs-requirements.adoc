@@ -1,0 +1,52 @@
+---
+sidebar: sidebar 
+permalink: proxmox/proxmox-pbs-requirements.html 
+keywords: netapp, proxmox, proxmox ve, proxmox backup server, ontap, storage, requirements, deployment, prerequisites 
+summary: Esaminare i requisiti e le considerazioni sulla distribuzione per Proxmox Backup Server con storage NetApp ONTAP . Ciò include opzioni di distribuzione, supporto backend di archiviazione, gestione multi-cluster e best practice per la configurazione di rete. 
+---
+= Requisiti di distribuzione e considerazioni per Proxmox Backup Server con storage NetApp ONTAP
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Esaminare i requisiti di distribuzione e le considerazioni per Proxmox Backup Server (PBS) con storage NetApp ONTAP prima dell'implementazione. Ciò garantisce una pianificazione adeguata per l'implementazione del server di backup, la configurazione dell'archiviazione e la connettività di rete.
+
+
+
+== Considerazioni sulla distribuzione
+
+Distribuisci PBS su bare metal o come VM su Proxmox VE. Quando si distribuisce PBS come VM, è opportuno considerare la disponibilità del server di backup nel caso in cui l'host Proxmox VE subisca tempi di inattività. Distribuisci PBS su bare metal o su un host o cluster Proxmox VE separato per garantire la disponibilità del server di backup durante i guasti dell'host primario.
+
+I contenuti del backup sono autonomi nel datastore, consentendo la migrazione del datastore a un'altra istanza PBS, se necessario. Ciò garantisce che i dati di backup rimangano accessibili anche quando l'istanza PBS originale non è disponibile.
+
+
+
+== Supporto backend di archiviazione
+
+PBS supporta vari backend di archiviazione, tra cui archiviazione locale, NFS, iSCSI, FC, NVMe-oF e S3 (anteprima tecnica). L'integrazione con lo storage NetApp ONTAP consente alle organizzazioni di sfruttare funzionalità avanzate di gestione dei dati per una migliore protezione e ripristino dei dati.
+
+Utilizzare ONTAP SnapMirror per replicare il datastore PBS su un altro sistema ONTAP per il ripristino di emergenza. In questo modo si proteggono i dati di backup e si consente il ripristino dopo guasti del sito.
+
+
+
+== Gestione multi-cluster
+
+Una singola istanza PBS può gestire più cluster Proxmox VE, fornendo un backup centralizzato per distribuzioni su larga scala. Utilizzare gli spazi dei nomi per separare logicamente i dati di backup per diversi cluster o tenant, garantendo l'isolamento e la sicurezza dei dati.
+
+Configurare criteri di conservazione dei dati per gestire automaticamente il ciclo di vita dei dati di backup e garantire la conformità ai requisiti organizzativi. Imposta criteri di potatura per contrassegnare automaticamente i dati di backup vecchi o non necessari per l'eliminazione. I processi di garbage collection recuperano spazio di archiviazione rimuovendo i dati inutilizzati o obsoleti dal datastore.
+
+
+
+== Interfacce di gestione
+
+Gestisci PBS tramite un'interfaccia basata sul Web, strumenti da riga di comando o API REST. Accedi all'interfaccia web sulla porta 8007 utilizzando l'URL `https://<pbs-ip-address>:8007`.
+
+
+
+== Buone pratiche per la configurazione di rete
+
+Garantire percorsi di rete ridondanti tra PBS e storage ONTAP per garantire elevata disponibilità e prestazioni. Per aumentare la larghezza di banda e la ridondanza, si può prendere in considerazione l'aggregazione dei link (LACP). Configurare i frame jumbo (MTU 9000) su tutti i dispositivi di rete per migliorare le prestazioni del traffico di archiviazione.
+
+Per NFS, creare un'esportazione dedicata per il datastore PBS con le autorizzazioni appropriate. Per i protocolli a blocchi, assicurarsi che la suddivisione in zone e il mascheramento LUN siano adeguati per limitare l'accesso solo agli host PBS autorizzati.
