@@ -26,6 +26,7 @@ sidebar:
   - section: proxmox
   - section: kvm
   - section: migration
+  - section: opennebula
   - title: Video
     url: "/videos/index.html"
     entries:
