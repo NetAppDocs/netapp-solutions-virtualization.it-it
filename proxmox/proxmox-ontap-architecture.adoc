@@ -75,6 +75,7 @@ ONTAP fornisce un set completo di funzionalità di archiviazione aziendale che m
 * Mappatura dei nomi tra identità Windows e Unix
 * Protezione autonoma contro i ransomware con rilevamento delle minacce integrato
 * Analisi del file system per informazioni su capacità e utilizzo
+* Supporto Metrocluster per alta disponibilità.
 
 
 
@@ -82,6 +83,7 @@ ONTAP fornisce un set completo di funzionalità di archiviazione aziendale che m
 === Caratteristiche del protocollo SAN
 
 * Estendi i cluster attraverso i domini di errore con SnapMirror ActiveSync (seleziona sempre https://mysupport.netapp.com/matrix/#welcome["Strumento di matrice di interoperabilità"] per le configurazioni supportate)
+* Supporto Metrocluster per alta disponibilità.
 * I modelli ASA forniscono multipathing attivo-attivo e failover del percorso rapido
 * Supporto del protocollo per FC, iSCSI e NVMe-oF
 * Autenticazione reciproca iSCSI CHAP
