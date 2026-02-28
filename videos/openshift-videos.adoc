@@ -34,7 +34,7 @@ video::27773297-a80c-473c-ab41-b01200fa009a[panopto,width=360]
 
 == Protezione dei dati e ripristino di emergenza
 
-.Protezione di una VM tramite Trident Protect
+.Proteggere una VM utilizzando Trident Protect
 video::4670e188-3d67-4207-84c5-b2d500f934a0[panopto,width=360]
 .Disaster Recovery per una VM utilizzando Trident Protect
 video::ae4bdcf7-b344-4f19-89ed-b2d500f94efd[panopto,width=360]

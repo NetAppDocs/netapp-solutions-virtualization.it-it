@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar 
 permalink: openshift/osv-vm-dr-using-tp.html 
-keywords: OpenShift, OCP, Trident, Trident protect, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, ROSA, Red Hat OpenShift Virtualization 
+keywords: OpenShift, OCP, Trident, Trident Protect, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, ROSA, Red Hat OpenShift Virtualization 
 summary: Virtualizzazione Red Hat OpenShift su ROSA 
 ---
-= Impostare il failover e il failback per le VM in Red Hat OpenShift Virtualization utilizzando Trident Protect
+= Configura il failover e il failback per le VM in Red Hat OpenShift Virtualization utilizzando Trident Protect
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -21,10 +21,10 @@ Configurare il disaster recovery per le VM in OpenShift Virtualization utilizzan
 == Prerequisiti
 
 * Trident deve essere installato.  Le classi backend e storage devono essere create prima di installare OpenShift Virtualization sul cluster utilizzando l'operatore OpenShift Virtualization.
-* Per implementare le operazioni di failover e failback per le VM OpenShift, è necessario installare Trident Protect.  Fare riferimento alle istruzioni qui perlink:https://docs.netapp.com/us-en/trident/trident-protect/trident-protect-installation.html["installare Trident Protect"]
+* Trident Protect deve essere installato per implementare le operazioni di failover e failback per le OpenShift VMs. Fare riferimento alle istruzioni qui per link:https://docs.netapp.com/us-en/trident/trident-protect/trident-protect-installation.html["installare Trident Protect"]
 
 
-image:redhat-openshift-ocpv-tp-001.png["OCP-v trident protect installato nello spazio dei nomi trident-protect"]
+image:redhat-openshift-ocpv-tp-001.png["OCP-v Trident Protect installato nel namespace trident-protect"]
 
 Una VM deve essere disponibile in OpenShift Virtualization.  Per informazioni dettagliate sulla distribuzione di una nuova VM o sulla migrazione di una VM esistente in OpenShift Virtualization, consultare la sezione appropriata nella documentazione.
 
@@ -97,7 +97,7 @@ image:redhat-openshift-ocpv-tp-002.png["Appvault OCP-v nello spazio dei nomi tri
 
 
 
-== Creare un'app di protezione Trident per la VM
+== Crea un'app Trident Protect per la VM
 
 Creare una risorsa personalizzata dell'app nello spazio dei nomi in cui si trova la macchina virtuale.
 
@@ -111,7 +111,7 @@ image:redhat-openshift-ocpv-tp-004.png["Applicazione OCP-v nello spazio dei nomi
 
 
 
-== Crea un'app di protezione Trident per la VM di Disaster Recovery in un nuovo spazio dei nomi
+== Crea un'app Trident Protect per la VM di Disaster Recovery in un nuovo namespace
 
 [source, CLI]
 ----

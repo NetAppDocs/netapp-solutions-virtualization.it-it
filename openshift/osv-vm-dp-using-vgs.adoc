@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: openshift/osv-vm-dp-using-vgs.html 
-keywords: OpenShift, OCP, Trident, Trident protect, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization,Data Protection, Data Management for VMs, VM protection, Volume Group Snapshots 
+keywords: OpenShift, OCP, Trident, Trident Protect, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization, Data Protection, Data Management for VMs, VM protection, Volume Group Snapshots 
 summary: Proteggi le VM in Red Hat OpenShift Virtualization utilizzando gli snapshot del gruppo di volumi Trident per garantire backup coerenti con gli arresti anomali e un ripristino rapido.  Questa procedura illustra come configurare, creare snapshot e ripristinare più dischi VM utilizzando Kubernetes e NetApp ONTAP. 
 ---
 = Proteggere le VM in Red Hat OpenShift Virtualization con gli snapshot del gruppo di volumi Trident
