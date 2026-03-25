@@ -1,0 +1,455 @@
+---
+sidebar: sidebar 
+permalink: migration/shift-toolkit-migrate-esxi2proxmox.html 
+keywords: netapp, vmware, esxi, vm, migration, virtualization, proxmox, proxmox ve 
+summary: 'Esegui la migrazione di VM da VMware ESXi a Proxmox VE utilizzando lo Shift Toolkit, preparando le VM, convertendo i formati dei dischi e configurando l"ambiente di destinazione.' 
+---
+= Migrare macchine virtuali da VMware ESXi a Proxmox VE utilizzando il Shift Toolkit
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Esegui la migrazione di VM da VMware ESXi a Proxmox VE utilizzando lo Shift Toolkit, preparando le VM, convertendo i formati dei dischi e configurando l'ambiente di destinazione.
+
+Shift Toolkit consente la migrazione delle VM tra piattaforme di virtualizzazione tramite la conversione del formato del disco e la riconfigurazione della rete nell'ambiente di destinazione.
+
+
+
+== Prima di iniziare
+
+Prima di iniziare la migrazione, verificare che siano soddisfatti i seguenti prerequisiti.
+
+.Proxmox VE
+. Cluster operativo minimo a 3 o più nodi con quorum con Proxmox VE 9.x e versioni successive e ONTAP NFS storage aggiunto come pool di storage.
++
+** Privilegi di livello amministratore sul cluster
+** Le release di Proxmox sono >= 9.x
+** I nodi Proxmox sono raggiungibili tramite rete
+** Pool di storage NFSv3 configurati con il volume e il qtree appropriati
+** Le reti (bridge) devono essere configurate con le vLAN corrette
+
+
+
+
+.Requisiti della macchina virtuale
+* Assicurarsi che i VMDK della VM siano posizionati su un volume NFSv3 (tutti i VMDK di una determinata VM devono trovarsi sullo stesso volume).
+* Gli strumenti VMware devono essere in esecuzione sulle VM guest per una corretta preparazione delle VM
+* Assicurarsi che le macchine virtuali da migrare siano in stato RUNNING per la preparazione
+* Shift toolkit esegue la preparazione della VM iniettando script per:
++
+** Aggiungi i driver VirtIO
+** Rimuovi VMware tools
+** Indirizzo IP di backup, route e informazioni DNS
+
+
+
+
+
+NOTE: Le macchine virtuali devono essere spente prima di avviare la migrazione
+
+
+NOTE: La rimozione degli strumenti VMware avviene sull'hypervisor di destinazione una volta che le macchine virtuali sono accese
+
+* Utilizzare un account amministratore locale quando si esegue Invoke-VMScript per preparare le macchine virtuali Windows oppure un account di Active Directory che faccia parte del gruppo Administrators locale. Per i sistemi Linux, utilizzare un account che possa eseguire comandi senza richiedere una password (ad esempio tramite sudo senza password).
+* Per le macchine virtuali Windows, assicurarsi che l'ISO di VirtIO sia montata; in caso contrario, il processo di preparazione non riuscirà. Il driver ISO di VirtIO può essere scaricato da qui. Lo script rileverà l'unità montata e copierà automaticamente i file necessari.
++
+** Assicurati che l'ISO specificato nel link venga utilizzato poiché lo script di preparazione utilizza il pacchetto .msi per installare i driver e qemu-guest-agents. Una volta soddisfatti i prerequisiti, accedi all'interfaccia utente di Shift toolkit e configura il sito con Proxmox VE come hypervisor di destinazione. Per aggiungere, fai clic su “Aggiungi nuovo sito” e seleziona “Destinazione”.
+
+
+
+
+
+
+== Passaggio 1: Aggiungi il sito di destinazione (Proxmox VE)
+
+Aggiungi l'ambiente Proxmox VE di destinazione allo Shift Toolkit.
+
+.Passi
+. Fare clic su *Aggiungi nuovo sito* e selezionare *Destinazione*.
++
+.Mostra esempio
+[%collapsible]
+====
+image:shift-toolkit-450.png["Aggiungi sito di destinazione"]
+
+====
+. Inserisci i dettagli del sito di destinazione:
++
+*Nome del sito*: Fornire un nome per il sito *Hypervisor*: Selezionare Proxmox VE (PVE) come destinazione *Posizione del sito*: Selezionare l'opzione predefinita *Connettore*: Selezionare la selezione predefinita
+
+. Fare clic su *Continua*.
++
+.Mostra esempio
+[%collapsible]
+====
+image:shift-toolkit-451.png["Aggiungi i dettagli del sito di destinazione"]
+
+====
+. Inserisci i dettagli PVE di destinazione
++
+*Endpoint*: indirizzo IP o FQDN del nodo Proxmox *Username*: nome utente linux per l'accesso (nel formato: username) * Ad esempio, ntapshift. Non è necessario specificare @pam. *Password*: password per l'accesso
+
+. Selezionare *Accetta certificato autofirmato* e fare clic su *Continua*.
++
+.Mostra esempio
+[%collapsible]
+====
+image:shift-toolkit-452.png["Dettagli Proxmox VE"]
+
+====
+. Fare clic su *Crea sito*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-453.png[Crea sito]
+
+====
++
+
+NOTE: Il volume di origine e il volume di destinazione saranno gli stessi, poiché la conversione del formato del disco avviene a livello di volume e all'interno dello stesso volume.
+
+
+
+
+
+== Passaggio 2: creare gruppi di risorse
+
+Organizzare le VM in gruppi di risorse per preservare l'ordine di avvio e le configurazioni del ritardo di avvio.
+
+.Prima di iniziare
+* Prima di creare i gruppi di risorse, assicurarsi che i Qtree siano predisposti (come indicato nella sezione dei prerequisiti).
+
+
+.Passi
+. Vai a *Gruppi di risorse* e clicca su *Crea nuovo gruppo di risorse*.
+. Seleziona il *Sito di origine* dal menu a discesa e fai clic su *Crea*.
+. Fornisci i dettagli del gruppo di risorse e seleziona il flusso di lavoro:
++
+** *Migrazione basata su cloni*: esegue la migrazione end-to-end dall'hypervisor di origine a quello di destinazione
+** *Conversione basata su clonazione*: converte il formato del disco nel tipo di hypervisor selezionato
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-454.png[Dettagli del gruppo di risorse]
+
+====
+
+
+. Fare clic su *Continua*.
+. Selezionare le VM utilizzando l'opzione di ricerca (il filtro predefinito è "Datastore").
++
+
+NOTE: Spostare le VM da convertire o migrare in un datastore designato su un SVM ONTAP appena creato prima della conversione. Ciò consente di isolare il datastore NFS di produzione e il datastore designato può essere utilizzato per lo staging delle macchine virtuali.
+
++
+
+NOTE: Il menu a discesa dei datastore mostra solo i datastore NFSv3.  Gli archivi dati NFSv4 non vengono visualizzati.
+
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-455.png[Selezione VM]
+
+====
+. Aggiorna i dettagli della migrazione:
++
+** Seleziona *Sito di destinazione*
+** Seleziona la voce *Destination Proxmox entry*
+** Configurare il mapping tra Datastore e Qtree
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-456.png[Dettagli sulla migrazione]
+
+====
++
+
+NOTE: Assicurarsi che il percorso di destinazione (dove vengono archiviate le VM convertite) sia impostato su un qtree durante la conversione delle VM da ESXi a Proxmox VE. È possibile creare e utilizzare più qtree per archiviare i dischi delle VM convertite.
+
++
+
+NOTE: È possibile creare più qtree e utilizzarli per archiviare i dischi VM convertiti.
+
+
+
+. Configurare l'ordine di avvio e il ritardo di avvio per tutte le VM selezionate:
++
+** *1*: Prima VM ad accendersi
+** *3*: Predefinito
+** *5*: Ultima VM ad accendersi
+
+
+. Fare clic su *Crea gruppo di risorse*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-457.png[Crea gruppo di risorse]
+
+====
+
+
+.Risultato
+Il gruppo di risorse è stato creato ed è pronto per la configurazione del blueprint.
+
+
+
+== Fase 3: creare un progetto di migrazione
+
+Creare un progetto per definire il piano di migrazione, inclusi i mapping della piattaforma, la configurazione di rete e le impostazioni della VM.
+
+.Passi
+. Vai su *Progetti* e clicca su *Crea nuovo progetto*.
+. Fornire un nome per il progetto e configurare i mapping degli host:
++
+** Selezionare *Sito di origine* e vCenter associato
+** Seleziona *Destination Site* e il target Proxmox VE associato
+** Configurare il cluster e la mappatura degli host
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-458.png[Mappature host]
+
+====
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-459.png[Mappature host]
+
+====
+
+
+. Selezionare i dettagli del gruppo di risorse e fare clic su *Continua*.
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-460.png[Dettagli del gruppo di risorse]
+
+====
+. Imposta l'ordine di esecuzione per i gruppi di risorse se esistono più gruppi.
+. Configurare la mappatura di rete sugli switch virtuali appropriati.
++
+
+NOTE: Per la migrazione di prova, "Do no configure Network" è l'opzione predefinita e Shift toolkit non esegue l'assegnazione degli indirizzi IP. Una volta convertito il disco e portata la macchina virtuale sul lato PVE, assegnare manualmente la bubble logical network per evitare qualsiasi conflitto con la rete di produzione.
+
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-461.png[Mappatura della rete]
+
+====
+. Esaminare le mappature di archiviazione (selezionate automaticamente in base alla selezione della VM).
++
+
+NOTE: Assicurarsi che il qtree sia predisposto in anticipo e che siano assegnate le autorizzazioni necessarie affinché la macchina virtuale possa essere creata e accesa dalla condivisione SMB.
+
+. In Dettagli VM, seleziona i dettagli di configurazione e fornisci le credenziali dell'account di servizio per ciascun tipo di sistema operativo:
++
+** *Windows*: utilizzare un utente con privilegi di amministratore locale (è possibile utilizzare anche le credenziali di dominio, tuttavia assicurarsi che esista un profilo utente sulla VM prima della conversione)
+** *Linux*: utilizzare un utente che possa eseguire comandi sudo senza richiesta di password (l'utente dovrebbe far parte dell'elenco sudoers o essere aggiunto a `/etc/sudoers.d/` cartella)
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-462.png[Credenziali VM]
+
+====
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-463.png[Credenziali VM]
+
+====
++
+
+NOTE: La selezione Configuration consente di selezionare il formato dell'immagine disco e di saltare override prepareVM. Nel caso del formato dell'immagine disco, il workflow predefinito è QCOW2, tuttavia se è richiesto il formato RAW, può essere selezionato. L'opzione override prepareVM consente di saltare la preparazione della VM, permettendo agli amministratori di eseguire script personalizzati per rendere la VM pronta per la migrazione. Se selezionato, Shift toolkit non inietterà alcuno script né aggiungerà i driver VirtIO.
+
+
+
+. Configurare le impostazioni IP:
++
+** *Non configurare*: opzione predefinita
+** *Mantieni IP*: Mantieni gli stessi IP del sistema sorgente
+** *DHCP*: assegna DHCP alle VM di destinazione
++
+Assicurarsi che le VM siano accese durante la fase prepareVM, che VMware Tools sia installato e che gli script di preparazione vengano eseguiti con i privilegi appropriati.
+
+
+
+. Configurare le impostazioni della VM:
++
+** Ridimensiona i parametri CPU/RAM (facoltativo)
+** Modificare l'ordine di avvio e il ritardo di avvio
+** *Accensione*: seleziona per accendere le VM dopo la migrazione (predefinito: ON)
+** *Rimuovi strumenti VMware*: Rimuovi VMware Tools dopo la conversione (predefinito: selezionato)
+** *Firmware VM*: Gen1 > BIOS e Gen2 > EFI (automatico)
+** *Conserva MAC*: conserva gli indirizzi MAC per i requisiti di licenza
+** *Sostituzione dell'account di servizio*: specificare un account di servizio separato, se necessario
+** *Override VLAN*: seleziona il nome VLAN corretto con tag quando l'hypervisor di destinazione utilizza un nome VLAN diverso
++
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-464.png[Configurazione VM]
+
+====
+
+
+. Fare clic su *Continua*.
+. Pianifica la migrazione selezionando una data e un'ora.
++
+
+NOTE: Pianificare le migrazioni con almeno 30 minuti di anticipo per consentire la preparazione della VM.
+
+. Fare clic su *Crea progetto*.
+
+
+.Risultato
+Shift Toolkit avvia un processo prepareVM che esegue script sulle VM di origine per prepararle alla migrazione.
+
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-465.png[Lavoro PrepareVM]
+
+====
+Il processo di preparazione:
+
+* Inietta script per aggiungere driver (RHEL/CentOS, Alma Linux), rimuovere strumenti VMware ed eseguire il backup delle informazioni IP/route/DNS
+* Utilizza invoke-VMScript per connettersi alle VM guest ed eseguire attività di preparazione
+* Per le VM Windows: memorizza gli script in `C:\NetApp`
+* Per le VM Linux: memorizza gli script in `/NetApp` E `/opt`
+
+
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-466.png[Script di preparazione di Windows]
+
+====
+Una volta completato correttamente prepareVM, lo stato del progetto viene aggiornato in "Attivo".  La migrazione verrà ora eseguita all'ora programmata oppure potrà essere avviata manualmente facendo clic sull'opzione *Migra*.
+
+
+
+== Passaggio 4: eseguire la migrazione
+
+Avvia il flusso di lavoro di migrazione per convertire le VM da VMware ESXi a Proxmox VE.
+
+.Prima di iniziare
+* Tutte le VM vengono spente correttamente secondo il programma di manutenzione pianificato
+* Assicurarsi che la VM Shift faccia parte del dominio
+* Assicurarsi che la condivisione CIFS sia configurata con le autorizzazioni appropriate
+* Il qtree utilizzato per la migrazione o la conversione ha lo stile di sicurezza corretto
+
+
+.Passi
+. Nel progetto, fare clic su *Migra*.
+. Shift Toolkit esegue le seguenti azioni:
++
+** Elimina gli snapshot esistenti per tutte le VM nel blueprint
+** Attiva gli snapshot delle VM per Blueprint – all'origine
+** Attiva l'istantanea del volume prima della conversione del disco
+** Crea macchine virtuali con dischi fittizi associati a esse
+** Converti VMDK in formato QCOW2 o RAW per tutte le VM e sovrascrivi i dischi fittizi
+** Accensione delle VM nel gruppo di risorse – alla destinazione
+** Registrare le reti su ogni VM
+** Rimuovere VMware tools e assegnare gli indirizzi IP utilizzando uno script trigger o un cron job a seconda del tipo di sistema operativo
+
+
+
+
+La conversione avviene in pochi secondi, rendendo questo l'approccio di migrazione più rapido e riducendo i tempi di inattività della VM.
+
+.Risultato
+Una volta completato il lavoro, lo stato del progetto cambia in "Migrazione completata".
+
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-467.png[Migrazione completata]
+
+====
+.Mostra esempio
+[%collapsible]
+====
+image::shift-toolkit-468.png[Macchine virtuali in Proxmox VE]
+
+====
+
+
+== Flusso di lavoro del toolkit Shift
+
+Le sezioni seguenti illustrano quali passaggi vengono attivati da Shift toolkit per convertire il VMDK e creare le VM sul lato Proxmox VE.
+
+.Convertire VMDK
+Shift Toolkit troverà automaticamente i VMDK associati a ciascuna VM, incluso il disco di avvio primario.
+
+
+NOTE: Se sono presenti più file VMDK, ogni VMDK verrà convertito.
+
+.Carica l'immagine QCOW2 o RAW nel pool di storage basato su NFS di PVE
+Una volta convertita l'immagine del disco della macchina virtuale in formato qcow2 o RAW, Shift toolkit posiziona il file nel pool di storage appropriato e aggiunge ciascun disco all'interno della rispettiva cartella VM ID.
+
+image::shift-toolkit-469.png[shift toolkit 469]
+
+.Crea macchina virtuale
+Shift toolkit effettua chiamate REST API per creare ogni VM a seconda del sistema operativo.
+
+
+NOTE: Le VM vengono create sotto i rispettivi nodi Proxmox
+
+.Avvio della VM per la prima volta
+A seconda del sistema operativo della macchina virtuale, Shift toolkit assegnerà automaticamente l'opzione di avvio della VM, insieme all'interfaccia dello storage controller. Nel caso delle distribuzioni Linux, viene utilizzato VirtIO o VirtIO scsi. Per Windows, la VM viene accesa con l'interfaccia SATA e quindi lo script pianificato installa automaticamente i driver VirtIO e poi cambia l'interfaccia in VirtIO. Le reti vengono assegnate di conseguenza in base alla selezione.
+
+image::shift-toolkit-470.png[Dettagli della VM Proxmox VE]
+
+
+
+== Permessi minimi per la migrazione e la creazione di VM in Proxmox VE
+
+Questa sezione descrive i passaggi necessari per creare un account utente dedicato con i privilegi minimi necessari per eseguire le migrazioni di VM.
+
+. Crea un utente Linux
++
+.. useradd -m -s /bin/bash ntapshift
+.. passwd ntapshift
+
+
+. Aggiungi l'utente a Proxmox
++
+.. pveum useradd ntapshift@pam
+
+
+. Crea un ruolo di migrazione
++
+.. pveum roleadd ntapshift-migrator -privs "Datastore.AllocateSpace, Datastore.AllocateTemplate, Datastore.Audit, SDN.Audit,SDN.Use, Sys.AccessNetwork, Sys.Audit, Sys.Modify, VM.Allocate, VM.Audit, VM.Config.CDROM, VM.Config.CPU, VM.Config.Cloudinit, VM.Config.Disk, VM.Config.HWType, VM.Config.Memory, VM.Config.Network, VM.Config.Options, VM.Console, VM.Migrate, VM.PowerMgmt"
+
+
+. Assegna il ruolo alla radice del cluster
++
+.. pveum aclmod / -user ntapshift@pam -role ntapshift-migrator
+
+
+. Assegna il ruolo a un nodo specifico
++
+.. pveum aclmod /nodes/<node-name> -user ntapshift@pam -role ntapshift-migrator
+
+
+
+
+
+NOTE: (Sostituire  `<node-name>` con ciascun nome effettivo del nodo Proxmox)

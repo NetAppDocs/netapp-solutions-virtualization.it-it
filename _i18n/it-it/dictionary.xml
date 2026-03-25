@@ -8606,4 +8606,75 @@
   <block id="f7e80f1783a43b249090b162d24eea2c" category="list-text">Imposta la VolumeSnapshotClass predefinita di Trident.</block>
   <block id="571d665b9a28f3b3c6d1a45d55491578" category="paragraph">Imposta un VolumeSnapshotClass supportato da Trident come predefinito del cluster per abilitare le operazioni basate su snapshot per i volumi persistenti. Questo garantisce che i VolumeSnapshots utilizzino automaticamente il driver CSI Trident quando non viene specificata alcuna classe di snapshot e consente a OpenShift Virtualization di creare snapshot di immagini golden.</block>
   <block id="27e9d9aa3e804e13ad6e9fd40486a99e" category="paragraph">Assicurati che solo un VolumeSnapshotClass sia impostato come predefinito. Se un altro VolumeSnapshotClass è già impostato come predefinito, imposta la relativa annotazione su false.</block>
+  <block id="4af3fe57a1c87e7a23768b6f4ed1b530" category="summary">Esegui la migrazione di VM da VMware ESXi a Proxmox VE utilizzando lo Shift Toolkit, preparando le VM, convertendo i formati dei dischi e configurando l'ambiente di destinazione.</block>
+  <block id="223e68066579ca3b50850d29277d5158" category="doc">Migrare macchine virtuali da VMware ESXi a Proxmox VE utilizzando il Shift Toolkit</block>
+  <block id="57e13573114577b3af8a0a24aa24d576" category="list-title">Proxmox VE</block>
+  <block id="a20c9efbe4fc687660840bb12400e19e" category="list-text">Cluster operativo minimo a 3 o più nodi con quorum con Proxmox VE 9.x e versioni successive e ONTAP NFS storage aggiunto come pool di storage.</block>
+  <block id="3c10f8538271b0bbf5b0e6aad5547885" category="list-text">Le release di Proxmox sono &gt;= 9.x</block>
+  <block id="3370e032ea4d765dac8075c8e33030c2" category="list-text">I nodi Proxmox sono raggiungibili tramite rete</block>
+  <block id="fc8a13c7ea360b2bb6cc441b35f94c32" category="list-text">Pool di storage NFSv3 configurati con il volume e il qtree appropriati</block>
+  <block id="912dd6c652b1afd2721db34835106f0a" category="list-text">Le reti (bridge) devono essere configurate con le vLAN corrette</block>
+  <block id="abdc31a04150712ce84289f73ab3537d" category="list-title">Requisiti della macchina virtuale</block>
+  <block id="19e2dc96aba500cfce75cdbf644dcb3f" category="list-text">Assicurarsi che i VMDK della VM siano posizionati su un volume NFSv3 (tutti i VMDK di una determinata VM devono trovarsi sullo stesso volume).</block>
+  <block id="b602f1269fd54599e3d82ef714f1007b" category="list-text">Gli strumenti VMware devono essere in esecuzione sulle VM guest per una corretta preparazione delle VM</block>
+  <block id="76d027b643130c57a22646bbec3237dd" category="list-text">Assicurarsi che le macchine virtuali da migrare siano in stato RUNNING per la preparazione</block>
+  <block id="9ab04320db6bcd44cd8ecddf185e46c9" category="list-text">Shift toolkit esegue la preparazione della VM iniettando script per:</block>
+  <block id="70217e773ca948bec42549ff247f99e3" category="list-text">Aggiungi i driver VirtIO</block>
+  <block id="fae49a8b4ce58c4a3669537c72392b9f" category="list-text">Rimuovi VMware tools</block>
+  <block id="9012f3c3d4c29804ac1455f40cc34f5d" category="list-text">Indirizzo IP di backup, route e informazioni DNS</block>
+  <block id="2250ade21f70f3898f30d19c23e4f560" category="admonition">Le macchine virtuali devono essere spente prima di avviare la migrazione</block>
+  <block id="643765be95e96ba0bd0d50b581f23ba9" category="admonition">La rimozione degli strumenti VMware avviene sull'hypervisor di destinazione una volta che le macchine virtuali sono accese</block>
+  <block id="e0a9da9332918532fa3fb3eadaa4ed4e" category="list-text">Utilizzare un account amministratore locale quando si esegue Invoke-VMScript per preparare le macchine virtuali Windows oppure un account di Active Directory che faccia parte del gruppo Administrators locale. Per i sistemi Linux, utilizzare un account che possa eseguire comandi senza richiedere una password (ad esempio tramite sudo senza password).</block>
+  <block id="f1229500f6a7c4d3c2d90804fdb089b8" category="list-text">Per le macchine virtuali Windows, assicurarsi che l'ISO di VirtIO sia montata; in caso contrario, il processo di preparazione non riuscirà. Il driver ISO di VirtIO può essere scaricato da qui. Lo script rileverà l'unità montata e copierà automaticamente i file necessari.</block>
+  <block id="bc0f647d8dee9e215c7b045379244a6e" category="list-text">Assicurati che l'ISO specificato nel link venga utilizzato poiché lo script di preparazione utilizza il pacchetto .msi per installare i driver e qemu-guest-agents. Una volta soddisfatti i prerequisiti, accedi all'interfaccia utente di Shift toolkit e configura il sito con Proxmox VE come hypervisor di destinazione. Per aggiungere, fai clic su “Aggiungi nuovo sito” e seleziona “Destinazione”.</block>
+  <block id="165d8350def49f049896fbe15e76a272" category="section-title">Passaggio 1: Aggiungi il sito di destinazione (Proxmox VE)</block>
+  <block id="58c19cc9f30ac5f53cecad2b57f1b183" category="paragraph">Aggiungi l'ambiente Proxmox VE di destinazione allo Shift Toolkit.</block>
+  <block id="2be3d66150efaf11bc807c60b267e960" category="paragraph"><block ref="2be3d66150efaf11bc807c60b267e960" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="2acce3a2c4dd37bf9036f0a7d4bcfc84" category="paragraph">*Nome del sito*: Fornire un nome per il sito *Hypervisor*: Selezionare Proxmox VE (PVE) come destinazione *Posizione del sito*: Selezionare l'opzione predefinita *Connettore*: Selezionare la selezione predefinita</block>
+  <block id="8eda3033073599e5cbcf2a5d38cba848" category="inline-image-macro">Aggiungi i dettagli del sito di destinazione</block>
+  <block id="ee3954b1103fd177553ee384083be5b3" category="paragraph"><block ref="ee3954b1103fd177553ee384083be5b3" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="1331794d0701cabb76a8c6f3d5f72781" category="list-text">Inserisci i dettagli PVE di destinazione</block>
+  <block id="bbe692f98338107fba878a05e33e3deb" category="paragraph">*Endpoint*: indirizzo IP o FQDN del nodo Proxmox *Username*: nome utente linux per l'accesso (nel formato: username) * Ad esempio, ntapshift. Non è necessario specificare @pam. *Password*: password per l'accesso</block>
+  <block id="bce994a9f9bede9fa68eb9281875dd9a" category="inline-image-macro">Dettagli Proxmox VE</block>
+  <block id="250d60b1842f217ab2a88fb3cb984e07" category="paragraph"><block ref="250d60b1842f217ab2a88fb3cb984e07" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="2771f022ed5f5f583d4395d47cb8a2b5" category="admonition">Il volume di origine e il volume di destinazione saranno gli stessi, poiché la conversione del formato del disco avviene a livello di volume e all'interno dello stesso volume.</block>
+  <block id="06066e46220d7638f084677fc888c691" category="list-text">Seleziona la voce *Destination Proxmox entry*</block>
+  <block id="c9eb69f4e408f5bdde670c86e8222c94" category="admonition">Assicurarsi che il percorso di destinazione (dove vengono archiviate le VM convertite) sia impostato su un qtree durante la conversione delle VM da ESXi a Proxmox VE. È possibile creare e utilizzare più qtree per archiviare i dischi delle VM convertite.</block>
+  <block id="a73dc566fd2c9e47b8aa24b66c5a5bc1" category="list-text">Seleziona *Destination Site* e il target Proxmox VE associato</block>
+  <block id="f2e5093c7e8d132b5770d5d3a8f2fbb4" category="admonition">Per la migrazione di prova, "Do no configure Network" è l'opzione predefinita e Shift toolkit non esegue l'assegnazione degli indirizzi IP. Una volta convertito il disco e portata la macchina virtuale sul lato PVE, assegnare manualmente la bubble logical network per evitare qualsiasi conflitto con la rete di produzione.</block>
+  <block id="076080a9aa5b6c47e1275f693b87b82f" category="admonition">La selezione Configuration consente di selezionare il formato dell'immagine disco e di saltare override prepareVM. Nel caso del formato dell'immagine disco, il workflow predefinito è QCOW2, tuttavia se è richiesto il formato RAW, può essere selezionato. L'opzione override prepareVM consente di saltare la preparazione della VM, permettendo agli amministratori di eseguire script personalizzati per rendere la VM pronta per la migrazione. Se selezionato, Shift toolkit non inietterà alcuno script né aggiungerà i driver VirtIO.</block>
+  <block id="ad331c61674b2ff82bbb2c984cca24e8" category="paragraph">Avvia il flusso di lavoro di migrazione per convertire le VM da VMware ESXi a Proxmox VE.</block>
+  <block id="7eb490629894ef4f37ef16cb38cff104" category="list-text">Attiva gli snapshot delle VM per Blueprint – all'origine</block>
+  <block id="d726770cca98cb9501f61242cdb2f6e2" category="list-text">Crea macchine virtuali con dischi fittizi associati a esse</block>
+  <block id="07f956e7f7cae30976a7c1a613856ee6" category="list-text">Converti VMDK in formato QCOW2 o RAW per tutte le VM e sovrascrivi i dischi fittizi</block>
+  <block id="95f4840a3d59a7bf04083fa862982bde" category="list-text">Accensione delle VM nel gruppo di risorse – alla destinazione</block>
+  <block id="5a1884bfad159a38dad4daa51b199b90" category="list-text">Rimuovere VMware tools e assegnare gli indirizzi IP utilizzando uno script trigger o un cron job a seconda del tipo di sistema operativo</block>
+  <block id="ec01f73a17f3b90d53635ac15e437c0b" category="image-alt">Macchine virtuali in Proxmox VE</block>
+  <block id="38ffc8cae96a8ac59aef58b15da6168d" category="section-title">Flusso di lavoro del toolkit Shift</block>
+  <block id="9aa9e231f950da618c182450dfecb607" category="paragraph">Le sezioni seguenti illustrano quali passaggi vengono attivati da Shift toolkit per convertire il VMDK e creare le VM sul lato Proxmox VE.</block>
+  <block id="f293d7a41626208fcbb41b3a794a30a2" category="paragraph-title">Carica l'immagine QCOW2 o RAW nel pool di storage basato su NFS di PVE</block>
+  <block id="f2ff48db9876dd928f72f730cad6c55e" category="paragraph">Una volta convertita l'immagine del disco della macchina virtuale in formato qcow2 o RAW, Shift toolkit posiziona il file nel pool di storage appropriato e aggiunge ciascun disco all'interno della rispettiva cartella VM ID.</block>
+  <block id="5d23268a1279c853582c3863ce0d4b7e" category="image-alt">shift toolkit 469</block>
+  <block id="0bdfa5286269feba4d23388e0c2f0e21" category="paragraph-title">Crea macchina virtuale</block>
+  <block id="9f6129bd27c47f979bd135fd817b20d3" category="paragraph">Shift toolkit effettua chiamate REST API per creare ogni VM a seconda del sistema operativo.</block>
+  <block id="7201b4542207ea349ce6ee4e5fe1a1ef" category="admonition">Le VM vengono create sotto i rispettivi nodi Proxmox</block>
+  <block id="7641a3ca4515625b9827a125208ce9ba" category="paragraph-title">Avvio della VM per la prima volta</block>
+  <block id="9dc7d1078613a016bf38c424e804e54a" category="paragraph">A seconda del sistema operativo della macchina virtuale, Shift toolkit assegnerà automaticamente l'opzione di avvio della VM, insieme all'interfaccia dello storage controller. Nel caso delle distribuzioni Linux, viene utilizzato VirtIO o VirtIO scsi. Per Windows, la VM viene accesa con l'interfaccia SATA e quindi lo script pianificato installa automaticamente i driver VirtIO e poi cambia l'interfaccia in VirtIO. Le reti vengono assegnate di conseguenza in base alla selezione.</block>
+  <block id="c29becbd9ac7907756f253805d95aaab" category="image-alt">Dettagli della VM Proxmox VE</block>
+  <block id="4918b90fd1eb5748df0a72a0f3de43d4" category="section-title">Permessi minimi per la migrazione e la creazione di VM in Proxmox VE</block>
+  <block id="1d0423aa9ff2fd874f6c9b380106ba8a" category="paragraph">Questa sezione descrive i passaggi necessari per creare un account utente dedicato con i privilegi minimi necessari per eseguire le migrazioni di VM.</block>
+  <block id="f5610950ce6657d3b8826a4379287f7b" category="list-text">Crea un utente Linux</block>
+  <block id="4ca68372b56079d277fe5298a55ab7a8" category="list-text">useradd -m -s /bin/bash ntapshift</block>
+  <block id="148b90dd37d3754dde03d3810acfdf49" category="list-text">passwd ntapshift</block>
+  <block id="9cbc8cbbe9b7a06b2f829a9608888377" category="list-text">Aggiungi l'utente a Proxmox</block>
+  <block id="9ba701ad3ee3fcb83ee90e774154e521" category="list-text">pveum useradd ntapshift@pam</block>
+  <block id="524cd4c33285ea1520dc8af155e589e1" category="list-text">Crea un ruolo di migrazione</block>
+  <block id="8ee3f22e8ee8bc07f094ef26df67e586" category="list-text">pveum roleadd ntapshift-migrator -privs "Datastore.AllocateSpace, Datastore.AllocateTemplate, Datastore.Audit, SDN.Audit,SDN.Use, Sys.AccessNetwork, Sys.Audit, Sys.Modify, VM.Allocate, VM.Audit, VM.Config.CDROM, VM.Config.CPU, VM.Config.Cloudinit, VM.Config.Disk, VM.Config.HWType, VM.Config.Memory, VM.Config.Network, VM.Config.Options, VM.Console, VM.Migrate, VM.PowerMgmt"</block>
+  <block id="c70a8c59834b0cf9d63d3f66717d5d02" category="list-text">Assegna il ruolo alla radice del cluster</block>
+  <block id="bc26ef423585194309ee26b38f980a04" category="list-text">pveum aclmod / -user ntapshift@pam -role ntapshift-migrator</block>
+  <block id="430ac9da617b7671d2470aac7aabeb61" category="list-text">Assegna il ruolo a un nodo specifico</block>
+  <block id="904571716d757dd2366380f38f6a8c7d" category="list-text">pveum aclmod /nodes/&lt;node-name&gt; -user ntapshift@pam -role ntapshift-migrator</block>
+  <block id="c88d9b30e97598ef05d325b4506788d5" category="admonition">(Sostituire <block ref="5229e8d2d27b318b34969f09afea3c3e" prefix=" " category="inline-code"></block> con ciascun nome effettivo del nodo Proxmox)</block>
+  <block id="e5b30de22f0b345a82ac611f3074c604" category="paragraph">Il toolkit Shift è stato validato su Proxmox VE in esecuzione con la versione 9.X e successive.</block>
+  <block id="6490ec34510eacbfef4a5a0912755642" category="sidebar">Migra le VM da VMware ESXi a Proxmox VE</block>
 </blocks>
