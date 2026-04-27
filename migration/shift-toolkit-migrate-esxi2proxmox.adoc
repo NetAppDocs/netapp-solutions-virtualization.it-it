@@ -56,9 +56,9 @@ NOTE: Le macchine virtuali devono essere spente prima di avviare la migrazione
 NOTE: La rimozione degli strumenti VMware avviene sull'hypervisor di destinazione una volta che le macchine virtuali sono accese
 
 * Utilizzare un account amministratore locale quando si esegue Invoke-VMScript per preparare le macchine virtuali Windows oppure un account di Active Directory che faccia parte del gruppo Administrators locale. Per i sistemi Linux, utilizzare un account che possa eseguire comandi senza richiedere una password (ad esempio tramite sudo senza password).
-* Per le macchine virtuali Windows, assicurarsi che l'ISO di VirtIO sia montata; in caso contrario, il processo di preparazione non riuscirà. Il driver ISO di VirtIO può essere scaricato da qui. Lo script rileverà l'unità montata e copierà automaticamente i file necessari.
+* Per le macchine virtuali Windows, assicurarsi che l'immagine ISO di VirtIO sia montata; in caso contrario, il processo di preparazione non andrà a buon fine. Il driver dell'immagine ISO di VirtIO può essere scaricato da link:https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.271-1/virtio-win-0.1.271.iso["Qui"]. Lo script rileverà l'unità montata e copierà automaticamente i file necessari.
 +
-** Assicurati che l'ISO specificato nel link venga utilizzato poiché lo script di preparazione utilizza il pacchetto .msi per installare i driver e qemu-guest-agents. Una volta soddisfatti i prerequisiti, accedi all'interfaccia utente di Shift toolkit e configura il sito con Proxmox VE come hypervisor di destinazione. Per aggiungere, fai clic su “Aggiungi nuovo sito” e seleziona “Destinazione”.
+** Assicurati di utilizzare l'immagine ISO specificata nel link, poiché lo script di preparazione utilizza il pacchetto .msi per installare i driver e qemu-guest-agents. Una volta soddisfatti i prerequisiti, accedi all'interfaccia utente di Shift toolkit e configura il sito con Proxmox VE come hypervisor di destinazione. Per aggiungere, fai clic su “Aggiungi nuovo sito” e seleziona “Destinazione”.
 
 
 
