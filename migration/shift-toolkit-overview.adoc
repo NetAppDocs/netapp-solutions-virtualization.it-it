@@ -36,6 +36,8 @@ Il toolkit Shift offre flessibilità in un ambiente multi-hypervisor supportando
 * Da Microsoft Hyper-V a VMware ESXi
 * Da VMWare ESXi a Oracle Linux Virtualization Manager (OLVM)
 * Virtualizzazione da VMWare ESXi a Red Hat OpenShift
+* Migrazione da VMware ESXi a Red Hat OpenShift Virtualization tramite Migration Toolkit for Virtualization (MTV)
+* VMware ESXi a Proxmox VE
 
 
 Shift Toolkit supporta conversioni a livello di disco di dischi virtuali tra hypervisor per i seguenti formati di disco:
