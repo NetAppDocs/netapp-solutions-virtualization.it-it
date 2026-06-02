@@ -1,0 +1,15 @@
+---
+section: euc
+title: Informatica per utenti finali con NetApp
+url: "/euc/index.html"
+entries:
+- title: Scopri di più sull'End User Computing con NetApp
+  pdf-filename: Panoramica dell'informatica per utenti finali con NetApp
+  entries:
+  - title: Panoramica dell'informatica per utenti finali con NetApp
+    url: "/euc/euc-overview.html"
+  - title: Vantaggi dello storage NetApp per l'informatica dell'utente finale
+    url: "/euc/euc-benefits.html"
+- title: Architettura di Omnissa Horizon e NetApp
+  pdf-filename: Architettura di Omnissa Horizon e NetApp
+  url: "/euc/omnissa-netapp-architecture.html"
