@@ -14,13 +14,13 @@ summary:
 
 
 [role="lead"]
-Utilizzare Shift Toolkit per convertire i dischi delle macchine virtuali VMware ESX (VMDK) nel formato disco Microsoft Hyper-V (VHDX) o Red Hat KVM (QCOW2).  Questo processo include la configurazione di gruppi di risorse, la creazione di progetti di conversione e la pianificazione delle conversioni.
+Utilizza Shift Toolkit per convertire i dischi delle macchine virtuali VMware ESX (VMDK) nel formato disco Microsoft Hyper-V (VHDX) o nei formati disco RAW/QCOW2. Questo processo include la configurazione dei gruppi di risorse, la creazione di modelli di conversione e la pianificazione delle conversioni.
 
 
 
 == Panoramica
 
-Shift Toolkit supporta conversioni a livello di disco di dischi virtuali tra hypervisor per i seguenti formati di disco:
+Shift Toolkit supporta la conversione a livello di disco dei dischi virtuali tra hypervisor per i seguenti formati, con supporto sia per i volumi FlexVol che per i volumi FlexGroup su ONTAP:
 
 * Da VMware ESX a Microsoft Hyper-V (da VMDK a VHDX)
 * Da Microsoft Hyper-V a VMware ESX (da VHDX a VMDK)
@@ -28,7 +28,12 @@ Shift Toolkit supporta conversioni a livello di disco di dischi virtuali tra hyp
 * Da VMware ESX a Red Hat KVM (da VMDK a RAW)
 
 
-I file qcow2 convertiti sono compatibili con qualsiasi hypervisor KVM. Ad esempio, un file qcow2 può essere utilizzato con KVM basato su RHEL utilizzando virt-manager per creare una VM, così come con Ubuntu KVM, Rocky Linux e altri. Lo stesso può essere utilizzato con Oracle Linux Virtualization Manager con una modifica e con la virtualizzazione OpenShift dopo l'importazione tramite NetApp Trident. L'obiettivo è fornire il disco (convertito in secondi in minuti) che può quindi essere integrato negli script di automazione esistenti utilizzati dalle organizzazioni per fornire la VM e assegnare la rete. Questo approccio aiuta a ridurre i tempi complessivi di migrazione, con la conversione del disco gestita dalle API del toolkit Shift e lo script rimanente che avvia le VM.
+I file qcow2 convertiti sono compatibili con qualsiasi hypervisor KVM. Ad esempio, un file qcow2 può essere utilizzato con KVM basato su RHEL tramite virt-manager per creare una VM, così come con KVM basato su Ubuntu, Rocky Linux e altri. Lo stesso può essere usato con Oracle Linux virtualization manager, Proxmox, OpenNebula, HP VME e con la virtualizzazione OpenShift dopo l'importazione tramite NetApp Trident. L'obiettivo è fornire il disco (convertito in secondi o minuti) che può poi essere integrato negli script di automazione esistenti usati dalle organizzazioni per effettuare il provisioning della VM e assegnare la rete. Questo approccio aiuta a ridurre i tempi complessivi di migrazione, con la conversione del disco gestita dalle API di Shift toolkit e il resto dello script che avvia le VM.
+
+Il NetApp Shift Toolkit supporta anche la conversione dei dischi VMware VMDK archiviati su volumi FlexGroup in formato disco RAW, permettendoti una migrazione senza interruzioni verso piattaforme basate su KVM come Proxmox o OLVM.
+
+
+NOTE: Quando si utilizza lo storage FlexGroup, sono supportate solo le conversioni in formato RAW. Inoltre, Shift toolkit inietta i driver VirtIO durante la preparazione quando si eseguono conversioni solo KVM.
 
 Shift Toolkit supporta la migrazione end-to-end da VMware ad altri hypervisor KVM compatibili.  Tuttavia, l'opzione di conversione consente agli amministratori della migrazione di eseguire queste API di conversione e migrazione.
 
