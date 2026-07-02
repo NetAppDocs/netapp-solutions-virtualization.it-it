@@ -404,7 +404,7 @@ NOTE: Se sono presenti più file VMDK, ogni VMDK verrà convertito.
 .Carica l'immagine QCOW2 o RAW nel pool di storage basato su NFS di PVE
 Una volta convertita l'immagine del disco della macchina virtuale in formato qcow2 o RAW, Shift toolkit posiziona il file nel pool di storage appropriato e aggiunge ciascun disco all'interno della rispettiva cartella VM ID.
 
-image::shift-toolkit-469.png[shift toolkit 469]
+image::shift-toolkit-469.png[Immagine del disco della macchina virtuale caricata nel pool di storage NFS]
 
 .Crea macchina virtuale
 Shift toolkit effettua chiamate REST API per creare ogni VM a seconda del sistema operativo.

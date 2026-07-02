@@ -7765,7 +7765,6 @@
   <block id="3df92176361d792627830768779df508" category="inline-link-macro">DR tramite NetApp Disaster Recovery NFS Datastore</block>
   <block id="ffdcb7d3677c196661a9e4ad7577206b" category="paragraph">Consulta la soluzione completa nel centro documentazione NetApps Solutions: <block ref="2c1099f5b5e7f13bd13b6333caafbe18" category="inline-link-macro-rx"></block></block>
   <block id="92c14cace513a50c24d49c4b13e1921d" category="sidebar">Proteggi i datastore VMware con NetApp Disaster Recovery</block>
-  <block id="e7e5267e37f6f0b79b838b5279ec25fe" category="sidebar">Migrare le VM da VMware ESXi a Red Hat OpenShift Virtualization utilizzando Migration Toolkit for Virtualization</block>
   <block id="3f92bc0cd3d2eee6f501ab309588039f" category="sidebar">VCF 9 DR con NetApp Disaster Recovery</block>
   <block id="72c2cb3a1c4fe511d4aa5e485a6894c5" category="sidebar">Informazioni sulla conversione dei cluster vSphere esistenti in VCF</block>
   <block id="29f9284e7442c54b5708da5878ed3103" category="sidebar">Convertire il cluster vSphere esistente con datastore NFS</block>
@@ -8639,7 +8638,6 @@
   <block id="9aa9e231f950da618c182450dfecb607" category="paragraph">Le sezioni seguenti illustrano quali passaggi vengono attivati da Shift toolkit per convertire il VMDK e creare le VM sul lato Proxmox VE.</block>
   <block id="f293d7a41626208fcbb41b3a794a30a2" category="paragraph-title">Carica l'immagine QCOW2 o RAW nel pool di storage basato su NFS di PVE</block>
   <block id="f2ff48db9876dd928f72f730cad6c55e" category="paragraph">Una volta convertita l'immagine del disco della macchina virtuale in formato qcow2 o RAW, Shift toolkit posiziona il file nel pool di storage appropriato e aggiunge ciascun disco all'interno della rispettiva cartella VM ID.</block>
-  <block id="5d23268a1279c853582c3863ce0d4b7e" category="image-alt">shift toolkit 469</block>
   <block id="0bdfa5286269feba4d23388e0c2f0e21" category="paragraph-title">Crea macchina virtuale</block>
   <block id="9f6129bd27c47f979bd135fd817b20d3" category="paragraph">Shift toolkit effettua chiamate REST API per creare ogni VM a seconda del sistema operativo.</block>
   <block id="7201b4542207ea349ce6ee4e5fe1a1ef" category="admonition">Le VM vengono create sotto i rispettivi nodi Proxmox</block>
@@ -9178,4 +9176,59 @@
   <block id="900072db4db9aa5a93fea4d351c838fd" category="paragraph">Al termine della migrazione, è necessario scollegare il volume clone. Il metodo da utilizzare dipende dalla versione di ONTAP: usa clone split per ONTAP 9.17.1 e versioni successive, oppure vol move per le versioni precedenti. Uno script per avviare il processo di scollegamento è disponibile nella cartella "Post migrate" all'interno del pacchetto ZIP fornito.</block>
   <block id="2c965de51648fb5524d2eb0e957d4709" category="list-text">I VMDK possono essere configurati in diversi modi: tutti i VMDK possono risiedere su un singolo volume (eliminando la necessità di Storage vMotion), ciascun VMDK può essere posizionato su un volume individuale oppure più VMDK possono essere organizzati all'interno di un qtree in un volume.</block>
   <block id="57ab8ea8689e4a7f85baeb77d04e766e" category="admonition">Il toolkit Shift rileva automaticamente il layout e seleziona il metodo di clonazione e i driver di storage NAS appropriati.</block>
+  <block id="c47f55c3a8bac3fc95565439ca167866" category="summary">Distribuisci manualmente l'operatore Shift in modalità standard come servizio containerizzato con NetApp Trident CSI e Migration Toolkit for Virtualization.</block>
+  <block id="c493434a73d41c1c89504b5c2119f8f7" category="doc">Distribuisci manualmente l'operatore Shift (modalità standard)</block>
+  <block id="0b3dcbbfd02210c8232664ad58afacc1" category="paragraph">Distribuisci manualmente il toolkit NetApp Shift come servizio containerizzato con NetApp Trident CSI e Migration Toolkit for Virtualization (MTV). Questo processo consente il provisioning dello storage automatizzato e la migrazione dei dischi delle macchine virtuali, sfruttando annotazioni ed etichette per instradare correttamente le richieste tra i componenti.</block>
+  <block id="03d8535f3d709d87cf73393d68dc935e" category="section-title">Componenti architetturali</block>
+  <block id="32de03dbc9044dcd99ef755bfa9a61c7" category="paragraph">Scopri come il toolkit NetApp Shift, Trident CSI e Migration Toolkit for Virtualization lavorano insieme per abilitare il provisioning dello storage automatizzato e la migrazione dei dischi delle VM nel tuo ambiente OpenShift.</block>
+  <block id="06a7cceb4ea9c104f5c471b398a24c44" category="image-alt">Diagramma dell'architettura dell'operatore shift</block>
+  <block id="87ed922160e9b4c75ab1ef893b525db3" category="paragraph">*NetApp Shift toolkit*</block>
+  <block id="d6407f63c84b09b3d67be7c599991a55" category="list-text">Distribuito come servizio containerizzato tramite un image registry</block>
+  <block id="20c3dba8e3ea0c01024e755c5c6207fd" category="list-text">Espone un endpoint che rimane in ascolto delle richieste Persistent Volume Claim (PVC) provenienti da MTV con una specifica annotazione</block>
+  <block id="db8eec9fefc21532a5c922c37968316b" category="list-text">Responsabile dell'elaborazione delle attività di migrazione del disco delle macchine virtuali, comprese le conversioni di formato</block>
+  <block id="6bcc7e2f71f96347b4b98736fe8a1979" category="paragraph">*NetApp Trident CSI (versione 26.06 o successiva)*</block>
+  <block id="7bd93547c704f452dc59535fa98c61cd" category="list-text">Agisce come provisioner della Container Storage Interface (CSI)</block>
+  <block id="cfbba3393ca298e784a32cb3ff60f2b7" category="list-text">Riceve le richieste di importazione PVC dal toolkit Shift</block>
+  <block id="f5516a7a904aaee238c3bb33a023bb89" category="list-text">Applica una logica basata su annotazioni e etichette PVC per determinare se elaborare la richiesta direttamente o reindirizzarla a Shift</block>
+  <block id="3e209c0b838737b9e42fa2e1abc60d0d" category="paragraph">*Migration Toolkit for Virtualization (MTV 2.12 o versioni successive)*</block>
+  <block id="c4b04e4af346af9c1e524e3c888249c3" category="list-text">Orchestra i piani di migrazione delle macchine virtuali</block>
+  <block id="48fead57851c63d0a08f7d92570dc697" category="list-text">Emette richieste PVC necessarie per il provisioning dello storage durante la migrazione delle VM</block>
+  <block id="027261bcfd50e8709c7c09eadd20093c" category="list-text">Aggiunge annotazioni per guidare l'elaborazione successiva</block>
+  <block id="e058688fa340803d3bc8ecc02ebe596c" category="paragraph">Verifica che nel tuo ambiente OpenShift siano installati e configurati tutti i componenti necessari prima di distribuire l'operatore Shift.</block>
+  <block id="9b1fb571d14c63b89bbbeba56ad51220" category="list-text">Migration Toolkit for Virtualization Operator è in esecuzione nella versione 2.12 o successiva</block>
+  <block id="39ff57afbe369c71d87164292f4d0267" category="inline-link-macro">Guida all'installazione di Trident</block>
+  <block id="3582bb9bff4c360d1b876af2b7038b93" category="list-text">Trident viene installato tramite OpenShift OperatorHub - <block ref="05c6198e6f7839675430d2fe772b5bcd" category="inline-link-macro-rx"></block></block>
+  <block id="ff7b16168d3a95f59b6b096ad2f62444" category="list-text">NetApp Shift viene distribuito come un container con l'endpoint Shift accessibile a NetApp Trident</block>
+  <block id="ed34562ebeafe2fa2386ac50a8bdb482" category="list-text">Viene creata e etichettata una Storage Class specifica per l'utilizzo con Shift toolkit</block>
+  <block id="db94c9b7bf6cc982e79f2c27b5743ca7" category="list-text">L'etichetta identifica Shift toolkit come gestore previsto</block>
+  <block id="4351ff451e06ead04e9a98f9ede6648a" category="list-text">MTV include la seguente annotazione sui PVC:<block ref="c465c4208b1e1f3418330711672ef4c0" prefix=" " category="inline-code"></block></block>
+  <block id="f80c7b604cf5d54f61f5580c1db23856" category="section-title">Passaggio 1: Scarica ed estrai il programma di installazione di Shift</block>
+  <block id="eb54a35ee77c8f156cf491f203292ee0" category="paragraph">Il pacchetto di installazione di Shift contiene tutto il necessario per distribuire l'operatore Shift e installare Shift.</block>
+  <block id="a7a83b5e4f375c0585588b9c7ff92219" category="inline-link-macro">Toolchest del sito di supporto NetApp</block>
+  <block id="728751c4a9e9dd7ddddfcf57839671a3" category="list-text">Scarica l'ultima versione del programma di installazione di Shift da <block ref="b9c63223260665c8c6f7e5af5c329877" category="inline-link-macro-rx"></block>.</block>
+  <block id="4a0495ab86984b1ab31e239d58d8efb5" category="list-text">Estrai il pacchetto di installazione:</block>
+  <block id="e85555dea2db4b5d9ec968264e242b59" category="list-text">Passa alla directory dell'installer:</block>
+  <block id="8de8c10653c019dccd733a2c9ad025d2" category="section-title">Passaggio 2: Crea lo spazio dei nomi Shift e le credenziali API</block>
+  <block id="8e4df91281e9b10e50416eba936b5e2a" category="paragraph">Configura uno spazio dei nomi dedicato per l'operatore Shift e crea le credenziali necessarie per l'accesso sicuro all'API.</block>
+  <block id="519042fdff45eca9e93f6c7975a33261" category="list-text">Crea lo spazio dei nomi Shift:</block>
+  <block id="ec280ac477abf1fd860b10b773a737d2" category="list-text">Crea il segreto per l'accesso all'API di Shift all'interno dello spazio dei nomi Shift:</block>
+  <block id="acb6fff399445a7c3982d06abd52c5e6" category="section-title">Passaggio 3: Distribuisci l'operatore Shift</block>
+  <block id="27cb2025888a0b8910a51ba44b8a1256" category="paragraph">Applica la configurazione dell'operatore Shift al tuo OpenShift cluster e verifica che i pod richiesti siano in esecuzione correttamente.</block>
+  <block id="4063ac6d9d4e7d61536ceaaf647337fa" category="list-text">Dalla directory shift-installer, esegui il comando deploy:</block>
+  <block id="1a676394126819000e99e53f06f4d3c8" category="list-text">Verifica l'installazione utilizzando lo stato di creazione del pod:</block>
+  <block id="8637d6c1f3e0436f7f2ec935b829bd22" category="paragraph">Esempio output:</block>
+  <block id="2adfd096e132762d7bb1806ee670838a" category="section-title">Passaggio 4: Configura la Storage Class per l'integrazione con Shift</block>
+  <block id="c2bb497b0e08f4c5770ce936ceb5ceed" category="paragraph">Crea una nuova Storage Class o aggiorna una Storage Class esistente con le annotazioni necessarie per l'integrazione con Shift.</block>
+  <block id="6920c9eaa8408cbe9ae61a5d1873db9d" category="paragraph">La Storage Class deve includere le seguenti annotazioni:</block>
+  <block id="57fd0c2d34b3faae09e8bcf9699feaff" category="list-text"><block ref="ef0a3ae2e4a56e2f40e59efcda1b4f3e" prefix="" category="inline-code"></block></block>
+  <block id="d85e934facee7138a2b76f8e8d3e3b18" category="list-text"><block ref="0baedb18fca27b94ae9ef70c324b3dc6" prefix="" category="inline-code"></block></block>
+  <block id="c289c6150aaba247cc1eac2250f16f40" category="list-text">Verifica le classi di storage esistenti:</block>
+  <block id="0bdf847d5b76241a4b323312bcf8bac1" category="list-text">Applica le annotazioni necessarie alla storage class:</block>
+  <block id="1c878a34021ac193182a89fe8da7f0ab" category="admonition">L'UUID del backend puoi recuperarlo eseguendo<block ref="7e745824a540942db553f6f4251bb92b" prefix=" " category="inline-code"></block></block>
+  <block id="01e12de62fa77fda2815719aed8ff892" category="section-title">Cosa c'è dopo</block>
+  <block id="3a36f8654c90283d28de9331a4458a28" category="paragraph">Dopo aver completato la distribuzione dell'operatore Shift e la configurazione della storage class, puoi creare e avviare il piano MTV.</block>
+  <block id="6f95d4f44cf1afc50df6a1c231ff124e" category="inline-link-macro">Documentazione di Migration Toolkit for Virtualization</block>
+  <block id="da7f041e9cc4cf4c35dad13e6d6d4256" category="paragraph">Per informazioni dettagliate sulla creazione del piano MTV, consulta il <block ref="52cfaab11b47ceb91fc31cd678248f92" category="inline-link-macro-rx"></block>.</block>
+  <block id="5b72c021801ffa146c82f90658cd7575" category="image-alt">Immagine del disco della macchina virtuale caricata nel pool di storage NFS</block>
+  <block id="5494dd2ac7ee98a0fa80c17d1b6858a0" category="sidebar">Distribuisci manualmente l'operatore Shift</block>
 </blocks>
