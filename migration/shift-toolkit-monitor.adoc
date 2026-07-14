@@ -18,6 +18,7 @@ Utilizza la dashboard di monitoraggio dei lavori di Shift Toolkit per monitorare
 
 
 
+[[job-monitoring-dashboard]]
 == Dashboard di monitoraggio dei lavori
 
 La dashboard di monitoraggio dei lavori fornisce una visualizzazione centralizzata di tutte le operazioni attive e completate all'interno di Shift Toolkit.  Utilizza questa dashboard per monitorare l'avanzamento dei tuoi lavori di migrazione, conversione e blueprint.
@@ -35,6 +36,7 @@ La dashboard mostra le informazioni chiave per ogni lavoro:
 
 
 
+[[understanding-job-status]]
 == Comprendere lo stato del lavoro
 
 L'interfaccia intuitiva consente di valutare rapidamente lo stato di tutte le operazioni e di identificare i lavori che richiedono attenzione.

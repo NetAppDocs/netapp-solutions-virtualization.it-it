@@ -15,6 +15,7 @@ Distribuisci gli ONTAP tools for VMware vSphere 10 e predisponi un datastore NFS
 
 
 
+[[step-1-deploy-ontap-tools-for-vmware-vsphere]]
 == Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
 
 In questa fase, gli strumenti ONTAP vengono distribuiti in una configurazione non HA. Per ulteriori dettagli sulla distribuzione delle configurazioni HA e non HA, fare riferimento a https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/ontap-tools-deployment.html["Distribuisci gli ONTAP tools for VMware vSphere"] .
@@ -71,6 +72,7 @@ image::vmware-vcf-import-nfs-003.png[Personalizza il modello]
 
 
 
+[[step-2-configure-ontap-tools]]
 == Passaggio 2: configurare gli strumenti ONTAP
 
 Dopo aver installato e acceso la VM degli strumenti ONTAP , aggiungere i server vCenter e i sistemi di storage ONTAP che si desidera gestire.
@@ -102,6 +104,7 @@ TIP: Per consentire la gestione completa di tutte le SVM nel sistema di storage,
 
 
 
+[[step-3-provision-the-nfs-datastore]]
 == Passaggio 3: provisioning del datastore NFS
 
 Gli strumenti ONTAP integrano le funzionalità nell'intera interfaccia utente del client vSphere. In questa fase, un datastore NFS viene predisposto dalla pagina dell'inventario di archiviazione.
@@ -149,6 +152,7 @@ image::vmware-vcf-import-nfs-009.png[Pagina di riepilogo]
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver distribuito gli strumenti ONTAP e aver effettuato il provisioning del datastore NFS,link:vmw-vcf-mgmt-nfs-conversion.html["convertire il cluster vSphere nel dominio di gestione VCF"] .

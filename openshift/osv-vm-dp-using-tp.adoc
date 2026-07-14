@@ -28,17 +28,18 @@ Trident Protect consente snapshot, backup, ripristino e disaster recovery di app
 
 * link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.17/html/installing_on_bare_metal/index["Cluster OpenShift 4.17"]
 * link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.17/html/virtualization/getting-started#tours-quick-starts_virt-getting-started["OpenShift Virtualization installato tramite OpenShift Virtualization Operator fornito da Red Hat"]
-* link:https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy.html["Trident 25.02"]
+* link:https://docs.netapp.com/us-en/trident/trident-get-started/quickstart.html["Trident 25.02"]
 * link:https://docs.netapp.com/us-en/trident/trident-protect/trident-protect-installation.html["Trident Protect 25.02"]
 * link:https://docs.netapp.com/us-en/ontap/["ONTAP 9.16"]
 
 
 
 
+[[create-app-vault-for-object-storage]]
 == Crea App Vault per Object Storage
 
 .Crea AppVault
-[%collapsible%open]
+[%collapsible]
 ====
 Prima di creare le snapshot e i backup per un'applicazione o una VM, un Object Storage deve essere configurato in Trident Protect per archiviare le snapshot e i backup. Questo viene fatto utilizzando il bucket CR. Solo gli amministratori possono creare un bucket CR e configurarlo. Il bucket CR è noto come AppVault in Trident Protect. Gli oggetti AppVault sono la rappresentazione dichiarativa del flusso di lavoro Kubernetes di un bucket di storage. Un CR AppVault contiene le configurazioni necessarie affinché un bucket possa essere utilizzato nelle operazioni di protezione, come backup, snapshot, operazioni di ripristino e replica SnapMirror.
 
@@ -105,10 +106,11 @@ image:rh-os-n-use-case-ocpv-tp-dp-008.png["ONTAP S3 Appvault creato"]
 ====
 
 
+[[create-a-vm-in-openshift-virtualization]]
 == Creare una VM in OpenShift Virtualization
 
 .Creare una VM in OpenShift Virtualization
-[%collapsible%open]
+[%collapsible]
 ====
 Gli screenshot seguenti mostrano la creazione della VM (demo-fedora nello spazio dei nomi demo) dalla console utilizzando il modello. Il disco radice sceglie automaticamente la classe di archiviazione predefinita, quindi verificare che la classe di archiviazione predefinita sia impostata correttamente. In questa configurazione, la classe di archiviazione predefinita è **sc-zonea-san**. Quando si crea il disco aggiuntivo, assicurarsi di scegliere la classe di archiviazione sc-zonea-san e di selezionare la casella di controllo "**Applica impostazioni di archiviazione ottimizzate**". In questo modo le modalità di accesso verranno impostate su RWX e la modalità volume su Blocco.
 
@@ -132,10 +134,11 @@ image:rh-os-n-use-case-ocpv-tp-dp-007.png["vm, pod e pvc creati"]
 ====
 
 
+[[create-an-app]]
 == Crea un'app
 
 .Crea app
-[%collapsible%open]
+[%collapsible]
 ====
 **Creare un'app Trident Protect per la VM**
 
@@ -163,10 +166,11 @@ image:rh-os-n-use-case-ocpv-tp-dp-009.png["App creata"]
 ====
 
 
+[[protect-the-app-by-creating-a-backup]]
 == Proteggi l'app creando un backup
 
 .Crea backup
-[%collapsible%open]
+[%collapsible]
 ====
 **Crea un backup su richiesta**
 
@@ -217,10 +221,11 @@ image:rh-os-n-use-case-ocpv-tp-dp-017.png["Backup creati su richiesta e secondo 
 ====
 
 
+[[restore-from-backup]]
 == Ripristina dal backup
 
 .Ripristina dai backup
-[%collapsible%open]
+[%collapsible]
 ====
 **Ripristina la VM nello stesso namespace**
 
@@ -301,10 +306,11 @@ image:rh-os-n-use-case-ocpv-tp-dp-023.png["VM nel nuovo namespace"]
 ====
 
 
+[[protect-the-app-using-snapshots]]
 == Proteggi l'app utilizzando gli snapshot
 
 .Crea snapshot
-[%collapsible%open]
+[%collapsible]
 ====
 **Crea uno snapshot on-demand** Crea uno snapshot per l'app e specifica l'appvault in cui deve essere archiviato.
 
@@ -373,10 +379,11 @@ image:rh-os-n-use-case-ocpv-tp-dp-026.png["snapshot pianificato"]
 ====
 
 
+[[restore-from-snapshot]]
 == Ripristina da snapshot
 
 .Ripristina da snapshot
-[%collapsible%open]
+[%collapsible]
 ====
 **Ripristinare la VM dallo snapshot nello stesso namespace** Eliminare la VM demo-fedora dal namespace demo2.
 
@@ -455,10 +462,11 @@ image:rh-os-n-use-case-ocpv-tp-dp-032.png["VM ripristinata nel nuovo namespace"]
 ====
 
 
+[[restore-a-specific-vm]]
 == Ripristina una VM specifica
 
 .Selezione di VM specifiche in uno spazio dei nomi per creare snapshot/backup e ripristinare
-[%collapsible%open]
+[%collapsible]
 ====
 Nell'esempio precedente, avevamo una singola VM all'interno di uno spazio dei nomi. Includendo l'intero namespace nel backup, sono state acquisite tutte le risorse associate a quella VM. Nell'esempio seguente, aggiungiamo un'altra VM allo stesso namespace e creiamo un'app solo per questa nuova VM utilizzando un selettore di etichette.
 
@@ -548,6 +556,56 @@ image:rh-os-n-use-case-ocpv-tp-dp-038.png["macchina virtuale centos creata"]
 ====
 
 
+[[single-file-restore-for-a-vm]]
+== Ripristino di un singolo file per una VM
+
+Questo metodo di ripristino a file singolo si applica solo ai volumi NAS/basati su file che sono montati come filesystem nel pod client, come i volumi NFS. Non si applica ai volumi SAN/a blocchi raw, inclusi i dischi VM configurati con  `volumeMode: Block` come mostrato in precedenza.
+
+Per i volumi NAS/basati su file supportati, un modo semplice per ripristinare un file specifico è rendere visibile al client la directory degli snapshot sul volume di supporto. Questo si può fare modificando la configurazione del backend Trident per includere la sezione defaults e impostare il parametro  `snapshotDir` su  `true`. Questo permette di accedere alla directory  `.snapshot` dalla stessa posizione di mount del volume principale. La directory  `.snapshot` contiene tutti gli snapshot. Puoi accedere alla directory dello snapshot desiderato, trovare il file che vuoi ripristinare e copiarlo nella posizione che ti serve.
+
+
+NOTE: Questo metodo espone i dati storici ai carichi di lavoro/utenti con accesso di montaggio e potrebbe violare le aspettative di minimo privilegio/conformità. Considera l'impatto sulla sicurezza/operatività e ricorda che dovresti abilitarlo temporaneamente e disattivarlo dopo aver ripristinato un file. Inoltre, se usi NFS versione 4, non puoi vedere la `.snapshot` directory quando elenchi i file con un comando `ls`. Tuttavia, puoi `cd` accedere alla directory `.snapshot`.
+
+.Esempio di ripristino di un singolo file accedendo alla directory .snapshot e copiando un file da uno Snapshot
+[%collapsible]
+====
+[source, yaml]
+----
+#single-file-restore.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-single-file-restore
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: test-trident-set-defaults
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: /data
+          name: task-pv-storage
+# oc apply -f single-file-restore.yaml
+----
+image:rh-os-n-use-case-ocpv-tp-dp-sfr-001.png["pod e il pvc della VM"]
+
+image:rh-os-n-use-case-ocpv-tp-dp-sfr-002.png["Nome del volume ONTAP per il disco della VM"]
+
+image:rh-os-n-use-case-ocpv-tp-dp-sfr-003.png["directory snapshot visibile nel client"]
+
+image:rh-os-n-use-case-ocpv-tp-dp-sfr-004.png["montare la directory nella VM"]
+
+image:rh-os-n-use-case-ocpv-tp-dp-sfr-005.png["perdere un file nella VM e copiare il file dalla directory dello snapshot alla directory principale per ripristinarlo"]
+
+====
+
+
+[[video-demonstration]]
 == Dimostrazione video
 
 Il seguente video mostra una dimostrazione della protezione di una VM tramite snapshot

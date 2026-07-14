@@ -18,12 +18,14 @@ NetApp offre piattaforme su misura per gli ambienti VMware, tra cui FAS per uno 
 
 
 
+[[introduction]]
 == Introduzione
 
 Queste offerte migliorano le prestazioni, la scalabilità e la gestione dei dati per l'amministratore VMware.  Inoltre, ONTAP viene utilizzato su queste piattaforme, offrendo una soluzione di gestione dei dati unificata, scalabile ed efficiente che supporta vari protocolli di archiviazione, migliora la protezione dei dati e ottimizza le prestazioni per diversi carichi di lavoro.
 
 
 
+[[common-benefits-across-netapp-platforms]]
 == Vantaggi comuni tra le piattaforme NetApp
 
 * *Integrazione VMware:* tutte le piattaforme NetApp offrono una profonda integrazione con VMware, migliorando l'efficienza dell'ambiente di storage.  Le soluzioni on-premise possono sfruttare plugin, API, VAAI e VASA per migliorare la gestione complessiva dei dati, aumentando al contempo la versatilità dell'infrastruttura.
@@ -42,6 +44,7 @@ Nota: le soluzioni cloud NetApp potrebbero avere funzionalità limitate dal prov
 
 
 
+[[netapp-asa-all-san-array-benefits]]
 == Vantaggi di NetApp ASA (All SAN Array)
 
 * *Ottimizzato per SAN:* progettato specificamente per carichi di lavoro SAN, garantisce prestazioni elevate e bassa latenza per gli ambienti VMware che si basano sullo storage a blocchi.
@@ -60,6 +63,7 @@ image:vmware-asa-002.png["larghezza=800"]
 
 
 
+[[storage-protocol-support]]
 === Supporto del protocollo di archiviazione
 
 ASA supporta tutti i protocolli SAN standard, tra cui iSCSI, Fibre Channel (FC), Fibre Channel over Ethernet (FCoE) e NVME over fabric.
@@ -78,6 +82,7 @@ Per indicazioni di progettazione su NVMe fare riferimento a https://docs.netapp.
 
 
 
+[[active-active-technology]]
 === Tecnologia attiva-attiva
 
 Gli array SAN All-Flash NetApp consentono percorsi attivi-attivi attraverso entrambi i controller, eliminando la necessità per il sistema operativo host di attendere il fallimento di un percorso attivo prima di attivare il percorso alternativo.  Ciò significa che l'host può utilizzare tutti i percorsi disponibili su tutti i controller, garantendo che i percorsi attivi siano sempre presenti indipendentemente dal fatto che il sistema sia in uno stato stabile o che stia subendo un'operazione di failover del controller.
@@ -92,6 +97,7 @@ Per informazioni dettagliate vedere il https://www.netapp.com/asa/["Pagina di de
 
 
 
+[[netapp-aff-all-flash-fas-benefits]]
 == Vantaggi di NetApp AFF (All Flash FAS)
 
 * *Prestazioni estreme:* utilizza l'archiviazione all-flash per garantire latenza inferiore al millisecondo e IOPS elevati, ideali per carichi di lavoro VMware sensibili alle prestazioni.
@@ -106,6 +112,7 @@ Per ulteriori informazioni sugli array di storage NetApp C-Series, vederelink:ht
 
 
 
+[[netapp-fas-fabric-attached-storage-benefits]]
 == Vantaggi NetApp FAS (Fabric-Attached Storage)
 
 * *Architettura di archiviazione unificata:* supporta sia i protocolli SAN (a livello di blocco) sia NAS (a livello di file), rendendola versatile per vari carichi di lavoro VMware.
@@ -114,6 +121,7 @@ Per ulteriori informazioni sugli array di storage NetApp C-Series, vederelink:ht
 
 
 
+[[cloud-solutions-benefits]]
 == Vantaggi delle soluzioni cloud
 
 * *Gestione dei dati cloud-native:* utilizza offerte cloud-native per migliorare la mobilità dei dati, il backup e il disaster recovery per i carichi di lavoro VMware.  Il supporto per il datastore NFS nativo per i carichi di lavoro cloud VMware è il seguente:
@@ -128,6 +136,7 @@ Per ulteriori informazioni sugli array di storage NetApp C-Series, vederelink:ht
 
 
 
+[[summary]]
 == Riepilogo
 
 In sintesi, le piattaforme ONTAP e NetApp offrono una serie completa di vantaggi per i carichi di lavoro VMware, migliorando le prestazioni, la scalabilità e la gestione dei dati.  Sebbene le funzionalità comuni forniscano una solida base, ogni piattaforma offre vantaggi differenziati, personalizzati in base alle esigenze specifiche, che si tratti di storage conveniente con FAS, elevate prestazioni con AFF, prestazioni SAN ottimizzate con ASA o flessibilità del cloud ibrido con le offerte cloud NetApp .

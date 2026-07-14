@@ -17,6 +17,7 @@ Verificare che i sistemi operativi guest Windows e Linux, la versione ONTAP e gl
 
 
 
+[[supported-vm-guest-operating-systems]]
 == Sistemi operativi guest VM supportati
 
 Shift Toolkit supporta i seguenti sistemi operativi guest Windows e Linux per la conversione delle VM.
@@ -52,12 +53,14 @@ NOTE: Windows Server 2008 non è ufficialmente supportato. Tuttavia, il processo
 
 
 
+[[supported-ontap-versions]]
 == Versioni ONTAP supportate
 
 Shift Toolkit supporta ONTAP 9.14.1 o versioni successive.
 
 
 
+[[supported-hypervisors]]
 == Hypervisor supportati
 
 Shift Toolkit supporta le seguenti piattaforme hypervisor per la migrazione e la conversione delle VM.

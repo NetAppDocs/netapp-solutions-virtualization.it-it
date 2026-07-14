@@ -18,6 +18,7 @@ OpenNebula è una piattaforma open-source per la gestione del cloud per la gesti
 
 
 
+[[overview]]
 == Panoramica
 
 OpenNebula offre un set completo di funzionalità per gestire l'intero ciclo di vita di macchine virtuali e container, inclusi deployment, monitoraggio, scalabilità e dismissione. Supporta un'ampia gamma di opzioni di storage e networking, rendendolo flessibile per diversi casi d'uso.
@@ -32,6 +33,7 @@ OpenNebula ha un'architettura modulare che consente una facile integrazione con 
 
 
 
+[[frontend-user-interface]]
 == Interfaccia utente frontend
 
 OpenNebula fornisce un'interfaccia utente basata sul web chiamata Sunstone, che consente agli utenti di gestire facilmente le proprie macchine virtuali e i container. L'interfaccia è intuitiva e facile da usare, rendendo semplice sia per gli amministratori che per gli utenti finali navigare ed eseguire le attività. Per impostazione predefinita, viene eseguita sulla porta 2616. I dati persistenti vengono archiviati in un database backend, che può essere SQLite (predefinito per piccoli carichi di lavoro) o MySQL/MariaDB (per ambienti di produzione). È possibile distribuire più istanze di server frontend per garantire alta disponibilità e bilanciamento del carico.
@@ -46,6 +48,7 @@ Le funzionalità di federazione consentono di collegare più istanze OpenNebula 
 
 
 
+[[compute]]
 == Calcolare
 
 OpenNebula supporta KVM per macchine virtuali e LXC per container Linux. I sistemi operativi supportati includono Ubuntu, Debian, RHEL e AlmaLinux. Le macchine virtuali possono essere distribuite da modelli preconfigurati o immagini personalizzate. Un set di macchine virtuali (servizio) può anche essere distribuito utilizzando modelli di servizio. OneFlow consente di definire e gestire applicazioni multilivello composte da più macchine virtuali interconnesse. OneGate consente di comunicare con il backend OpenNebula dall'interno delle macchine virtuali, consentendo funzionalità avanzate di monitoraggio e gestione.
@@ -75,6 +78,7 @@ OpenNebula supporta NVIDIA vGPU e MIG (Multi Instance GPU) per macchine virtuali
 
 
 
+[[storage]]
 == Magazzinaggio
 
 OpenNebula fornisce quattro tipi di datastore per gestire le risorse di storage: System, Image, File e Backup datastores. I System datastores vengono utilizzati per archiviare i dischi delle macchine virtuali e i file di configurazione. Gli Image datastores vengono utilizzati per archiviare immagini di macchine virtuali, ISO e dischi dati. I File datastores vengono utilizzati per archiviare file a cui possono accedere le macchine virtuali. I Backup datastores vengono utilizzati per archiviare i backup delle macchine virtuali e dei loro dati.
@@ -102,6 +106,7 @@ Il driver Trident CSI viene utilizzato per creare volumi persistenti sui cluster
 
 
 
+[[network]]
 == Rete
 
 OpenNebula si collega all'infrastruttura di rete esistente per fornire funzionalità di rete per macchine virtuali e container. Supporta vari modelli di rete, tra cui Linux bridge, VLAN 802.1Q, VXLAN e Open vSwitch networks. Per una rete simile a VPC, VXLAN con EVPN può essere utilizzato per isolare le reti tenant.
@@ -120,6 +125,7 @@ I router virtuali possono essere implementati per fornire servizi di routing e N
 
 
 
+[[monitoring-and-operations]]
 == Monitoraggio e operazioni
 
 OpenNebula include un sistema di monitoraggio completo che fornisce informazioni in real-time sulle prestazioni e sullo stato di salute dell'infrastruttura cloud. Raccoglie metriche da hypervisor, macchine virtuali, storage e componenti di rete, consentendo agli amministratori di monitorare l'utilizzo delle risorse e identificare potenziali problemi.
@@ -142,6 +148,7 @@ https://github.com/OpenNebula/one-swap["Strumento OneSwap"] consente di migrare 
 
 
 
+[[data-protection]]
 == Protezione dei dati
 
 OpenNebula fornisce supporto per il backup tramite rsync, restic e Veeam. L'integrazione con Veeam è disponibile solo con l'edizione Enterprise. I datastore di backup vengono utilizzati per archiviare i backup delle macchine virtuali e dei loro dati. I job di backup possono essere pianificati per essere eseguiti a intervalli specifici, garantendo che le macchine virtuali vengano regolarmente sottoposte a backup.

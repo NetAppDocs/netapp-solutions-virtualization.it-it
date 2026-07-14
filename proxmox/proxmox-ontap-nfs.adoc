@@ -24,6 +24,7 @@ Se non hai familiarità con ONTAP, utilizza l'interfaccia System Manager per com
 video::f6c9aba3-b070-45d6-8048-b22e001acfd4[panopto,width=360]
 
 
+[[storage-administrator-tasks]]
 == Attività dell'amministratore dell'archiviazione
 
 Completare queste attività per predisporre l'archiviazione NFS su ONTAP da utilizzare con Proxmox VE.
@@ -59,6 +60,7 @@ image:proxmox-ontap-nfs-003.png["Informazioni sul volume NFS"]
 
 
 
+[[virtualization-administrator-tasks]]
 == Attività dell'amministratore della virtualizzazione
 
 Completare queste attività per aggiungere il volume NFS come storage in Proxmox VE e configurare nConnect o il trunking di sessione per migliorare le prestazioni.

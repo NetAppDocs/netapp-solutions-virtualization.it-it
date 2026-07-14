@@ -20,6 +20,7 @@ Il concetto di sovranità sta emergendo come componente necessaria del cloud com
 
 
 
+[[vmware-sovereign-cloud-initiative]]
 == Iniziativa VMware Sovereign Cloud
 
 VMware definisce un cloud sovrano come un sistema che:
@@ -33,6 +34,7 @@ VMware definisce un cloud sovrano come un sistema che:
 
 
 
+[[partnering-with-a-trusted-vmware-sovereign-cloud-service-provider]]
 == Collaborare con un fornitore di servizi cloud VMware Sovereign affidabile
 
 Per garantire il successo, le organizzazioni devono collaborare con partner di cui si fidano e che siano in grado di ospitare piattaforme cloud sovrane autentiche e autonome.  I VMware Cloud Provider riconosciuti nell'ambito dell'iniziativa VMware Sovereign Cloud si impegnano a progettare e gestire soluzioni cloud basate su architetture moderne, definite dal software, che incarnano i principi chiave e le best practice delineati nel framework VMware Sovereign Cloud.

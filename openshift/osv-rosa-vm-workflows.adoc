@@ -26,6 +26,7 @@ image:redhat-openshift-ocpv-rosa-023.png["File di riavvio della VM OCP-v"]
 
 
 
+[[vm-live-migration]]
 == Migrazione live della VM
 
 In questa sezione eseguiremo una migrazione live della VM e poi esamineremo il contenuto dei dischi.  La migrazione in tempo reale si riferisce al processo di spostamento di una macchina virtuale (VM) in esecuzione da un host fisico a un altro host senza interrompere le normali operazioni o causare tempi di inattività o altri effetti negativi per l'utente finale.  La migrazione in tempo reale è considerata un passaggio fondamentale nella virtualizzazione.  Consente di spostare un'intera VM con un sistema operativo (SO) in esecuzione, memoria, storage e connettività di rete dal nodo corrente alla destinazione.  Di seguito vedremo come eseguire una migrazione live della VM dal nodo corrente a un nuovo nodo.
@@ -48,6 +49,7 @@ Anche i volumi associati al pod VM sono gli stessi (2 PVC) di prima.image:redhat
 
 
 
+[[demo-video]]
 == Video dimostrativo
 
 .Migrazione live di macchine virtuali in OpenShift Virtualization su ROSA con Amazon FSx for NetApp ONTAP

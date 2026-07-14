@@ -18,12 +18,14 @@ Gli ONTAP tools for VMware vSphere semplificano la gestione del ciclo di vita de
 
 
 
+[[introduction]]
 == Introduzione
 
 Consente agli amministratori di gestire direttamente lo storage all'interno di vCenter Server e di semplificare la gestione dello storage e dei dati per gli ambienti VMware.  Lo strumento plug-in VMware vSphere Client è progettato per integrare la funzionalità plug-in in vSphere Client senza la necessità di eseguirlo all'interno di vCenter Server.  Ciò garantisce l'isolamento dei plug-in e consente la scalabilità orizzontale dei plug-in che operano in ambienti vSphere di grandi dimensioni.
 
 
 
+[[ontap-tools-components]]
 == Componenti degli strumenti ONTAP
 
 * *Virtual Storage Console (VSC)* La VSC include l'interfaccia integrata con il client vSphere, dove è possibile aggiungere controller di storage, eseguire il provisioning di datastore, monitorare le prestazioni dei datastore e visualizzare e aggiornare le impostazioni dell'host ESXi.

@@ -30,6 +30,7 @@ In questo tipo di migrazione, la maggior parte dei dati viene copiata durante la
 ====
 
 
+[[video-demonstration]]
 == Dimostrazione video
 
 Il seguente video mostra una dimostrazione della migrazione a freddo di una VM RHEL da VMware a OpenShift Virtualization utilizzando la classe di archiviazione ontap-san per l'archiviazione persistente.
@@ -38,6 +39,7 @@ Il seguente video mostra una dimostrazione della migrazione a freddo di una VM R
 video::bac58645-dd75-4e92-b5fe-b12b015dc199[panopto,width=360]
 
 
+[[migration-of-vm-from-vmware-to-openshift-virtualization-using-migration-toolkit-for-virtualization]]
 == Migrazione di VM da VMware a OpenShift Virtualization utilizzando Migration Toolkit for Virtualization
 
 In questa sezione vedremo come utilizzare Migration Toolkit for Virtualization (MTV) per migrare macchine virtuali da VMware a OpenShift Virtualization in esecuzione sulla piattaforma OpenShift Container e integrate con lo storage NetApp ONTAP tramite Trident.
@@ -48,10 +50,12 @@ image:rh-os-n-use-case-vm-migration-using-mtv.png["Figura che mostra il dialogo 
 
 
 
+[[prerequisites-for-the-sample-migration]]
 === Prerequisiti per la migrazione del campione
 
 
 
+[[on-vmware]]
 === **Su VMware**
 
 * È stata installata una VM RHEL 9 che utilizza rhel 9.3 con le seguenti configurazioni:
@@ -80,6 +84,7 @@ NOTE: Assicurarsi di avviare il server PostgreSQL e abilitare l'avvio del serviz
 
 
 
+[[on-openshift-cluster]]
 === **Su OpenShift Cluster**
 
 Prima di installare MTV sono state completate le seguenti installazioni:
@@ -92,6 +97,7 @@ Prima di installare MTV sono state completate le seguenti installazioni:
 
 
 
+[[install-mtv]]
 === Installa MTV
 
 Ora puoi installare Migration Toolkit per la virtualizzazione (MTV).  Fare riferimento alle istruzioni fornitelink:https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization/2.5/html/installing_and_using_the_migration_toolkit_for_virtualization/installing-the-operator["Qui"] per ricevere aiuto con l'installazione.
@@ -137,6 +143,7 @@ image:rh-os-n-use-case-vm-migration-mtv-plan-ready.png["Figura che mostra il dia
 
 
 
+[[perform-cold-migration]]
 === Eseguire la migrazione a freddo
 
 Facendo clic su *Avvia* verrà eseguita una sequenza di passaggi per completare la migrazione della VM.
@@ -149,6 +156,7 @@ Una volta completati tutti i passaggi, è possibile visualizzare le VM migrate f
 
 
 
+[[perform-warm-migration]]
 === Eseguire la migrazione a caldo
 
 Per eseguire una migrazione a caldo, dopo aver creato un piano di migrazione come mostrato sopra, è necessario modificare le impostazioni del piano per cambiare il tipo di migrazione predefinito.  Fare clic sull'icona di modifica accanto alla migrazione a freddo e attivare il pulsante per impostarla su migrazione a caldo.  Fare clic su **Salva**.  Ora clicca su **Avvia** per avviare la migrazione.

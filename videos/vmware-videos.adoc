@@ -18,6 +18,7 @@ Guarda video e demo che illustrano l'integrazione di VMware con le soluzioni di 
 
 
 
+[[vmware-datastore-provisioning-with-ontap]]
 == Provisioning del datastore VMware con ONTAP
 
 .Strumenti ONTAP per VMware - Panoramica
@@ -30,6 +31,7 @@ video::3135c36f-3a13-4c95-aac9-b2a0001816dc[panopto,width=360]
 video::a34bcd1c-3aaa-4917-9a5d-b01200f97f08[panopto]
 
 
+[[snapcenter-plug-in-for-vmware-vsphere]]
 == SnapCenter Plug-in for VMware vSphere
 
 .SnapCenter Plug-in for VMware vSphere - prerequisiti della soluzione
@@ -44,12 +46,14 @@ video::ed41002e-585c-445d-a60c-b01200fb1188[panopto,width=360]
 video::8df4ad1f-83ad-448b-9405-b01200fb2567[panopto,width=360]
 
 
+[[3-2-1-data-protection-solutions]]
 == Soluzioni di protezione dei dati 3-2-1
 
 .Protezione dei dati 3-2-1 per datastore VMFS con SnapCenter Plug-in for VMware vSphere e NetApp Backup and Recovery per macchine virtuali
 video::7c21f3fc-4025-4d8f-b54c-b0e001504c76[panopto,width=360]
 
 
+[[vmware-cloud-on-aws-with-aws-fsx-ontap]]
 == VMware Cloud su AWS con AWS FSx ONTAP
 
 .Archiviazione connessa guest Windows con FSx ONTAP tramite iSCSI
@@ -68,6 +72,7 @@ video::52661f10-3f90-4f3d-865a-b01200f06d31[panopto,width=360]
 video::685c0dc2-9d8a-42ff-b46d-b01200f056b0[panopto,width=360]
 
 
+[[azure-vmware-solutions]]
 == Soluzioni Azure VMware
 
 .Panoramica del datastore supplementare della soluzione Azure VMware con Azure NetApp Files
@@ -82,6 +87,7 @@ video::986bb505-6f3d-4a5a-b016-b01200f03f18[panopto,width=360]
 video::255640f5-4dff-438c-8d50-b01200f017d1[panopto,width=360]
 
 
+[[vmware-cloud-foundation-with-netapp-ontap]]
 == VMware Cloud Foundation con NetApp ONTAP
 
 .Datastore NFS come storage principale per domini di carico di lavoro VCF
@@ -90,6 +96,7 @@ video::9b66ac8d-d2b1-4ac4-a33c-b16900f67df6[panopto]
 video::1d0e1af1-40ae-483a-be6f-b156015507cc[panopto]
 
 
+[[netapp-cloud-insights]]
 == Cloud Insights NetApp
 
 .NetApp Cloud Insights - Osservabilità per il data center moderno

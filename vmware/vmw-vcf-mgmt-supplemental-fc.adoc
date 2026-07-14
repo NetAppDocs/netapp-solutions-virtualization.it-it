@@ -47,6 +47,7 @@ L'aggiunta di un backend di archiviazione consente di integrare un cluster ONTAP
 
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 * Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] .

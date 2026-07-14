@@ -20,6 +20,7 @@ Questa soluzione completa fornisce un'interfaccia standardizzata per la gestione
 
 
 
+[[introduction]]
 == Introduzione
 
 NetApp Storage Management Initiative Specification (SMI-S) è un potente strumento per la gestione e il monitoraggio dei sistemi di storage.  NetApp SMI-S sfrutta i protocolli Web-Based Enterprise Management (WBEM) per fornire un'interfaccia unificata per varie attività di gestione, tra cui la gestione di LUN, volumi, impostazioni di configurazione CIMOM e utenti del server CIM.
@@ -28,6 +29,7 @@ SCVMM è una soluzione di gestione completa per data center virtualizzati.  SCVM
 
 
 
+[[benefits-of-using-netapp-smi-s-provider-with-scvmm]]
 === Vantaggi dell'utilizzo di NetApp SMI-S Provider con SCVMM
 
 L'integrazione di NetApp SMI-S Provider con SCVMM consente alle organizzazioni di gestire le risorse di storage in modo più efficace in un data center virtualizzato, fornendo un'interfaccia standardizzata per la gestione dello storage.
@@ -43,6 +45,7 @@ image:hyperv-smis-001.png["NetApp SMI-S con architettura Hyper-V"]
 
 
 
+[[get-ready-for-smi-s-provider-deployment]]
 == Preparati per l'implementazione del provider SMI-S
 
 Per un'integrazione fluida con i sistemi di storage esistenti è necessaria un'installazione e una configurazione corrette di NetApp SMI-S Provider.
@@ -61,6 +64,7 @@ Per un'integrazione fluida con i sistemi di storage esistenti è necessaria un'i
 
 
 
+[[smi-s-virtual-machine-hardware-requirements]]
 === Requisiti hardware della macchina virtuale SMI-S
 
 La tabella seguente mostra i requisiti hardware della VM del provider NetApp SMI-S.
@@ -69,6 +73,7 @@ image:hyperv-smis-002.png["Requisiti hardware del provider SMI-S"]
 
 
 
+[[install-smi-s-provider]]
 === Installa SMI-S Provider
 
 Prima di avviare la distribuzione del provider SMI-S, è necessario distribuire Microsoft Hyper-V con SCVMM e NetApp 9 su un sistema di archiviazione FAS o AFF .  È importante comprendere l'interfaccia basata sui comandi per eseguire varie attività di gestione, controllarelink:https://docs.netapp.com/us-en/smis-provider/concept-smi-s-provider-commands-overview.html["Comandi NetApp SMI-S Provider ."]
@@ -87,6 +92,7 @@ Procedura consigliata: NetApp consiglia di utilizzare un server Windows dedicato
 
 
 
+[[connect-smi-s-provider-with-scvmm]]
 === Connetti il provider SMI-S con SCVMM
 
 Per aggiungere un dispositivo di archiviazione remoto in SCVMM e connettersi a un provider SMI-S, è necessario assicurarsi che siano soddisfatti i seguenti prerequisiti e passaggi:
@@ -114,6 +120,7 @@ Durante l'installazione di SMI-S Provider viene inserito un certificato obsoleto
 
 
 
+[[provisioning-storage-with-scvmm-using-an-smi-s-provider]]
 === Provisioning dello storage con SCVMM utilizzando un provider SMI-S
 
 SCVMM utilizza SMI-S Provider per interagire con i sistemi di storage, consentendo di creare e gestire risorse di storage direttamente da SCVMM.
@@ -135,12 +142,14 @@ SCVMM utilizza SMI-S Provider per interagire con i sistemi di storage, consenten
 
 
 
+[[logs-and-traces]]
 == Registri e tracce
 
 È possibile configurare il modo in cui SMI-S Provider gestisce i log e i file di traccia, ad esempio specificando i livelli di messaggi da registrare e la directory in cui salvare i log.  È inoltre possibile specificare i componenti da tracciare, la destinazione su cui vengono scritti i messaggi di traccia, il livello di tracciamento e la posizione del file di traccia.
 
 
 
+[[logs-setting]]
 === Impostazione dei registri
 
 Per impostazione predefinita, tutti i messaggi di sistema vengono registrati e i registri dei messaggi di sistema si trovano nella directory logs nella directory in cui è installato NetApp SMI-S Provider .  È possibile modificare la posizione e il livello dei messaggi di sistema scritti nel registro del server CIM.
@@ -169,6 +178,7 @@ image:hyperv-smis-012.png["Impostazione della traccia"]
 
 
 
+[[conclusion]]
 == Conclusione
 
 NetApp SMI-S Provider è uno strumento essenziale per gli amministratori di storage, in quanto fornisce una soluzione standardizzata, efficiente e completa per la gestione e il monitoraggio dei sistemi di storage.  Utilizzando protocolli e schemi standard del settore, garantisce la compatibilità e semplifica le complessità associate alla gestione della rete di storage.

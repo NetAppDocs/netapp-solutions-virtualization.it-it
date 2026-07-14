@@ -18,6 +18,7 @@ Distribuisci, fai convergere o aggiorna gli ambienti VMware Cloud Foundation 9 c
 
 
 
+[[deploy-a-new-vcf-9-instance]]
 == Distribuisci una nuova istanza VCF 9
 
 Utilizzare questo flusso di lavoro per distribuire un ambiente VMware Cloud Foundation (VCF) 9.0 pulito.  Dopo la distribuzione, è possibile migrare i carichi di lavoro o iniziare a fornire applicazioni e servizi infrastrutturali.
@@ -127,6 +128,7 @@ NOTE: IL `nConnect` il conteggio delle sessioni è per host.  Aggiornare gli alt
 
 
 
+[[converge-existing-components-into-vcf-9]]
 == Convergere i componenti esistenti in VCF 9
 
 Potresti già disporre di alcuni componenti della flotta VCF e preferire riutilizzarli.  Quando si riutilizza un'istanza vCenter, gli archivi dati vengono spesso forniti con strumenti ONTAP , che possono fungere da storage principale per VCF.
@@ -147,6 +149,7 @@ Potresti già disporre di alcuni componenti della flotta VCF e preferire riutili
 
 
 
+[[upgrade-an-existing-vcf-environment-to-vcf-9]]
 == Aggiorna un ambiente VCF esistente a VCF 9
 
 Aggiornare una precedente distribuzione VCF alla versione 9.0 utilizzando la procedura di aggiornamento standard.  Il risultato è un ambiente VCF che esegue la versione 9.0 con domini di gestione e di carico di lavoro aggiornati.

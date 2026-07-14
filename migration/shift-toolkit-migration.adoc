@@ -18,6 +18,7 @@ Utilizzare Shift Toolkit per migrare le VM tra piattaforme di virtualizzazione. 
 
 
 
+[[supported-migrations]]
 == Migrazioni supportate
 
 Shift Toolkit offre flessibilità negli ambienti multi-hypervisor supportando la migrazione bidirezionale tra i seguenti hypervisor:
@@ -32,6 +33,7 @@ Shift Toolkit offre flessibilità negli ambienti multi-hypervisor supportando la
 
 
 
+[[migration-workflow]]
 == Flusso di lavoro di migrazione
 
 Dopo aver creato un progetto, è possibile avviare il processo di migrazione.  Durante la migrazione, Shift Toolkit esegue una serie di passaggi per convertire i formati dei dischi e creare macchine virtuali sull'host di destinazione come definito nel progetto.
@@ -49,6 +51,7 @@ Shift Toolkit esegue i seguenti passaggi durante la migrazione:
 
 
 
+[[network-tips-and-considerations]]
 == Suggerimenti e considerazioni sulla rete
 
 Quando pianifichi la migrazione, tieni in considerazione i seguenti requisiti e comportamenti di rete.  Shift Toolkit copia automaticamente le impostazioni di rete dalle VM di origine e le riapplica alle VM migrate, ma la denominazione dell'interfaccia e le configurazioni delle schede di rete possono variare tra i sistemi Windows e Linux.
@@ -91,6 +94,7 @@ Shift Toolkit conserva gli indirizzi IP come specificato nel progetto.
 
 
 
+[[migration-phases]]
 == Fasi della migrazione
 
 Di seguito sono riportate le fasi di migrazione da seguire per migrare le VM utilizzando Shift Toolkit.
@@ -111,6 +115,7 @@ NOTE: Shift Toolkit non modifica la VM di origine, fatta eccezione per la copia 
 
 
 
+[[execute-a-migration]]
 == Eseguire una migrazione
 
 Per avviare il flusso di lavoro di migrazione con la configurazione specificata nel progetto, fare clic su *Migra*.
@@ -133,3 +138,57 @@ image::shift-toolkit-033.png[Avanzamento della conversione del disco]
 Una volta completato il lavoro, lo stato del progetto cambia in "Migrazione completata".
 
 image::shift-toolkit-034.png[Stato di migrazione completata]
+
+
+
+[[delete-a-blueprint]]
+== Elimina un blueprint
+
+Un blueprint che non è mai stato eseguito può essere eliminato direttamente dall'interfaccia utente. Tuttavia, dopo che un blueprint è stato attivato, vengono creati dei record nella cronologia dei processi che devono essere rimossi prima di poter eliminare il blueprint stesso. Usa lo script di rimozione PowerShell per eliminare questi record, dopo di che puoi eliminare il blueprint e il gruppo di risorse associato.
+
+.Passi
+. Scarica lo script di rimozione dall'interfaccia utente di Shift Toolkit accedendo a *Impostazioni > Accesso sviluppatore > Blocco script*.
++
+image::shift-toolkit-082.png[Rimuovi i job in base al nome del blueprint]
+
+. Estrai la cartella zip. Il pacchetto contiene due file:
++
+** `removeBpJobs.json` - File di configurazione
+** `removeBpJobs.ps1` - script PowerShell
+
+
+. Modifica il file  `removeBpJobs.json` per specificare:
++
+** Nome di esecuzione per questa operazione
+** Indirizzo IP di Shift Toolkit
+** Credenziali di amministratore
+** Nome blueprint da rimuovere
++
+Esempio di configurazione:
+
++
+[source, json]
+----
+"executions": [
+  {
+    "execution_name": "reslore",
+    "shift_server_ip": "https://10.63.184.75",
+    "shift_username": "admin",
+    "shift_password": "Admin",
+    "blueprint_details": [{"BPTHIMFAT": "True"}]
+  }
+]
+----
+
+
+. Apri PowerShell e naviga fino alla cartella contenente i file estratti.
+. Esegui lo script:
++
+[listing]
+----
+pwsh
+.\removeBpJobs.ps1
+----
+
+
+Dopo che lo script è stato completato correttamente, puoi eliminare il blueprint e il relativo gruppo di risorse dall'interfaccia utente di Shift Toolkit.

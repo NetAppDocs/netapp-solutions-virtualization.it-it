@@ -18,6 +18,7 @@ Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per 
 
 
 
+[[infrastructure-requirements]]
 == Requisiti infrastrutturali
 
 Assicurarsi che i seguenti componenti e configurazioni siano presenti.
@@ -29,6 +30,7 @@ Assicurarsi che i seguenti componenti e configurazioni siano presenti.
 
 
 
+[[recommended-iscsi-network-design]]
 == Progettazione di rete iSCSI consigliata
 
 È necessario configurare progetti di rete completamente ridondanti per iSCSI.  Il diagramma seguente illustra un esempio di configurazione ridondante.  Fornisce tolleranza agli errori per sistemi di archiviazione, switch, adattatori di rete e sistemi host.  Per ulteriori informazioni, fare riferimento a NetApplink:https://docs.netapp.com/us-en/ontap/san-config/index.html["Riferimento alla configurazione SAN"^] .
@@ -44,6 +46,7 @@ NOTE: Nei casi in cui più adattatori VMkernel sono configurati sulla stessa ret
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver esaminato i requisiti di distribuzione,link:vmw-vcf-viwld-supp-iscsi-vvols-svm-lifs.html["creare SVM e LIF"] .

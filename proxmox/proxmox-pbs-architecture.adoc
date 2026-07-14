@@ -19,6 +19,7 @@ PBS supporta vari backend di archiviazione, tra cui archiviazione locale, NFS, i
 
 
 
+[[solution-architecture]]
 == Architettura della soluzione
 
 La soluzione comprende i seguenti componenti:

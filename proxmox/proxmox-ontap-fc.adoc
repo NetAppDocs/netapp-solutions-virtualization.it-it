@@ -18,6 +18,7 @@ Configurare Logical Volume Manager (LVM) per l'archiviazione condivisa tra gli h
 
 
 
+[[initial-virtualization-administrator-tasks]]
 == Attività iniziali dell'amministratore della virtualizzazione
 
 Completare queste attività iniziali per preparare gli host Proxmox VE per la connettività FC e raccogliere le informazioni necessarie per l'amministratore dell'archiviazione.
@@ -46,6 +47,7 @@ cat /sys/class/fc_host/host*/port_name
 
 
 
+[[storage-administrator-tasks]]
 == Attività dell'amministratore dell'archiviazione
 
 Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza migliore.
@@ -65,6 +67,7 @@ image:proxmox-ontap-fc-002.png["dettagli lun"]
 
 
 
+[[final-virtualization-administrator-tasks]]
 == Attività finali dell'amministratore della virtualizzazione
 
 Completare queste attività per configurare la LUN come storage LVM condiviso in Proxmox VE.

@@ -18,6 +18,7 @@ NetApp Disaster Recovery automatizza la replica e il ripristino delle macchine v
 
 
 
+[[introduction]]
 == Introduzione
 
 Avere un piano efficace e una combinazione di tecnologie garantisce la protezione di dati, applicazioni e VM critici.  La sfida della DR è determinare il livello di protezione appropriato e i costi associati.
@@ -28,6 +29,7 @@ Per ulteriori informazioni su NetApp Disaster Recovery, vederelink:https://docs.
 
 
 
+[[considerations]]
 == Considerazioni
 
 La parte più dispendiosa in termini di tempo di un failover DR in un ambiente VMware vSphere è l'esecuzione dei passaggi necessari per inventariare, registrare, riconfigurare e accendere le VM nel sito DR. Una soluzione ideale ha sia un basso RPO (misurato in minuti) sia un basso RTO (misurato in minuti o ore). Un fattore che spesso viene trascurato in una soluzione DR è la capacità di testare la soluzione DR in modo efficiente a intervalli periodici.

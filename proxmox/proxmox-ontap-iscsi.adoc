@@ -20,6 +20,7 @@ Configurare Logical Volume Manager (LVM) per l'archiviazione condivisa tra gli h
 video::d66ef67f-bcc2-4ced-848e-b22e01588e8c[panopto,width=360]
 
 
+[[initial-virtualization-administrator-tasks]]
 == Attività iniziali dell'amministratore della virtualizzazione
 
 Completare queste attività iniziali per preparare gli host Proxmox VE per la connettività iSCSI e raccogliere le informazioni necessarie per l'amministratore dell'archiviazione.
@@ -48,6 +49,7 @@ cat /etc/iscsi/initiator.name
 
 
 
+[[storage-administrator-tasks]]
 == Attività dell'amministratore dell'archiviazione
 
 Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza migliore.
@@ -67,6 +69,7 @@ image:proxmox-ontap-iscsi-002.png["dettagli lun iscsi"]
 
 
 
+[[final-virtualization-administrator-tasks]]
 == Attività finali dell'amministratore della virtualizzazione
 
 Completare queste attività per configurare la LUN iSCSI come storage LVM condiviso in Proxmox VE.

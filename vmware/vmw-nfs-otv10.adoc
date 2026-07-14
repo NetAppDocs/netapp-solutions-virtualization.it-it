@@ -22,6 +22,7 @@ In questo scenario mostreremo come distribuire e utilizzare gli ONTAP tools for 
 
 
 
+[[solution-overview]]
 == Panoramica della soluzione
 
 Questo scenario comprende i seguenti passaggi di alto livello:
@@ -35,6 +36,7 @@ Questo scenario comprende i seguenti passaggi di alto livello:
 
 
 
+[[architecture]]
 == Architettura
 
 Il diagramma seguente mostra i componenti architettonici di un'implementazione ONTAP tools for VMware vSphere 10.
@@ -43,6 +45,7 @@ image:vmware-nfs-otv10-029.png["architettura otv10"]
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 Questa soluzione richiede i seguenti componenti e configurazioni:
@@ -62,12 +65,14 @@ Strumenti ONTAP completi 10 risorse possono essere trovate https://docs.netapp.c
 
 
 
+[[deployment-steps]]
 == Fasi di distribuzione
 
 Per distribuire gli strumenti ONTAP 10 e utilizzarli per creare un datastore NFS sul dominio di gestione VCF, completare i seguenti passaggi:
 
 
 
+[[create-svm-and-lifs-on-ontap-storage-system]]
 === Creare SVM e LIF sul sistema di archiviazione ONTAP
 
 Il passaggio seguente viene eseguito in ONTAP System Manager.
@@ -108,6 +113,7 @@ image:vmware-vcf-asa-004.png["Abilita l'account SVM e termina"]
 ====
 
 
+[[set-up-networking-for-nfs-on-esxi-hosts]]
 === Configurare la rete per NFS sugli host ESXi
 
 I passaggi seguenti vengono eseguiti sul cluster VI Workload Domain utilizzando il client vSphere.  In questo caso viene utilizzato vCenter Single Sign-On in modo che il client vSphere sia comune tra i domini di gestione e di carico di lavoro.
@@ -194,6 +200,7 @@ image:vmware-nfs-otv10-006.png["Esaminare le selezioni VMkernel"]
 ====
 
 
+[[deploy-and-use-ontap-tools-10-to-configure-storage]]
 === Distribuire e utilizzare gli strumenti ONTAP 10 per configurare l'archiviazione
 
 I passaggi seguenti vengono eseguiti sul cluster vSphere 8 utilizzando il client vSphere e comportano la distribuzione di OTV, la configurazione di ONTAP Tools Manager e la creazione di un datastore NFS vVols .
@@ -439,6 +446,7 @@ image:vmware-nfs-otv10-032.png["Riquadro attività recenti"]
 ====
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 Per un elenco completo degli ONTAP tools for VMware vSphere 10, fare riferimento a https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["ONTAP tools for VMware vSphere Risorse di documentazione"] .

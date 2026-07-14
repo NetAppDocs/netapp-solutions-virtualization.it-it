@@ -18,6 +18,7 @@ Utilizzare SnapMirror Active Sync per configurare la replica sincrona e bidirezi
 
 
 
+[[introduction]]
 == Introduzione
 
 A partire da ONTAP 9.15.1, SnapMirror Active Sync supporta distribuzioni attive/attive simmetriche, consentendo operazioni di I/O in lettura e scrittura da entrambe le copie di una LUN protetta con replica sincrona bidirezionale.  Un cluster esteso di Windows è un'estensione della funzionalità Cluster di failover di Windows che si estende su più posizioni geografiche per garantire elevata disponibilità e ripristino di emergenza.  Grazie alle applicazioni attive/attive simmetriche e in cluster SnapMirror Active Sync, come il clustering di failover di Windows, possiamo ottenere una disponibilità continua per le applicazioni aziendali critiche di Microsoft Hyper-V, ottenendo RTO e RPO pari a zero durante incidenti imprevisti.  Questa soluzione offre i seguenti vantaggi:
@@ -32,6 +33,7 @@ Questo documento documenta la replica bidirezionale sincrona della tecnologia Sn
 
 
 
+[[use-cases]]
 == Casi d'uso
 
 In caso di interruzioni come un attacco informatico, un'interruzione di corrente o un disastro naturale, un ambiente aziendale connesso a livello globale richiede un rapido ripristino dei dati delle applicazioni aziendali critiche, senza alcuna perdita di dati.  Tali esigenze sono più elevate in settori quali la finanza e quelli che aderiscono a obblighi normativi quali il Regolamento generale sulla protezione dei dati (GDPR).  Distribuire una configurazione attiva/attiva simmetrica per replicare i dati tra posizioni geograficamente disperse, fornendo accesso locale ai dati e garantendo la continuità in caso di interruzioni regionali.
@@ -55,6 +57,7 @@ SnapMirror Active Sync offre flessibilità con granularità a livello di applica
 
 
 
+[[solution-architecture]]
 == Architettura della soluzione
 
 Il cluster Microsoft Stretch ha due nodi Hyper-V su ciascun sito.  Questi due nodi condividono lo storage NetApp e utilizzano SnapMirror ActiveSync Symmetric Active-Active per replicare i volumi tra i due siti. Un gruppo di coerenza garantisce che tutti i volumi di un set di dati vengano messi in stato di quiescenza e quindi acquisiti esattamente nello stesso momento.  Ciò fornisce un punto di ripristino coerente con i dati su tutti i volumi che supportano il set di dati.  Il mediatore ONTAP riceve informazioni sullo stato di salute dei cluster e dei nodi ONTAP peer, orchestrando i due e determinando se ciascun nodo/cluster è integro e in esecuzione.
@@ -76,6 +79,7 @@ image:hyperv-smas-001.png["Figura che mostra il dialogo di input/output o che ra
 
 
 
+[[install-a-microsoft-stretch-failover-cluster]]
 === Installa un cluster di failover Microsoft Stretch
 
 È possibile utilizzare Windows Admin Center, PowerShell o la console di Server Manager per installare la funzionalità Failover Clustering e i cmdlet PowerShell associati.  Per maggiori dettagli sui prerequisiti e sui passaggi, consultare la sezione Creare un cluster di failover.
@@ -127,6 +131,7 @@ image:hyperv-smas-005.png["Figura che mostra il dialogo di input/output o che ra
 
 
 
+[[create-intercluster-peering]]
 === Crea peering intercluster
 
 È necessario creare relazioni peer tra cluster di origine e di destinazione prima di poter replicare copie Snapshot tramite SnapMirror.
@@ -143,6 +148,7 @@ image:hyperv-smas-007.png["Figura che mostra il dialogo di input/output o che ra
 
 
 
+[[configure-mediator-with-ontap]]
 === Configurare Mediator con ONTAP
 
 Il mediatore ONTAP riceve informazioni sullo stato di salute dei cluster e dei nodi ONTAP peering, orchestrando i due e determinando se ciascun nodo/cluster è integro e in esecuzione.  SM-as consente di replicare i dati sulla destinazione non appena vengono scritti sul volume di origine.  Il mediatore deve essere distribuito nel terzo dominio di errore. Prerequisiti
@@ -218,6 +224,7 @@ image:hyperv-smas-010.png["Figura che mostra il dialogo di input/output o che ra
 
 
 
+[[configure-symmetric-activeactive-protection]]
 === Configurare la protezione simmetrica attiva/attiva
 
 I gruppi di coerenza facilitano la gestione del carico di lavoro delle applicazioni, fornendo policy di protezione locali e remote facilmente configurabili e copie snapshot simultanee, coerenti con gli arresti anomali o con l'applicazione, di una raccolta di volumi in un dato momento.  Per maggiori dettagli fare riferimento alink:https://docs.netapp.com/us-en/ontap/consistency-groups/index.html["panoramica del gruppo di coerenza"] .  Per questa configurazione utilizziamo una configurazione uniforme.
@@ -240,6 +247,7 @@ image:hyperv-smas-012.png["Figura che mostra il dialogo di input/output o che ra
 
 
 
+[[perform-cluster-failover-validation-test]]
 === Eseguire il test di convalida del failover del cluster
 
 Si consiglia di eseguire test di failover pianificati per verificare la convalida del cluster, dei database SQL o di qualsiasi software in cluster su entrambi i siti: il sito primario o mirror deve continuare a essere accessibile durante i test.
@@ -286,6 +294,7 @@ Durante i test, osservare quanto segue:
 
 
 
+[[summary]]
 == Riepilogo
 
 La sincronizzazione attiva SnapMirror può aiutare i dati delle applicazioni multi-sito, ad esempio MSSQL e Oracle, a essere attivamente accessibili e sincronizzati su entrambi i siti.  In caso di errore, le applicazioni vengono immediatamente reindirizzate al sito attivo rimanente, senza perdita di dati né di accesso.

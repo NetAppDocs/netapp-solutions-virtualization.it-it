@@ -25,6 +25,7 @@ NOTE: Quando si utilizza LVM con protocolli SAN (FC, iSCSI, NVMe-oF), il gruppo 
 
 
 
+[[choose-a-storage-protocol]]
 == Scegli un protocollo di archiviazione
 
 Seleziona il protocollo più adatto al tuo ambiente e ai tuoi requisiti:

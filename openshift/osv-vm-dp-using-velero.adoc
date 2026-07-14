@@ -18,6 +18,7 @@ Eseguire il backup delle VM in OpenShift Virtualization utilizzando Velero e Net
 
 
 
+[[steps-to-create-a-backup-of-a-vm]]
 == Passaggi per creare un backup di una VM
 
 Per creare un backup su richiesta dell'intera VM (metadati e dischi della VM), fare clic sulla scheda **Backup**.  In questo modo viene creata una risorsa personalizzata di backup (CR). Viene fornito un file yaml di esempio per creare il Backup CR.  Utilizzando questo yaml, verrà eseguito il backup della VM e dei suoi dischi nello spazio dei nomi specificato. È possibile impostare parametri aggiuntivi come mostrato inlink:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/backing_up_and_restoring/oadp-creating-backup-cr.html["documentazione"] .
@@ -51,6 +52,7 @@ image:redhat-openshift-oadp-backup-002.png["Backup degli oggetti in S3"]
 
 
 
+[[creating-scheduled-backups-for-vms-in-openshift-virtualization]]
 == Creazione di backup pianificati per le VM in OpenShift Virtualization
 
 Per creare backup pianificati, è necessario creare un CR pianificato. La pianificazione è semplicemente un'espressione Cron che consente di specificare l'ora in cui si desidera creare il backup. Un esempio di file YAML per creare una Schedule CR.

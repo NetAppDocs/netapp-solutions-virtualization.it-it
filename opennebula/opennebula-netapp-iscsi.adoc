@@ -18,6 +18,7 @@ Configura i datastore OpenNebula utilizzando il protocollo iSCSI con NetApp ONTA
 
 
 
+[[initial-virtualization-administrator-tasks]]
 == Attività iniziali dell'amministratore della virtualizzazione
 
 Completare queste attività iniziali per preparare gli host OpenNebula per la connettività iSCSI e raccogliere le informazioni necessarie per l'amministratore dello storage.
@@ -62,6 +63,7 @@ cat /etc/iscsi/initiator.name
 
 
 
+[[storage-administrator-tasks]]
 == Attività dell'amministratore dell'archiviazione
 
 Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza migliore.
@@ -93,6 +95,7 @@ NETAPP_TARGET="iqn.1992-08.com.netapp:sn.85c23687d5d911f086c4d039eac4d4b3:vs.6"
  TIP: System Manager displays the UUID in the URL when viewing the resource details.
 
 
+[[final-virtualization-administrator-tasks]]
 == Attività finali dell'amministratore della virtualizzazione
 
 Completare queste attività per configurare l'iSCSI Datastore su OpenNebula.

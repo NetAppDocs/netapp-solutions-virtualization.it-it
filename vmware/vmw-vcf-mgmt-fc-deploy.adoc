@@ -15,6 +15,7 @@ Distribuisci gli ONTAP tools for VMware vSphere 10 e predisponi un datastore Fib
 
 
 
+[[step-1-deploy-ontap-tools-for-vmware-vsphere]]
 == Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
 
 In questa fase gli strumenti ONTAP 10 vengono implementati in una configurazione non HA.  Per ulteriori dettagli sulla distribuzione delle configurazioni HA e non HA, fare riferimento alla documentazione degli ONTAP tools for VMware vSphere : https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/ontap-tools-deployment.html["Distribuisci gli ONTAP tools for VMware vSphere"] .
@@ -72,6 +73,7 @@ image::vmware-vcf-import-nfs-003.png[Personalizza il modello]
 
 
 
+[[step-2-configure-ontap-tools]]
 == Passaggio 2: configurare gli strumenti ONTAP
 
 Dopo aver installato e acceso la VM degli strumenti ONTAP , aggiungere i server vCenter e i sistemi di storage ONTAP da gestire. Fare riferimento al  https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["Documentazione ONTAP tools for VMware vSphere"] per maggiori informazioni.
@@ -102,6 +104,7 @@ NOTE: Il backend di storage viene aggiunto nell'interfaccia utente del client vS
 
 
 
+[[step-3-provision-the-fc-datastore-with-ontap-tools]]
 == Passaggio 3: fornire il datastore FC con gli strumenti ONTAP
 
 Gli strumenti ONTAP integrano le funzionalità nell'intera interfaccia utente del client vSphere. In questa fase, un datastore FC viene predisposto dalla pagina dell'inventario degli host.
@@ -156,6 +159,7 @@ image::vmware-vcf-convert-fc-005.png[Pagina di riepilogo]
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver distribuito gli strumenti ONTAP e aver predisposto il datastore FC,link:vmw-vcf-mgmt-fc-conversion.html["convertire il cluster vSphere in un dominio di gestione VCF"] .

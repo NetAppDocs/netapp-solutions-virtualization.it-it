@@ -18,6 +18,7 @@ In questo caso d'uso descriviamo la procedura per utilizzare un datastore VMFS b
 
 
 
+[[introduction]]
 == Introduzione
 
 Se opportuno, faremo riferimento alla documentazione esterna per i passaggi che devono essere eseguiti in SDDC Manager di VCF e faremo riferimento ai passaggi specifici della parte di configurazione dell'archiviazione.
@@ -32,6 +33,7 @@ NOTE: Questa soluzione è applicabile alle piattaforme ONTAP che supportano l'ar
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 In questo scenario vengono utilizzati i seguenti componenti e configurazioni:
@@ -47,10 +49,12 @@ Per informazioni sulla configurazione di VCF fare riferimento alink:https://docs
 
 
 
+[[deployment-steps]]
 == Fasi di distribuzione
 
 
 
+[[management-domain-default-cluster]]
 === Dominio di gestione - Cluster predefinito
 
 L'archiviazione principale FC sul cluster iniziale è supportata solo con lo strumento di importazione brownfield VCF.  Se VCF viene distribuito con lo strumento Cloud Builder (prima della versione 5.2.x), è supportato solo vSAN.
@@ -59,6 +63,7 @@ Per ulteriori informazioni sull'utilizzo di un ambiente vSphere esistente, fare 
 
 
 
+[[management-domain-additional-cluster]]
 === Dominio di gestione - Cluster aggiuntivo
 
 Il cluster vSphere aggiuntivo sul dominio di gestione può essere distribuito con le seguenti opzioni:
@@ -70,6 +75,7 @@ Il cluster vSphere aggiuntivo sul dominio di gestione può essere distribuito co
 
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] centro.

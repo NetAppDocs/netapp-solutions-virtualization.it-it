@@ -20,6 +20,7 @@ Shift Toolkit consente la migrazione delle VM tra piattaforme di virtualizzazion
 
 
 
+[[before-you-begin]]
 == Prima di iniziare
 
 Prima di iniziare la migrazione, verificare che siano soddisfatti i seguenti prerequisiti.
@@ -220,6 +221,7 @@ NOTE: Lo script di preparazione utilizza il pacchetto .msi per installare i driv
 
 
 
+[[step-1-add-the-destination-site-openshift]]
 == Passaggio 1: aggiungere il sito di destinazione (OpenShift)
 
 Aggiungere l'ambiente di virtualizzazione OpenShift di destinazione a Shift Toolkit.
@@ -282,6 +284,7 @@ NOTE: Il volume di origine e quello di destinazione saranno gli stessi poiché l
 
 
 
+[[step-2-create-resource-groups]]
 == Passaggio 2: creare gruppi di risorse
 
 Organizzare le VM in gruppi di risorse per preservare l'ordine di avvio e le configurazioni del ritardo di avvio.
@@ -358,6 +361,7 @@ Il gruppo di risorse è stato creato ed è pronto per la configurazione del blue
 
 
 
+[[step-3-create-a-migration-blueprint]]
 == Fase 3: creare un progetto di migrazione
 
 Creare un progetto per definire il piano di migrazione, inclusi i mapping della piattaforma, la configurazione di rete e le impostazioni della VM.
@@ -484,6 +488,7 @@ image::shift-toolkit-113.png[Progetto pronto per la migrazione]
 ====
 
 
+[[step-4-execute-the-migration]]
 == Passaggio 4: eseguire la migrazione
 
 Avvia il flusso di lavoro di migrazione per convertire le VM da VMware ESXi a OpenShift Virtualization.
@@ -556,6 +561,7 @@ NOTE: L'opzione di verifica può essere esercitata sul blueprint una volta compl
 
 
 
+[[use-migration-toolkit-for-virtualization-with-shift-toolkit-scripted-approach]]
 == Usa Migration Toolkit per la virtualizzazione con Shift Toolkit (approccio tramite script)
 
 Questa sezione descrive come utilizzare Migration Toolkit for Virtualization (MTV) con NetApp Shift Toolkit per una migrazione senza problemi a Red Hat OpenShift Virtualization.
@@ -708,6 +714,7 @@ Al termine della migrazione, è necessario scollegare il volume clone. Il metodo
 
 
 
+[[video-demonstration]]
 == Dimostrazione video
 
 Il seguente video illustra il processo descritto in questa soluzione.

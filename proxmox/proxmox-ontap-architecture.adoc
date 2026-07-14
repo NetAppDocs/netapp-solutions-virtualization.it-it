@@ -15,6 +15,7 @@ NetApp ONTAP si integra con Proxmox Virtual Environment (VE) per fornire funzion
 
 
 
+[[solution-architecture]]
 == Architettura della soluzione
 
 L'architettura della soluzione comprende i seguenti componenti chiave:
@@ -32,12 +33,14 @@ image::proxmox-deploy-guidelines-001.png[Proxmox VE con architettura NetApp ONTA
 
 
 
+[[ontap-features-for-proxmox-ve]]
 == Funzionalità ONTAP per Proxmox VE
 
 ONTAP fornisce un set completo di funzionalità di archiviazione aziendale che migliorano le distribuzioni Proxmox VE. Queste funzionalità riguardano la gestione dei dati, la protezione, l'efficienza e il supporto dei protocolli nelle architetture di archiviazione NAS e SAN.
 
 
 
+[[core-data-management-features]]
 === Funzionalità principali di gestione dei dati
 
 * Architettura cluster scalabile
@@ -60,6 +63,7 @@ ONTAP fornisce un set completo di funzionalità di archiviazione aziendale che m
 
 
 
+[[nas-protocol-features]]
 === Caratteristiche del protocollo NAS
 
 * I volumi FlexGroup forniscono contenitori NAS scalabili con elevate prestazioni, distribuzione del carico e scalabilità
@@ -80,6 +84,7 @@ ONTAP fornisce un set completo di funzionalità di archiviazione aziendale che m
 
 
 
+[[san-protocol-features]]
 === Caratteristiche del protocollo SAN
 
 * Estendi i cluster attraverso i domini di errore con SnapMirror ActiveSync (seleziona sempre https://mysupport.netapp.com/matrix/#welcome["Strumento di matrice di interoperabilità"] per le configurazioni supportate)

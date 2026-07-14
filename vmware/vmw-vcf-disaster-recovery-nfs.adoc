@@ -42,6 +42,7 @@ image::vmw-vcf-dr-nfs-001.png[Diagramma dell'architettura NetApp Disaster Recove
 
 
 
+[[getting-started]]
 == Iniziare
 
 Per iniziare a utilizzare NetApp Disaster Recovery, utilizzare NetApp Console e quindi accedere al servizio.
@@ -75,6 +76,7 @@ image::vmw-vcf-dr-nfs-003.png[Dashboard dettagliata NetApp Disaster Recovery]
 
 
 
+[[netapp-disaster-recovery-configuration]]
 == Configurazione NetApp Disaster Recovery
 
 Il primo passo nella preparazione al disaster recovery è individuare e aggiungere le risorse di origine vCenter e storage a NetApp Disaster Recovery.
@@ -93,6 +95,7 @@ Una volta aggiunti i vCenter, viene attivata la rilevazione automatica.
 
 
 
+[[configuring-storage-replication-between-source-site-array-and-destination-site-array]]
 == Configurazione della replicazione dello storage tra l'array del sito di origine e l'array del sito di destinazione
 
 SnapMirror fornisce la replica dei dati in un ambiente NetApp . Basata sulla tecnologia NetApp Snapshot®, la replica SnapMirror è estremamente efficiente perché replica solo i blocchi che sono stati modificati o aggiunti dall'aggiornamento precedente. SnapMirror può essere facilmente configurato tramite NetApp OnCommand® System Manager o ONTAP CLI. NetApp Disaster Recovery crea anche la relazione SnapMirror, a condizione che il cluster e il peering SVM siano configurati in anticipo.
@@ -104,6 +107,7 @@ NOTE: Se la relazione SnapMirror è già configurata per il volume tramite CLI o
 
 
 
+[[how-to-setup-replication-relationships-for-netapp-disaster-recovery]]
 == Come impostare le relazioni di replica per NetApp Disaster Recovery
 
 Il processo di base per creare la replica SnapMirror rimane lo stesso per qualsiasi applicazione.  Il modo più semplice è sfruttare NetApp Disaster Recovery , che automatizzerà il flusso di lavoro di replicazione a condizione che siano soddisfatti i due criteri seguenti: Il processo può essere manuale o automatizzato. Il modo più semplice consiste nell'utilizzare NetApp Disaster Recovery, che automatizza il flusso di lavoro di replica a condizione che vengano soddisfatti i due criteri seguenti:
@@ -116,6 +120,7 @@ NetApp Console fornisce anche un'opzione alternativa per configurare la replica 
 
 
 
+[[what-can-netapp-disaster-recovery-do-for-you]]
 == Cosa può fare per te NetApp Disaster Recovery ?
 
 Dopo aver aggiunto i siti di origine e di destinazione, NetApp Disaster Recovery esegue automaticamente un'analisi approfondita e visualizza le VM insieme ai metadati associati. NetApp Disaster Recovery rileva inoltre automaticamente le reti e i gruppi di porte utilizzati dalle VM e li popola.
@@ -173,6 +178,7 @@ image::vmw-vcf-dr-nfs-012.png[Azioni del piano di replica NetApp Disaster Recove
 
 
 
+[[test-failover]]
 == Failover di prova
 
 Il failover di prova in NetApp Disaster Recovery è una procedura operativa che consente agli amministratori VMware di convalidare completamente i propri piani di ripristino senza interrompere gli ambienti di produzione.
@@ -198,6 +204,7 @@ image::vmw-vcf-dr-nfs-015.png[Risultato del failover del test del piano di repli
 
 
 
+[[cleanup-failover-test-operation]]
 == Operazione di test di failover di pulizia
 
 L'operazione di test di failover di pulizia avviene dopo il completamento del test del piano di replica e quando l'amministratore VMware risponde al prompt di pulizia.
@@ -212,6 +219,7 @@ Questa azione reimposterà le macchine virtuali (VM) e lo stato del piano di rep
 
 
 
+[[planned-migration-and-fail-over]]
 == Migrazione pianificata e failover
 
 NetApp Disaster Recovery dispone di due metodi per eseguire un failover reale: migrazione pianificata e failover. Il primo metodo, la migrazione pianificata, incorpora l'arresto delle VM e la sincronizzazione della replicazione dello storage nel processo per ripristinare o spostare efficacemente le VM nel sito di destinazione. La migrazione pianificata richiede l'accesso al sito di origine. Il secondo metodo, il failover, è un failover pianificato/non pianificato in cui le VM vengono ripristinate nel sito di destinazione dall'ultimo intervallo di replicazione dell'archiviazione che è stato possibile completare. A seconda dell'RPO progettato nella soluzione, è possibile che si verifichi una certa perdita di dati nello scenario DR.
@@ -234,6 +242,7 @@ image::vmw-vcf-dr-nfs-019.png[vSphere Client - VM accese]
 
 
 
+[[failback]]
 == Rifasamento
 
 Un failback è una procedura facoltativa che ripristina la configurazione originale dei siti di origine e di destinazione dopo un ripristino.
@@ -263,6 +272,7 @@ Per maggiori dettagli sull'accesso e la configurazione NetApp Disaster Recovery,
 
 
 
+[[monitoring-and-dashboard]]
 == Monitoraggio e dashboard
 
 Da NetApp Disaster Recovery o da ONTAP CLI, è possibile monitorare lo stato di integrità della replica per i volumi del datastore appropriati, mentre lo stato di un failover o di un failover di prova può essere monitorato tramite Job Monitoring.

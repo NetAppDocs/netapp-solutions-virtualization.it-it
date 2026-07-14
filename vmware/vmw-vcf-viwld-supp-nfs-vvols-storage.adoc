@@ -18,6 +18,7 @@ Configurare l'archiviazione NFS vVols in un dominio di carico di lavoro VI.  Dop
 
 
 
+[[step-1-deploy-ontap-tools-for-vmware-vsphere]]
 == Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
 
 Per i domini del carico di lavoro VI, gli strumenti ONTAP vengono installati nel cluster di gestione VCF ma registrati con il vCenter associato al dominio del carico di lavoro VI.
@@ -87,6 +88,7 @@ image:vmware-vcf-asa-035.png["Personalizza il modello OTV 2"]
 
 
 
+[[step-2-add-a-storage-system]]
 == Passaggio 2: aggiungere un sistema di archiviazione
 
 Per aggiungere un sistema di archiviazione utilizzando gli strumenti ONTAP , procedere come segue.
@@ -131,6 +133,7 @@ image:vmware-vcf-asa-017.png["Autorizza il certificato del cluster"]
 
 
 
+[[step-3-create-an-nfs-datastore-in-ontap-tools]]
 == Passaggio 3: creare un datastore NFS negli strumenti ONTAP
 
 Completare i seguenti passaggi per distribuire un datastore ONTAP in esecuzione su NFS.  Utilizzare gli strumenti ONTAP .
@@ -187,6 +190,7 @@ image:vmware-vcf-aff-045.png["Riepilogo e conclusione della revisione"]
 
 
 
+[[step-4-create-a-vvols-datastore-in-ontap-tools]]
 == Passaggio 4: creare un datastore vVols negli strumenti ONTAP
 
 Per creare un datastore vVols negli strumenti ONTAP , completare i seguenti passaggi.
@@ -247,6 +251,7 @@ image:vmware-vcf-aff-049.png["Pagina di riepilogo"]
 
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 * Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"^] .

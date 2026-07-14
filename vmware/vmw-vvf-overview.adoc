@@ -18,12 +18,14 @@ NetApp ONTAP e VMware vSphere 8 collaborano per offrire soluzioni di storage bas
 
 
 
+[[using-nfs-v3-with-vsphere-8-and-ontap-storage-systems]]
 == Utilizzo di NFS v3 con vSphere 8 e sistemi di archiviazione ONTAP
 
 Questo documento fornisce informazioni sulle opzioni di archiviazione disponibili per VMware Cloud vSphere Foundation utilizzando gli array All-Flash NetApp .  Le opzioni di archiviazione supportate sono illustrate con istruzioni specifiche per la distribuzione di datastore NFS.  Inoltre, viene illustrato VMware Live Site Recovery per il disaster recovery di datastore NFS.  Infine, viene esaminata la protezione autonoma dai ransomware di NetApp per l'archiviazione NFS.
 
 
 
+[[use-cases]]
 === Casi d'uso
 
 Casi d'uso trattati in questa documentazione:
@@ -38,6 +40,7 @@ Casi d'uso trattati in questa documentazione:
 
 
 
+[[audience]]
 === Pubblico
 
 Questa soluzione è destinata alle seguenti persone:
@@ -50,12 +53,14 @@ Questa soluzione è destinata alle seguenti persone:
 
 
 
+[[technology-overview]]
 == Panoramica della tecnologia
 
 La guida di riferimento NFS v3 VVF per vSphere 8 è composta dai seguenti componenti principali:
 
 
 
+[[vmware-vsphere-foundation]]
 === Fondazione VMware vSphere
 
 Componente centrale di vSphere Foundation, VMware vCenter è una piattaforma di gestione centralizzata che fornisce configurazione, controllo e amministrazione degli ambienti vSphere. vCenter funge da base per la gestione delle infrastrutture virtualizzate, consentendo agli amministratori di distribuire, monitorare e gestire VM, container e host ESXi all'interno dell'ambiente virtuale.
@@ -73,6 +78,7 @@ Per ulteriori informazioni sui componenti inclusi in VVF, fare riferimento ad ar
 
 
 
+[[vvf-storage-options]]
 === Opzioni di archiviazione VVF
 
 Per un ambiente virtuale efficace e performante è fondamentale lo storage.  L'archiviazione, sia tramite datastore VMware che tramite casi d'uso connessi agli ospiti, sblocca le capacità dei tuoi carichi di lavoro, consentendoti di scegliere il miglior prezzo per GB che offre il massimo valore, riducendo al contempo il sottoutilizzo.  ONTAP è da quasi due decenni una soluzione di storage leader per gli ambienti VMware vSphere e continua ad aggiungere funzionalità innovative per semplificare la gestione riducendo al contempo i costi.
@@ -85,6 +91,7 @@ Fare riferimento a https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vspher
 
 
 
+[[netapp-ontap]]
 === NetApp ONTAP
 
 Sono numerose e convincenti le ragioni per cui decine di migliaia di clienti hanno scelto ONTAP come soluzione di storage primaria per vSphere.  Tra questi rientrano i seguenti:
@@ -103,6 +110,7 @@ L'utilizzo di ONTAP insieme a vSphere è un'ottima combinazione che consente di 
 
 
 
+[[netapp-all-flash-arrays]]
 === Array All-Flash NetApp
 
 NetApp AFF (All Flash FAS) è una linea di prodotti di array di storage all-flash.  È progettato per offrire soluzioni di archiviazione ad alte prestazioni e bassa latenza per carichi di lavoro aziendali.  La serie AFF unisce i vantaggi della tecnologia flash alle capacità di gestione dei dati di NetApp, offrendo alle aziende una piattaforma di storage potente ed efficiente.
@@ -159,6 +167,7 @@ Per informazioni dettagliate vedere il https://www.netapp.com/data-storage/aff-a
 
 
 
+[[netapp-ontap-tools-for-vmware-vsphere]]
 === Strumenti NetApp ONTAP per VMware vSphere
 
 Una componente potente di vCenter è la possibilità di integrare plug-in o estensioni che ne migliorano ulteriormente le funzionalità e forniscono caratteristiche e capacità aggiuntive.  Questi plug-in estendono le capacità di gestione di vCenter e consentono agli amministratori di integrare soluzioni, strumenti e servizi di terze parti nel proprio ambiente vSphere.
@@ -171,6 +180,7 @@ Visualizza la soluzione di distribuzione degli strumenti ONTAP 10 sulink:vmw-nfs
 
 
 
+[[netapp-nfs-plug-in-for-vmware-vaai]]
 === Plug-in NetApp NFS per VMware VAAI
 
 Il plug-in NetApp NFS per VAAI (vStorage APIs for Array Integration) migliora le operazioni di archiviazione delegando determinate attività al sistema di archiviazione NetApp , con conseguente miglioramento delle prestazioni e dell'efficienza.  Ciò include operazioni quali la copia completa, l'azzeramento dei blocchi e il blocco assistito dall'hardware.  Inoltre, il plugin VAAI ottimizza l'utilizzo dello storage riducendo la quantità di dati trasferiti sulla rete durante le operazioni di provisioning e clonazione delle macchine virtuali.
@@ -181,6 +191,7 @@ Fare riferimento a https://docs.netapp.com/us-en/nfs-plugin-vmware-vaai/["Docume
 
 
 
+[[snapcenter-plug-in-for-vmware-vsphere]]
 === SnapCenter Plug-in for VMware vSphere
 
 SnapCenter Plug-in for VMware vSphere (SCV) è una soluzione software di NetApp che offre una protezione completa dei dati per gli ambienti VMware vSphere.  È progettato per semplificare e snellire il processo di protezione e gestione delle macchine virtuali (VM) e degli archivi dati.  SCV utilizza snapshot basati sull'archiviazione e replica su array secondari per soddisfare obiettivi di tempi di ripristino più bassi.
@@ -207,6 +218,7 @@ Per istruzioni dettagliate sulla distribuzione del plug-in SnapCenter , fare rif
 
 
 
+[[storage-considerations]]
 === Considerazioni sullo stoccaggio
 
 Sfruttando i datastore ONTAP NFS con VMware vSphere si ottiene un ambiente ad alte prestazioni, facile da gestire e scalabile, che fornisce rapporti tra VM e datastore irraggiungibili con protocolli di storage basati su blocchi.  Questa architettura può determinare un aumento di dieci volte della densità degli archivi dati, accompagnato da una corrispondente riduzione del numero di archivi dati.
@@ -225,6 +237,7 @@ Fare riferimento a https://docs.netapp.com/us-en/ontap/nfs-trunking/["Panoramica
 
 
 
+[[ransomware-protection]]
 === Protezione dal ransomware
 
 Il software di gestione dati NetApp ONTAP è dotato di una suite completa di tecnologie integrate per aiutarti a proteggere, rilevare e ripristinare gli attacchi ransomware.  La funzionalità NetApp SnapLock Compliance integrata in ONTAP impedisce l'eliminazione dei dati archiviati in un volume abilitato utilizzando la tecnologia WORM (write once, read many) con conservazione avanzata dei dati.  Dopo aver stabilito il periodo di conservazione e bloccato la copia Snapshot, nemmeno un amministratore di storage con privilegi di sistema completi o un membro del team di supporto NetApp può eliminare la copia Snapshot.  Ma, cosa ancora più importante, un hacker con credenziali compromesse non può cancellare i dati.
@@ -239,6 +252,7 @@ Consulta la soluzione completa nel centro documentazione NetApps Solutions:link:
 
 
 
+[[disaster-recovery-considerations]]
 === Considerazioni sul ripristino in caso di disastro
 
 NetApp fornisce lo storage più sicuro al mondo.  NetApp può aiutare a proteggere i dati e l'infrastruttura delle applicazioni, a spostare i dati tra storage locali e cloud e a garantire la disponibilità dei dati tra i cloud.  ONTAP è dotato di potenti tecnologie di protezione e sicurezza dei dati che aiutano a proteggere i clienti dai disastri rilevando in modo proattivo le minacce e ripristinando rapidamente dati e applicazioni.
@@ -255,6 +269,7 @@ Consulta la soluzione completa nel centro documentazione NetApps Solutions: link
 
 
 
+[[solutions-overview]]
 === Panoramica delle soluzioni
 
 Soluzioni trattate in questa documentazione:

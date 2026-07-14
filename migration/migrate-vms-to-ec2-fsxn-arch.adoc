@@ -18,6 +18,7 @@ Scopri l'architettura e i prerequisiti chiave per migrare le VM su Amazon EC2 ut
 
 
 
+[[high-level-architecture]]
 == Architettura di alto livello
 
 Il diagramma seguente illustra l'architettura di alto livello della migrazione dei dati del disco della macchina virtuale (VMDK) da VMware ad AWS tramite CMC MigrateOps:
@@ -26,10 +27,12 @@ image:migrate-ec2-fsxn-001.png["Migrazione di VM su Amazon EC2 tramite FSx ONTAP
 
 
 
+[[how-to-migrate-your-vmware-vms-to-aws-using-amazon-ec2-and-fsx-ontap-iscsi]]
 == Come migrare le VM VMware su AWS utilizzando Amazon EC2 e FSx ONTAP iSCSI
 
 
 
+[[prerequisites]]
 === Prerequisiti
 
 Prima di iniziare la procedura dettagliata, assicurarsi che siano soddisfatti i seguenti prerequisiti:

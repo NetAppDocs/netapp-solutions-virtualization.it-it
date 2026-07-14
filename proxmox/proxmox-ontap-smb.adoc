@@ -25,6 +25,7 @@ NOTE: Le password vengono salvate in file di testo non crittografato e sono acce
 video::5b4ae54a-08d2-4f7d-95ec-b22d015f6035[panopto,width=360]
 
 
+[[storage-administrator-tasks]]
 == Attività dell'amministratore dell'archiviazione
 
 Se non hai familiarità con ONTAP, utilizza l'interfaccia System Manager per completare queste attività.
@@ -67,6 +68,7 @@ image:proxmox-ontap-smb-004.png["Informazioni sulle quote di SMB"]
 
 
 
+[[virtualization-administrator-tasks]]
 == Attività dell'amministratore della virtualizzazione
 
 Completare queste attività per aggiungere la condivisione SMB come storage in Proxmox VE e abilitare il multicanale per migliorare le prestazioni e la tolleranza agli errori.

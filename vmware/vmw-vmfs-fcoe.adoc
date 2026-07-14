@@ -18,6 +18,7 @@ Questa sezione riguarda la creazione di un datastore VMFS con il protocollo di t
 
 
 
+[[what-you-need]]
 == Di cosa hai bisogno
 
 * Le competenze di base necessarie per gestire un ambiente vSphere e ONTAP
@@ -51,6 +52,7 @@ Questa sezione riguarda la creazione di un datastore VMFS con il protocollo di t
 
 
 
+[[provision-a-vmfs-datastore]]
 == Fornire un datastore VMFS
 
 * Verificare la compatibilità con il https://mysupport.netapp.com/matrix["Strumento di matrice di interoperabilità (IMT)"] .
@@ -59,6 +61,7 @@ Questa sezione riguarda la creazione di un datastore VMFS con il protocollo di t
 
 
 
+[[ontap-tasks]]
 == Attività ONTAP
 
 . link:https://docs.netapp.com/us-en/ontap-cli-98/system-license-show.html["Verificare la licenza ONTAP per FCP."]
@@ -86,6 +89,7 @@ Questa sezione riguarda la creazione di un datastore VMFS con il protocollo di t
 
 
 
+[[vmware-vsphere-tasks]]
 == Attività VMware vSphere
 
 . Verificare che i driver HBA siano installati.  Gli HBA supportati da VMware dispongono di driver distribuiti immediatamente e dovrebbero essere visibili inlink:++https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/7-0/vsphere-storage-7-0/getting-started-with-a-traditional-storage-model-in-vsphere-environment/supported-storage-adapters/view-storage-adapters-available-on-an-esxi-host.html++["informazioni sull'adattatore di archiviazione"] .

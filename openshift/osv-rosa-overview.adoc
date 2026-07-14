@@ -20,6 +20,7 @@ Esamineremo anche la connessione alla macchina virtuale utilizzando le credenzia
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 * link:https://signin.aws.amazon.com/signin?redirect_uri=https://portal.aws.amazon.com/billing/signup/resume&client_id=signup["Account AWS"]
@@ -39,6 +40,7 @@ A partire dalla versione Trident 25.02, è possibile preparare facilmente i nodi
 
 
 
+[[initial-setup]]
 == Configurazione iniziale
 
 Impostare il backend Trident, la classe di archiviazione e VolumeSnapshotClass.  Puoi fare riferimento allink:osv-trident-install.html["Sezione di installazione Trident"] per i dettagli.
@@ -99,6 +101,7 @@ Prima di installare OpenShift Virtualization, assicurarsi che la classe di archi
 
 
 
+[[create-a-vm-from-the-template]]
 === **Crea una VM dal modello**
 
 Utilizzare la console Web per creare una VM da un modello.  Dalla console RedHat OpenShiftService su AWS, creare una macchina virtuale.  Nel cluster sono disponibili dei modelli che possono essere utilizzati per creare la VM.  Nello screenshot qui sotto, scegliamo Fedora VM da questo elenco.  Assegna un nome alla VM, quindi fai clic su **Personalizza macchina virtuale**.  Selezionare la scheda **Dischi** e fare clic su **Aggiungi dischi**.  Cambiare preferibilmente il nome del disco con qualcosa di significativo, assicurarsi che **trident-csi** sia selezionato per la classe di archiviazione.  Fare clic su **Salva**.  Fare clic su **Crea macchina virtuale**
@@ -117,6 +120,7 @@ image:redhat-openshift-ocpv-rosa-008.png["VM OCP-v in esecuzione"]
 
 
 
+[[review-all-the-objects-created-for-the-vm]]
 === **Esamina tutti gli oggetti creati per la VM**
 
 I dischi di archiviazione.image:redhat-openshift-ocpv-rosa-009.png["Dischi di archiviazione OCP-v"]
@@ -135,6 +139,7 @@ Qui possiamo vedere i due volumi associati al pod VM e i 2 PVC ad essi associati
 
 
 
+[[connect-to-the-vm]]
 === **Connettiti alla VM**
 
 Fare clic sul pulsante "Apri console web" e accedere utilizzando le credenziali ospiteimage:redhat-openshift-ocpv-rosa-016.png["Connessione VM OCP-v"]

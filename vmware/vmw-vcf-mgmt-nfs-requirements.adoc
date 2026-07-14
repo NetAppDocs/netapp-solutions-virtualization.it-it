@@ -17,6 +17,7 @@ Il processo di conversione richiede un sistema di archiviazione AFF o ASA , SVM 
 
 
 
+[[infrastructure-requirements]]
 == Requisiti infrastrutturali
 
 Assicurarsi che i seguenti componenti e configurazioni siano presenti.
@@ -37,6 +38,7 @@ Gli ONTAP tools for VMware vSphere possono essere installati in configurazioni H
 
 
 
+[[additional-resources]]
 == Risorse aggiuntive
 
 * Per l'archiviazione supportata e altre considerazioni per la conversione o l'importazione di vSphere in VCF 5.2, fare riferimento a https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2/map-for-administering-vcf-5-2/importing-existing-vsphere-environments-admin/considerations-before-converting-or-importing-existing-vsphere-environments-into-vcf-admin.html["Considerazioni prima di convertire o importare ambienti vSphere esistenti in VMware Cloud Foundation"] .
@@ -46,6 +48,7 @@ Gli ONTAP tools for VMware vSphere possono essere installati in configurazioni H
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver esaminato i requisiti di distribuzione,link:vmw-vcf-mgmt-nfs-deploy.html["distribuire gli strumenti ONTAP e predisporre il datastore NFS"] .

@@ -20,6 +20,7 @@ Scopri come affrontare le considerazioni specifiche sul backup Hyper-V, come i c
 
 
 
+[[restore-using-netapp-storage-snapshot]]
 == Ripristina utilizzando lo snapshot di NetApp Storage
 
 Tra i grandi punti di forza dei volumi ONTAP rientrano il backup delle VM e il loro rapido ripristino o clonazione.  Utilizzare le copie Snapshot per creare rapidamente copie FlexClone delle VM o persino dell'intero volume CSV senza compromettere le prestazioni.  Ciò consente di lavorare con i dati di produzione senza il rischio di danneggiamento dei dati durante la clonazione di volumi di dati di produzione e il loro montaggio in ambienti di controllo qualità, staging e sviluppo.  I volumi FlexClone sono utili per creare copie di prova dei dati di produzione, senza dover raddoppiare la quantità di spazio necessaria per copiare i dati.
@@ -30,6 +31,7 @@ Mentre la procedura è semplice con gli host Hyper-V autonomi, per i cluster Hyp
 
 
 
+[[backup-and-restore-using-third-party-solutions]]
 == Backup e ripristino tramite soluzioni di terze parti
 
 *Nota*: questa sezione utilizza Commvault, ma è applicabile anche ad altre soluzioni di terze parti.
@@ -149,6 +151,7 @@ Per i passaggi dettagliati per tutte le opzioni di ripristino supportate, vedere
 
 
 
+[[advanced-netapp-ontap-options]]
 == Opzioni avanzate NetApp ONTAP
 
 NetApp SnapMirror consente un'efficiente replica dello storage da sito a sito, rendendo il disaster recovery rapido, affidabile e gestibile, adatto alle esigenze delle aziende globali di oggi.  Replicando i dati ad alta velocità su LAN e WAN, SnapMirror garantisce un'elevata disponibilità dei dati e un rapido ripristino per applicazioni mission-critical, oltre a eccezionali capacità di deduplicazione dello storage e di compressione di rete.  Grazie alla tecnologia NetApp SnapMirror , il disaster recovery può proteggere l'intero data center.  I volumi possono essere sottoposti a backup incrementale in una posizione esterna.  SnapMirror esegue la replica incrementale basata su blocchi con la frequenza necessaria per raggiungere l'RPO richiesto.  Gli aggiornamenti a livello di blocco riducono i requisiti di larghezza di banda e tempo e la coerenza dei dati viene mantenuta nel sito DR.

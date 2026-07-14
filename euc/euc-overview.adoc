@@ -18,6 +18,7 @@ L'End User Computing (EUC) è una tecnologia che consente agli utenti di acceder
 
 
 
+[[what-is-end-user-computing-euc]]
 == Che cos'è l'End User Computing (EUC)?
 
 L'End User Computing (EUC) è una tecnologia che consente agli utenti di accedere al proprio desktop e alle proprie applicazioni da qualsiasi dispositivo, ovunque si trovino. Le soluzioni EUC includono in genere virtual desktop infrastructure (VDI), virtualizzazione delle applicazioni e strumenti di gestione dei profili utente. Grazie all'EUC, le organizzazioni possono migliorare la produttività, ridurre i costi e rafforzare la sicurezza per i propri utenti finali. Anche le condivisioni di file e le home directory fanno parte della soluzione EUC, fornendo agli utenti l'accesso ai propri file e dati da qualsiasi dispositivo.
@@ -28,6 +29,7 @@ Le organizzazioni possono scegliere di implementare la soluzione EUC on-premises
 
 
 
+[[high-level-benefits-of-end-user-computing-with-netapp]]
 == Vantaggi di alto livello dell'informatica per utenti finali con NetApp
 
 NetApp offre soluzioni EUC che presentano numerosi vantaggi per le organizzazioni, tra cui: * Produttività migliorata: con EUC, gli utenti possono accedere al proprio desktop e alle applicazioni da qualsiasi dispositivo, ovunque, migliorando la produttività e la collaborazione. * Riduzione dei costi: EUC può aiutare le organizzazioni a ridurre i costi centralizzando la gestione di desktop e applicazioni, riducendo così la necessità di hardware e software costosi. * Sicurezza migliorata: EUC può aiutare le organizzazioni a migliorare la sicurezza centralizzando la gestione di desktop e applicazioni, riducendo il rischio di violazioni dei dati e altri incidenti di sicurezza. * Scalabilità: le soluzioni EUC di NetApp sono progettate per essere scalabili, consentendo alle organizzazioni di aggiungere o rimuovere facilmente utenti in base alle esigenze. * Flessibilità: le soluzioni EUC di NetApp possono essere implementate on-premises, nel cloud o in un ambiente ibrido, offrendo alle organizzazioni la flessibilità di scegliere il modello di implementazione più adatto alle proprie esigenze.
@@ -36,6 +38,7 @@ Per maggiori informazioni, consulta la pagina link:euc-benefits.html["Vantaggi d
 
 
 
+[[netapps-euc-solutions]]
 == NetApp's Soluzioni EUC
 
 NetApp offre una gamma di soluzioni EUC, tra cui: * Infrastruttura di desktop virtuale (VDI): le soluzioni VDI consentono alle organizzazioni di fornire desktop virtuali ai propri utenti finali, offrendo loro l'accesso al desktop e alle applicazioni da qualsiasi dispositivo, ovunque. * Virtualizzazione delle applicazioni: le soluzioni di virtualizzazione delle applicazioni consentono alle organizzazioni di fornire applicazioni virtuali ai propri utenti finali, offrendo loro l'accesso alle applicazioni da qualsiasi dispositivo, ovunque. * Condivisione di file e directory home: le soluzioni di condivisione di file e directory home consentono alle organizzazioni di fornire agli utenti l'accesso ai propri file e dati da qualsiasi dispositivo, ovunque, garantendo al contempo che i dati siano archiviati in modo sicuro ed efficiente. * Gestione dei profili utente: le soluzioni di gestione dei profili utente consentono alle organizzazioni di gestire i profili e le impostazioni degli utenti su più dispositivi, offrendo agli utenti un'esperienza coerente indipendentemente dal dispositivo utilizzato.

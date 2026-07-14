@@ -20,6 +20,7 @@ Eseguire i seguenti passaggi sul cluster del dominio del carico di lavoro VI uti
 
 
 
+[[step-1-create-distributed-port-groups-for-nvmetcp-traffic]]
 == Passaggio 1: creare gruppi di porte distribuiti per il traffico NVME/TCP
 
 Completare i seguenti passaggi per creare un nuovo gruppo di porte distribuito per ciascuna rete NVMe/TCP.
@@ -81,6 +82,7 @@ image:vmware-vcf-asa-079.png["sposta l'uplink 1 in non utilizzato"]
 
 
 
+[[step-2-create-the-vmkernel-adapters-on-each-esxi-host]]
 == Passaggio 2: creare gli adattatori VMkernel su ciascun host ESXi
 
 Creare gli adattatori VMkernel su ciascun host ESXi nel dominio del carico di lavoro.
@@ -139,6 +141,7 @@ image:vmware-vcf-asa-098.png["Esaminare le selezioni VMkernel"]
 
 
 
+[[step-3-add-nvmetcp-adapter]]
 == Passaggio 3: aggiungere l'adattatore NVMe/TCP
 
 Ogni host ESXi nel cluster del dominio del carico di lavoro deve disporre di un adattatore software NVMe/TCP installato per ogni rete NVMe/TCP stabilita dedicata al traffico di archiviazione.
@@ -199,6 +202,7 @@ image:vmware-vcf-asa-103.png["Spazio dei nomi NVMe elencato sotto i dispositivi"
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver configurato la rete,link:vmw-vcf-viwld-supp-nvme-storage.html["configurare l'archiviazione per NVMe vVols"] .

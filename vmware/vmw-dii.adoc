@@ -18,6 +18,7 @@ NetApp Data Infrastructure Insights (in precedenza Cloud Insights) è una piatta
 
 
 
+[[monitoring-on-premises-storage-with-data-infrastructure-insights]]
 == Monitoraggio dell'archiviazione locale con Data Infrastructure Insights
 
 Data Infrastructure Insights funziona tramite il software Acquisition Unit, configurato con collettori di dati per asset quali i sistemi di storage VMware vSphere e NetApp ONTAP .  Questi collettori raccolgono i dati e li trasmettono a Data Infrastructure Insights.  La piattaforma utilizza quindi una serie di dashboard, widget e query metriche per organizzare i dati in analisi approfondite che gli utenti possono interpretare.
@@ -28,6 +29,7 @@ image:vmware-dii.png["Data Infrastructure Insights"]
 
 
 
+[[solution-deployment-overview]]
 == Panoramica sulla distribuzione della soluzione
 
 Questa soluzione fornisce un'introduzione al monitoraggio dei sistemi di storage VMware vSphere e ONTAP on-premise mediante Data Infrastructure Insights.
@@ -45,6 +47,7 @@ Questo elenco fornisce i passaggi di alto livello trattati in questa soluzione:
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 Questa soluzione utilizza i seguenti componenti:
@@ -57,10 +60,12 @@ Questa soluzione utilizza i seguenti componenti:
 
 
 
+[[solution-deployment]]
 == Distribuzione della soluzione
 
 
 
+[[configure-data-collectors]]
 === Configurare i raccoglitori di dati
 
 Per configurare i Data Collector per i sistemi di archiviazione VMware vSphere e ONTAP , completare i seguenti passaggi:
@@ -103,6 +108,7 @@ image:vmware-asa-034.png["Configura Collector"]
 ====
 
 
+[[add-annotations-to-assets]]
 === Aggiungi annotazioni alle risorse
 
 Le annotazioni rappresentano un metodo utile per contrassegnare le risorse in modo che possano essere filtrate e altrimenti identificate nelle varie visualizzazioni e query metriche disponibili in Cloud Insights.
@@ -129,6 +135,7 @@ image:vmware-asa-037.png["Esegui tutte le regole"]
 ====
 
 
+[[explore-and-correlate-assets]]
 === Esplora e correla le risorse
 
 Cloud Insights trae conclusioni logiche sulle risorse in esecuzione contemporaneamente sui sistemi di storage e sui cluster vSphere.
@@ -167,6 +174,7 @@ image:vmware-asa-043.png["Metriche delle prestazioni della VM"]
 ====
 
 
+[[use-cloud-insights-to-identify-noisy-neighbors]]
 === Utilizza Cloud Insights per identificare i vicini rumorosi
 
 Cloud Insights offre dashboard che consentono di isolare facilmente le VM peer che hanno un impatto negativo sulle altre VM in esecuzione sullo stesso volume di storage.
@@ -195,6 +203,7 @@ image:vmware-asa-047.png["Contesa del carico di lavoro"]
 ====
 
 
+[[view-over-and-under-utilized-resources-in-cloud-insights]]
 === Visualizza le risorse sovra e sottoutilizzate in Cloud Insights
 
 Abbinando le risorse delle VM ai requisiti effettivi del carico di lavoro, è possibile ottimizzare l'utilizzo delle risorse, con conseguente risparmio sui costi dell'infrastruttura e dei servizi cloud.  I dati in Cloud Insights possono essere personalizzati per visualizzare facilmente le VM sovra o sotto utilizzate.
@@ -223,6 +232,7 @@ image:vmware-asa-051.png["VM spente"]
 ====
 
 
+[[use-queries-to-isolate-and-sort-metrics]]
 === Utilizzare query per isolare e ordinare le metriche
 
 La quantità di dati acquisiti da Cloud Insights è piuttosto ampia.  Le query metriche rappresentano un modo efficace per ordinare e organizzare grandi quantità di dati in modo utile.
@@ -243,12 +253,14 @@ image:vmware-asa-053.png["ONTAP Essential - VMware"]
 ====
 
 
+[[conclusion]]
 == Conclusione
 
 Questa soluzione è stata progettata come introduzione per imparare a usare NetApp Cloud Insights e mostrare alcune delle potenti funzionalità che questa soluzione di osservabilità può offrire.  Il prodotto è dotato di centinaia di dashboard e query metriche integrate, che consentono di iniziare subito a utilizzarlo.  La versione completa di Cloud Insights è disponibile come prova di 30 giorni, mentre la versione base è disponibile gratuitamente per i clienti NetApp .
 
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 Per saperne di più sulle tecnologie presentate in questa soluzione, fare riferimento alle seguenti informazioni aggiuntive.

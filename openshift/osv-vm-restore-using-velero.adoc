@@ -18,6 +18,7 @@ Ripristina le VM in OpenShift Virtualization utilizzando Velero e l'API OpenShif
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 Per ripristinare da un backup, supponiamo che lo spazio dei nomi in cui era presente la macchina virtuale sia stato eliminato accidentalmente.

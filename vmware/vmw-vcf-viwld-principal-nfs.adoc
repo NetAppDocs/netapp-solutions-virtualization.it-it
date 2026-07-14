@@ -18,6 +18,7 @@ In questo caso d'uso descriviamo la procedura per configurare un datastore NFS s
 
 
 
+[[benefits-of-nfs]]
 == Vantaggi di NFS
 
 *Semplicità e facilità d'uso:* NFS è semplice da configurare e gestire, il che lo rende una scelta eccellente per gli ambienti che richiedono una condivisione dei file rapida e semplice.
@@ -32,6 +33,7 @@ Per ulteriori informazioni sull'utilizzo di Fibre Channel con i sistemi di stora
 
 
 
+[[scenario-overview]]
 == Panoramica dello scenario
 
 Questo scenario comprende i seguenti passaggi di alto livello:
@@ -51,6 +53,7 @@ NOTE: Questa soluzione è applicabile alle piattaforme ONTAP che supportano l'ar
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 In questo scenario vengono utilizzati i seguenti componenti e configurazioni:
@@ -75,6 +78,7 @@ Per ulteriori informazioni sull'utilizzo di NFS con cluster vSphere, fare riferi
 
 
 
+[[deployment-steps]]
 == Fasi di distribuzione
 
 Per distribuire un dominio di carico di lavoro VI con un datastore NFS come storage principale, completare i seguenti passaggi:
@@ -294,12 +298,14 @@ Per istruzioni dettagliate sulla distribuzione del plug-in NetApp NFS per VMware
 ====
 
 
+[[video-demo-for-this-solution]]
 == Demo video per questa soluzione
 
 .Datastore NFS come storage principale per domini di carichi di lavoro VCF
 video::9b66ac8d-d2b1-4ac4-a33c-b16900f67df6[panopto,width=360]
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] centro.

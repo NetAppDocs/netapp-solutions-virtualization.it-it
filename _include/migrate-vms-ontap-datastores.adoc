@@ -17,6 +17,7 @@ NOTE: Alcune VM distribuite con strumenti di gestione esterni come VCF Automatio
 
 
 
+[[network-requirements]]
 == Requisiti di rete
 
 .Migrazione di VM con vMotion
@@ -38,6 +39,7 @@ TIP: Assicurarsi che siano disponibili almeno due schede di rete uplink attive a
 ====
 
 
+[[vm-migration-scenarios]]
 == Scenari di migrazione delle VM
 
 vMotion viene spesso utilizzato per migrare le VM indipendentemente dal loro stato di alimentazione.  Di seguito sono disponibili ulteriori considerazioni e procedure di migrazione per scenari specifici.
@@ -412,6 +414,7 @@ TIP: Quando la VM di origine risiede sul datastore vVol a blocchi, può essere r
 ====
 
 
+[[vm-template-migration-scenarios]]
 == Scenari di migrazione dei modelli di VM
 
 I modelli di VM possono essere gestiti da vCenter Server o da una libreria di contenuti.  La distribuzione di modelli VM, modelli OVF e OVA e altri tipi di file viene gestita pubblicandoli nella libreria di contenuti locale e le librerie di contenuti remote possono sottoscriverli.
@@ -494,6 +497,7 @@ NOTE: Per ulteriori dettagli sui modelli VM nella libreria di contenuti, control
 ====
 
 
+[[use-cases]]
 == Casi d'uso
 
 .Migrazione da sistemi di archiviazione di terze parti (incluso vSAN) a datastore ONTAP .
@@ -527,6 +531,7 @@ NOTE: Per consentire la comunicazione di rete con le VM esistenti su altri clust
 ====
 
 
+[[additional-resources]]
 == Risorse aggiuntive
 
 * https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vcenter-and-host-management-8-0/migrating-virtual-machines-host-management.html["Migrazione della macchina virtuale vSphere"]

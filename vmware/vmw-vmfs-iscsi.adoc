@@ -20,6 +20,7 @@ Per il provisioning automatico, utilizzare il seguente script:<<Ansible>> .
 
 
 
+[[what-you-need]]
 == Di cosa hai bisogno
 
 * Le competenze di base necessarie per gestire un ambiente vSphere e ONTAP.
@@ -46,6 +47,7 @@ Per il provisioning automatico, utilizzare il seguente script:<<Ansible>> .
 
 
 
+[[steps]]
 == Passi
 
 . Verificare la compatibilità con il https://mysupport.netapp.com/matrix["Strumento di matrice di interoperabilità (IMT)"] .
@@ -55,6 +57,7 @@ Per il provisioning automatico, utilizzare il seguente script:<<Ansible>> .
 
 
 
+[[ontap-tasks]]
 == Attività ONTAP
 
 . link:https://docs.netapp.com/us-en/ontap-cli-98/system-license-show.html["Verificare la licenza ONTAP per iSCSI"] .
@@ -82,6 +85,7 @@ TIP: Si consigliano due interfacce di rete iSCSI per nodo.
 
 
 
+[[vmware-vsphere-tasks]]
 == Attività VMware vSphere
 
 . Verificare che almeno una scheda di rete sia disponibile per la VLAN iSCSI.  Per ottenere prestazioni migliori e una maggiore tolleranza agli errori, è preferibile utilizzare due schede di rete.
@@ -102,10 +106,12 @@ TIP: Si consigliano due interfacce di rete iSCSI per nodo.
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Una volta completate queste attività, il datastore VMFS è pronto per essere utilizzato per il provisioning delle macchine virtuali.
 
+[[Ansible]]
 .Manuale di gioco di Ansible
 [source]
 ----

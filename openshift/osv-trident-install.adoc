@@ -28,11 +28,12 @@ oc delete dv,VolumeSnapshot -n openshift-virtualization-os-images --selector=cdi
 
 
 
+[[step-1-install-trident]]
 == Passaggio 1: installa Trident
 
 L'operatore Trident certificato da Red Hat è supportato da NetApp per OpenShift on-premises, nei cloud pubblici e nei servizi gestiti come ROSA. A partire da Trident 25.02, l'operatore può anche preparare i nodi worker per iSCSI quando si utilizza Amazon FSx for NetApp ONTAP e si prevede di eseguire carichi di lavoro VM di OpenShift Virtualization.
 
-Per altre opzioni di installazione, vedere link:https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy.html["la documentazione di Trident"].
+Per altre opzioni di installazione, vedere link:https://docs.netapp.com/us-en/trident/trident-get-started/quickstart.html["la documentazione di Trident"].
 
 .Passi
 . In *OperatorHub*, seleziona *Certified NetApp Trident*.
@@ -101,6 +102,7 @@ Il seguente video mostra una dimostrazione dell'installazione di Trident utilizz
 video::15c225f3-13ef-41ba-b255-b2d500f927c0[panopto,width=360]
 
 
+[[step-2-prepare-storage-backend-and-storageclass-configuration-files-for-your-environment]]
 == Passaggio 2: Preparare i file di backend dello storage e di configurazione di StorageClass per il proprio ambiente
 
 Crea le definizioni di TridentBackendConfig e StorageClass per il tuo ambiente. Puoi configurare più protocolli di storage all'interno del tuo ambiente. Crea file YAML per ogni protocollo che desideri utilizzare e sostituisci i valori segnaposto con i dettagli specifici della tua configurazione.
@@ -110,9 +112,100 @@ NOTE: Completa la sezione relativa all'ambiente locale o ROSA riportata di segui
 
 
 
+[[on-premises-openshift-clusters]]
 === Cluster OpenShift locali
 
 Crea file YAML per ogni protocollo che desideri configurare. Puoi configurare uno o più dei seguenti protocolli: NAS per file storage basato su NFS, iSCSI per storage a blocchi iSCSI, NVMe/TCP per storage a blocchi NVMe over TCP dalle performance elevate o FC per storage a blocchi Fibre Channel.
+
+Crea un TridentBackendConfig e StorageClass per ogni protocollo. La configurazione del backend include le credenziali memorizzate in un Secret di Kubernetes.
+
+.Linee guida essenziali per le opzioni di base della configurazione del backend
+[%collapsible]
+====
+. I file di configurazione del backend fanno riferimento al tuo **ONTAP SVM** e al **management LIF**. +
+. Puoi usare **nome utente e password** per autenticarti con ONTAP. Può trattarsi del nome utente e della password dell'amministratore del cluster o dell'amministratore del vserver. +
+. Puoi anche usare un **certificato client** per l'autenticazione con ONTAP. Per dettagli su come generare il certificato client, la chiave privata e il certificato CA, consulta link:https://docs.netapp.com/us-en/trident/trident-use/ontap-san-prep.html#enable-certificate-based-authentication["Documentazione di Trident qui"].
+
+
+====
+.Linee guida essenziali per le opzioni di configurazione del backend per il driver NAS economy
+[%collapsible]
+====
+Per la configurazione del **driver NAS economy** è possibile includere i seguenti parametri:
+
+. **qtreesPerFlexvol** Il valore deve essere compreso tra 50 e 300, il valore predefinito è 200. +
+. **limitVolumePoolSize** Il valore è la dimensione massima di FlexVol che richiedi quando usi i qtree nel backend ontap-nas-economy. Non è impostato alcun valore predefinito e questo parametro non viene applicato per impostazione predefinita. Se imposti questo parametro, l'operatore Trident crea un nuovo FlexVol quando quello corrente FlexVol raggiunge la dimensione specificata. Questo parametro può aiutarti a controllare l'utilizzo della capacità nel tuo cluster limitando la dimensione dei FlexVols usati per il provisioning dei PV. +
+. **denyNewVolumePools** Questo parametro impedisce ai backend ontap-nas-economy di creare nuovi FlexVol volumi per contenere i loro qtree. Solo i FlexVol preesistenti vengono utilizzati per il provisioning di nuovi PV.
+
+
+====
+.Linee guida essenziali per le opzioni di configurazione del backend per il driver SAN
+[%collapsible]
+====
+Per la configurazione del **driver SAN** puoi includere i seguenti parametri:
+
+. **limitVolumeSize** Il valore è la dimensione massima del volume che richiedi quando usi il backend SAN. Non è impostato alcun valore predefinito e questo parametro non viene applicato per impostazione predefinita. Se imposti questo parametro, l'operatore Trident non esegue il provisioning se la dimensione del volume richiesta supera questo valore. Puoi usare questo parametro per limitare la dimensione massima dei volumi che gestisce per le LUN. +
+. **lunsPerFlexvol** Numero massimo di LUN per FlexVol, deve essere compreso nell'intervallo [50, 200], il valore predefinito è 100. Se imposti questo parametro, l'operatore Trident crea un nuovo FlexVol quando quello corrente FlexVol raggiunge il numero di LUN specificato. Questo parametro può aiutarti a controllare l'utilizzo della capacità nel tuo cluster limitando il numero di LUN per FlexVol utilizzati per il provisioning dei PV.
+
+
+====
+.Linee guida essenziali per le opzioni di configurazione del backend per il driver SAN economy
+[%collapsible]
+====
+Per la configurazione del **SAN economy driver** è possibile includere i seguenti parametri:
+
+. **limitVolumePoolSize** Il valore è la dimensione massima di FlexVol che richiedi quando usi il backend SAN economy. Non è impostato alcun valore predefinito e questo parametro non viene applicato per impostazione predefinita. Se imposti questo parametro, l'operatore Trident limita la dimensione massima del flexvol che può essere creata per la creazione di LUN nel flexvol. Questo parametro può aiutarti a controllare l'utilizzo della capacità nel tuo cluster limitando la dimensione delle FlexVols usate per il provisioning dei PV. +
+. **denyNewVolumePools** Questo parametro impedisce ai backend SAN economy di creare nuovi FlexVol volumi per contenere i propri LUN. Solo i FlexVol preesistenti vengono utilizzati per il provisioning di nuovi PV.
+
+
+====
+.Linee guida essenziali per le opzioni di configurazione del backend per il provisioning dei volumi
+[%collapsible]
+====
+
+NOTE: Nei file yaml di esempio forniti per ciascun protocollo, se storagePrefix non viene specificato, viene utilizzato il prefisso predefinito "trident". Quando usi ontap-nas-economy e un storagePrefix di 24 o più caratteri, i qtree non avranno il prefisso di storage incorporato, anche se sarà presente nel nome del volume.
+
+Quando crei un volume in ONTAP direttamente da System Manager o dalla CLI, senza fornire valori per tutti i parametri opzionali, alcuni valori predefiniti vengono impostati automaticamente durante il provisioning di un volume come mostrato di seguito.
+
+image:rh-os-n-use-case-osv-trident-install-volumes-001.png["Crea un volume in ONTAP"]
+
+image:rh-os-n-use-case-osv-trident-install-volumes-002.png["valori predefiniti per i parametri di volume"]
+
+Ecco un esempio di volume creato utilizzando la configurazione backend di Trident. Non presenta opzioni impostate esplicitamente nella sezione delle impostazioni predefinite, ad eccezione del modello di nome.
+
+[source, cli]
+----
+oc describe tbc -n trident tbc-nas
+### output truncated for brevity
+Spec:
+  Backend Name:  tbc-nas
+  Credentials:
+    Name:  tbc-nas-secret
+  Defaults: # There are no defaults set except for the volume name template.
+    Name Template:      {{ .config.StoragePrefix }}_{{ .volume.Namespace }}_{{ .volume.RequestName }}
+  Management LIF:       10.192.102.50
+  Storage Driver Name:  ontap-nas
+  Storage Prefix:       testautomation
+  Svm:                  oc-test-automation
+----
+Quando il volume viene creato utilizzando questa configurazione di backend, le opzioni che non sono impostate nel file di configurazione del backend vengono impostate sui valori predefiniti come mostrato di seguito.
+
+image:rh-os-n-use-case-osv-trident-install-volumes-003.png["Volume creato utilizzando la configurazione backend di Trident"]
+
+Tuttavia, quando imposti i valori nella sezione predefinita della configurazione del backend di Trident, puoi creare volumi che possono avere valori specifici per quei parametri. Nell'esempio seguente, snapshotPolicy è impostato sulla policy predefinita (è none se non imposti nulla esplicitamente) e snapshotDir è impostato su true nella sezione predefinita del file di configurazione yaml del backend. Con queste impostazioni, puoi vedere che il volume del backend ottiene quei valori. (snapdir-access è true e snapshot-policy è default)
+
+image:rh-os-n-use-case-osv-trident-install-volumes-004.png["sezione predefinita con valori espliciti"]
+
+image:rh-os-n-use-case-osv-trident-install-volumes-005.png["imposta esplicitamente i valori snapshotDir e snapshotPolicy nella configurazione del backend"]
+
+image:rh-os-n-use-case-osv-trident-install-volumes-006.png["imposta esplicitamente i valori snapshotDir e snapshotPolicy nel volume"]
+
+====
+Per tutti gli altri parametri aggiuntivi, consulta la documentazione di Trident:
+
+. link:https://docs.netapp.com/us-en/trident/trident-use/ontap-nas-examples.html#backend-configuration-options["Opzioni di configurazione del backend NAS di Trident"] +
+. link:https://docs.netapp.com/us-en/trident/trident-use/ontap-san-examples.html#backend-configuration-options["Opzioni di configurazione del backend SAN di Trident"]
+
 
 [role="tabbed-block"]
 ====
@@ -120,7 +213,7 @@ Crea file YAML per ogni protocollo che desideri configurare. Puoi configurare un
 --
 Crea un TridentBackendConfig e un StorageClass per ONTAP NAS per abilitare il provisioning di storage persistente basato su NFS. La configurazione del backend include le credenziali memorizzate in un Secret di Kubernetes e fa riferimento al tuo ONTAP SVM e al LIF di gestione.
 
-Segreto del backend e file di configurazione del backend (salva come  `tbc-nas.yaml`):
+Esempio di segreto del backend e file di configurazione con metodo di autenticazione tramite nome utente e password (salva come  `tbc-nas.yaml`):
 
 [source, yaml]
 ----
@@ -150,6 +243,36 @@ spec:
   credentials:
     name: tbc-nas-secret
 ----
+Esempio di segreto del backend e file di configurazione che utilizza l'autenticazione tramite certificato client (salva come  `tbc-nas.yaml`):
+
+[source, yaml]
+----
+# tbc-nas.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ontap-nas-secret
+  namespace: trident
+type: Opaque
+stringData:
+  clientPrivateKey: <client private>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: tbc-nas
+  namespace: trident
+spec:
+  version: 1
+  storageDriverName: ontap-nas
+  managementLIF: <ONTAP management LIF>
+  backendName: tbc-nas
+  svm: zoneb #<replace with your SVM name>
+  storagePrefix: testzoneb #<replace with your prefix>
+  credentials:
+    name: ontap-nas-secret
+  clientCertificate: <client certificate>
+----
 StorageClass definition (salva come  `sc-nas.yaml`):
 
 [source, yaml]
@@ -168,11 +291,66 @@ parameters:
 allowVolumeExpansion: true
 ----
 --
-.iSCSI
+.NAS economy
 --
-Crea un TridentBackendConfig e un StorageClass per ONTAP SAN per abilitare il provisioning dello storage a blocchi basato su iSCSI. La configurazione del backend utilizza il driver ontap-san e include le credenziali memorizzate in un Secret di Kubernetes.
+Crea un TridentBackendConfig e un StorageClass per il driver ONTAP NAS economy per abilitare il provisioning di storage persistente basato su NFS utilizzando i qtree. La configurazione del backend include le credenziali memorizzate in un Secret di Kubernetes e fa riferimento al tuo ONTAP SVM e al LIF di gestione.
 
-Segreto del backend e file di configurazione del backend (salva come  `tbc-iscsi.yaml`):
+Esempio di segreto del backend e file di configurazione con metodo di autenticazione tramite nome utente e password (salva come  `tbc-nas-economy.yaml`):
+
+[source, yaml]
+----
+# tbc-nas-economy.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tbc-nas-economy-secret
+type: Opaque
+stringData:
+  username: <cluster admin username>
+  password: <cluster admin password>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: tbc-nas-economy
+spec:
+  version: 1
+  storageDriverName: ontap-nas-economy
+  managementLIF: <ONTAP management LIF>
+  backendName: tbc-nas-eco
+  svm: <replace with your SVM name>
+  storagePrefix: <replace with your prefix>
+  defaults:
+    nameTemplate: "{{ .config.StoragePrefix }}_{{ .volume.Namespace }}_{{ .volume.RequestName }}"
+  credentials:
+    name: tbc-nas-economy-secret
+----
+StorageClass definition (salva come  `sc-nas-economy.yaml`):
+
+[source, yaml]
+----
+# sc-nas-economy.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-nas-economy
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-nas-economy"
+  media: "ssd"
+  provisioningType: "thin"
+  snapshots: "true"
+allowVolumeExpansion: true
+----
+
+NOTE: Consulta la sezione "Linee guida essenziali per le opzioni di configurazione del backend per il driver NAS economy" sopra per i dettagli sui parametri aggiuntivi che puoi includere nel file di configurazione del backend per il driver ontap-nas-economy.
+
+--
+.iSCSI SAN
+--
+Crea un TridentBackendConfig e un StorageClass per ONTAP SAN con iSCSI per abilitare il provisioning dello storage a blocchi basato su iSCSI. La configurazione del backend utilizza il driver ontap-san e include le credenziali memorizzate in un Secret di Kubernetes. Il parametro sanType utilizza per impostazione predefinita il protocollo iSCSI se omesso.
+
+Segreto del backend e file di configurazione del backend che utilizzano il metodo di autenticazione tramite nome utente e password (salva come  `tbc-iscsi.yaml`):
 
 [source, yaml]
 ----
@@ -199,6 +377,33 @@ spec:
   credentials:
     name: backend-tbc-ontap-iscsi-secret
 ----
+Segreto del backend e file di configurazione del backend che utilizzano il metodo di autenticazione tramite certificato client (salva come  `tbc-iscsi.yaml`):
+
+[source, yaml]
+----
+# tbc-iscsi.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-tbc-ontap-iscsi-secret
+type: Opaque
+stringData:
+  clientPrivateKey: <client private key>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: ontap-iscsi
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  managementLIF: <management LIF>
+  backendName: ontap-iscsi
+  svm: <SVM name>
+  credentials:
+    name: backend-tbc-ontap-iscsi-secret
+  clientCertificate: <client certificate>
+----
 StorageClass definition (salva come  `sc-iscsi.yaml`):
 
 [source, yaml]
@@ -218,11 +423,11 @@ parameters:
 allowVolumeExpansion: true
 ----
 --
-.NVMe/TCP
+.NVMe/TCP SAN
 --
 Crea una TridentBackendConfig e una StorageClass per ONTAP SAN con NVMe su TCP per abilitare il provisioning di storage a blocchi dalle performance elevate. La configurazione del backend utilizza il driver ontap-san ottimizzato per il trasporto NVMe/TCP e include le credenziali memorizzate in un Secret di Kubernetes.
 
-Segreto del backend e file di configurazione del backend (salva come  `tbc-nvme.yaml`):
+Segreto del backend e file di configurazione del backend che utilizzano il metodo di autenticazione tramite nome utente e password (salva come  `tbc-nvme.yaml`):
 
 [source, yaml]
 ----
@@ -250,6 +455,34 @@ spec:
   credentials:
     name: backend-tbc-ontap-nvme-secret
 ----
+Segreto del backend e file di configurazione del backend che utilizzano il metodo di autenticazione tramite certificato client (salva come  `tbc-nvme.yaml`):
+
+[source, yaml]
+----
+# tbc-nvme.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-tbc-ontap-nvme-secret
+type: Opaque
+stringData:
+  clientPrivateKey: <client private key>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: backend-tbc-ontap-nvme
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  sanType: nvme
+  managementLIF: <ONTAP management LIF>
+  backendName: backend-tbc-ontap-nvme
+  svm: <SVM name>
+  credentials:
+    name: backend-tbc-ontap-nvme-secret
+  clientCertificate: <client certificate>
+----
 StorageClass definition (salva come  `sc-nvme.yaml`):
 
 [source, yaml]
@@ -268,12 +501,20 @@ parameters:
   snapshots: "true"
 allowVolumeExpansion: true
 ----
+
+NOTE: Se prevedi di usare i volumi ReadWriteMany (RWX) con il protocollo NVMe, un singolo volume RWX NVMe non può essere montato da più di 64 nodi in un cluster Kubernetes. Per maggiori informazioni su questa limitazione e sui dettagli del modello Super-subsystem introdotto in Trident 26.02 e del modello Per-volume subsystem precedente a Trident 26.02, consulta la documentazione di Trident: https://docs.netapp.com/us-en/trident/trident-use/ontap-san-prep.html#nvme-tcp-considerations[].
+
 --
-.FC
+.FC SAN
 --
 Crea una TridentBackendConfig e una StorageClass per ONTAP SAN con Fibre Channel per abilitare il provisioning dello storage a blocchi basato su FC. La configurazione del backend utilizza il driver ontap-san con il protocollo FCP specificato e include le credenziali memorizzate in un Secret di Kubernetes.
 
-Segreto del backend e file di configurazione del backend (salva come  `tbc-fc.yaml`):
+Usa il metodo di autenticazione username/password o il metodo di autenticazione con certificato client per autenticarti con ONTAP. Per dettagli su come generare il certificato client, la chiave privata e il certificato CA, consulta link:https://docs.netapp.com/us-en/trident/trident-use/ontap-san-prep.html#enable-certificate-based-authentication["Documentazione di Trident qui"]. Qui sotto trovi esempi per entrambi i metodi.
+
+.Mostra esempio
+[%collapsible]
+=====
+Segreto del backend e file di configurazione del backend che utilizzano il metodo di autenticazione ONTAP con nome utente e password (salva come  `tbc-fc.yaml`):
 
 [source, yaml]
 ----
@@ -304,8 +545,37 @@ spec:
   credentials:
     name: tbc-fc-secret
 ----
-StorageClass definition (salva come  `sc-fc.yaml`):
+Segreto del backend e file di configurazione del backend che utilizzano il metodo di autenticazione tramite certificato client (salva come  `tbc-fc.yaml`):
 
+[source, yaml]
+----
+# tbc-fc.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tbc-fc-secret
+type: Opaque
+stringData:
+  clientPrivateKey: <client private key>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: tbc-fc
+spec:
+  version: 1
+  storageDriverName: ontap-san
+  managementLIF: <ONTAP management LIF>
+  backendName: tbc-fc
+  svm: openshift-fc #<replace with your SVM name>
+  sanType: fcp
+  storagePrefix: demofc #<replace with your prefix>
+  defaults:
+    nameTemplate: "{{ .config.StoragePrefix }}_{{ .volume.Namespace }}_{{ .volume.RequestName }}"
+  credentials:
+    name: tbc-fc-secret
+  clientCertificate: <client certificate>
+----
 [source, yaml]
 ----
 # sc-fc.yaml
@@ -322,10 +592,69 @@ parameters:
   snapshots: "true"
 allowVolumeExpansion: true
 ----
+=====
+--
+.Economia SAN iSCSI
+--
+Crea un TridentBackendConfig e un StorageClass per ONTAP SAN economy con iSCSI per abilitare il provisioning dello storage a blocchi basato su iSCSI. La configurazione del backend utilizza il driver ontap-san-economy con il protocollo iSCSI e include le credenziali memorizzate in un Secret di Kubernetes.
+
+Segreto del backend e file di configurazione del backend che utilizzano il metodo di autenticazione tramite certificato client (salva come  `tbc-san-eco.yaml`):
+
+[source, yaml]
+----
+
+# tbc-san-eco.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ontap-san-cert-auth
+  namespace: trident
+type: Opaque
+stringData:
+  clientPrivateKey: <client private key>
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: tbc-san-eco-cert
+  namespace: trident
+spec:
+  version: 1
+  storageDriverName: ontap-san-economy
+  managementLIF: "<ONTAP management LIF>"
+  backendName: tbc_san_eco
+  svm: <replace with your SVM name>
+  storagePrefix: <replace with your prefix>
+  credentials:
+    name: ontap-san-cert-auth
+  clientCertificate: <client certificate>
+
+----
+[source, yaml]
+----
+# sc-san-eco.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-san-eco
+provisioner: csi.trident.netapp.io
+parameters:
+  backendType: "ontap-san-economy"
+  provisioningType: "thin"
+  snapshots: "true"
+----
 --
 ====
+Consulta la documentazione di Trident per ulteriori esempi di file yaml e informazioni sulle modalità di accesso e sulle modalità di volume supportate dai driver SAN e NAS.
+
+. link:https://docs.netapp.com/us-en/trident/trident-use/ontap-nas.html["Esempi che utilizzano driver NAS"]
+. link:https://docs.netapp.com/us-en/trident/trident-use/ontap-san.html["Esempi che utilizzano driver SAN"]
 
 
+
+
+[[rosa-clusters-with-amazon-fsx-for-netapp-ontap]]
 === Cluster ROSA con Amazon FSx for NetApp ONTAP
 
 Crea file YAML per ogni protocollo che desideri configurare. Puoi configurare uno o entrambi i seguenti protocolli: NAS per file storage basato su NFS o iSCSI per storage a blocchi.
@@ -434,6 +763,7 @@ allowVolumeExpansion: true
 ====
 
 
+[[step-3-create-a-volumesnapshotclass-configuration-file]]
 == Passaggio 3: Creare un file di configurazione VolumeSnapshotClass
 
 Crea una definizione VolumeSnapshotClass sia per le implementazioni on-premises che per quelle ROSA. Questa configurazione abilita le operazioni basate su snapshot per i volumi persistenti.
@@ -452,6 +782,7 @@ deletionPolicy: Retain
 ----
 
 
+[[step-4-apply-the-configuration-files-to-your-cluster]]
 == Passaggio 4: applica i file di configurazione al tuo cluster
 
 Applica i file di configurazione che hai creato nei passaggi precedenti al tuo OpenShift cluster.
@@ -466,6 +797,9 @@ Per i cluster on-premises:
 ----
 oc create -f tbc-nas.yaml -n trident
 oc create -f sc-nas.yaml
+
+oc create -f tbc-nas-economy.yaml -n trident
+oc create -f sc-nas-economy.yaml
 
 oc create -f tbc-iscsi.yaml -n trident
 oc create -f sc-iscsi.yaml
@@ -523,6 +857,7 @@ oc get volumesnapshotclass
 
 
 
+[[step-5-set-the-default-trident-storage-and-snapshot-classes]]
 == Passaggio 5: Imposta le classi di storage e snapshot predefinite di Trident
 
 Imposta StorageClass e VolumeSnapshotClass di Trident come predefiniti nel cluster OpenShift. Questo è necessario affinché OpenShift Virtualization crei sorgenti di immagini golden per i template delle VM.

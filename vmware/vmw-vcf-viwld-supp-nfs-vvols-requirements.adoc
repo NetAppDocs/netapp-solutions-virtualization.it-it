@@ -13,6 +13,7 @@ Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per 
 
 
 
+[[infrastructure-requirements]]
 == Requisiti infrastrutturali
 
 Assicurarsi che i seguenti componenti e configurazioni siano presenti.
@@ -24,6 +25,7 @@ Assicurarsi che i seguenti componenti e configurazioni siano presenti.
 
 
 
+[[recommended-nfs-network-design]]
 == Progettazione di rete NFS consigliata
 
 Configurare progetti di rete ridondanti per NFS per garantire tolleranza agli errori per sistemi di archiviazione, switch, adattatori di rete e sistemi host.  È comune distribuire NFS con una singola subnet o più subnet, a seconda dei requisiti architettonici.
@@ -32,6 +34,7 @@ Configurare progetti di rete ridondanti per NFS per garantire tolleranza agli er
 
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 * Per informazioni dettagliate specifiche su VMware vSphere, fare riferimento a https://www.vmware.com/docs/vmw-best-practices-running-nfs-vmware-vsphere["Procedure consigliate per l'esecuzione di NFS con VMware vSphere"] .
@@ -44,6 +47,7 @@ Questa documentazione illustra il processo di creazione di un nuovo SVM e di spe
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver esaminato i requisiti,link:vmw-vcf-viwld-supp-nfs-vvols-svm-lifs.html["creare SVM e LIF"] .

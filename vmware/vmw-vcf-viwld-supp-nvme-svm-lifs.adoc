@@ -18,6 +18,7 @@ Crea una macchina virtuale di archiviazione (SVM) con più interfacce logiche (L
 
 
 
+[[step-1-create-the-svms-and-lifs]]
 == Passaggio 1: creare gli SVM e i LIF
 
 Completare i seguenti passaggi per creare una SVM con più LIF per il traffico NVMe/TCP.
@@ -58,6 +59,7 @@ image:vmware-vcf-asa-004.png["Abilita l'account SVM e termina"]
 
 
 
+[[step-2-create-the-nvme-namespace]]
 == Passaggio 2: creare lo spazio dei nomi NVMe
 
 Gli spazi dei nomi NVMe sono analoghi ai LUN per iSCSi o FC. È necessario creare lo spazio dei nomi NVMe prima di poter distribuire un datastore VMFS da vSphere Client.
@@ -103,6 +105,7 @@ image:vmware-vcf-asa-093.png["Fare clic su +Aggiungi per creare lo spazio dei no
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver creato SVM e LIF,link:vmw-vcf-viwld-supp-nvme-network.html["configurare la rete per NVMe/TCP (NVMe/TCP) vVols"] .

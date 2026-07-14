@@ -22,6 +22,7 @@ image::shift-toolkit-250.png[Icona Impostazioni nella barra degli strumenti di S
 
 
 
+[[credential-security-service-provider-credssp]]
 == Fornitore di servizi di sicurezza delle credenziali (CredSSP)
 
 Shift Toolkit utilizza Credential Security Service Provider (CredSSP) per gestire i trasferimenti di credenziali durante il processo di conversione.  Il server Shift esegue script sul sistema operativo guest della macchina virtuale in fase di conversione, passando le credenziali tramite un "doppio salto" dal server Shift al sistema operativo guest tramite il server Hyper-V.
@@ -30,6 +31,7 @@ image::shift-toolkit-251.png[Impostazioni di configurazione CredSSP]
 
 
 
+[[configure-the-shift-server-as-a-credssp-client]]
 === Configurare il server Shift come client CredSSP
 
 La procedura guidata Impostazioni avanzate configura automaticamente il server Shift come client CredSSP, consentendogli di delegare le credenziali ai server Hyper-V.
@@ -56,6 +58,7 @@ Abilita questa policy e aggiungi `wsman/fqdn-of-hyper-v-host` .
 
 
 
+[[configure-the-hyper-v-server-as-a-credssp-server]]
 === Configurare il server Hyper-V come server CredSSP
 
 Utilizzare il `Enable-WSManCredSSP` cmdlet sul server Hyper-V per configurarlo come server CredSSP, consentendogli di ricevere credenziali dal server Shift.
@@ -73,6 +76,7 @@ Enable-WSManCredSSP -Role server
 
 
 
+[[logging-and-debugging]]
 == Registrazione e debug
 
 Shift Toolkit include una registrazione predefinita con un periodo di conservazione di 30 giorni.  Su richiesta del supporto, è possibile commutare la registrazione in modalità debug per la risoluzione dei problemi.
@@ -81,6 +85,7 @@ image::shift-toolkit-252.png[Impostazioni di configurazione della registrazione]
 
 
 
+[[swagger]]
 == Spavalderia
 
 La pagina Swagger nelle impostazioni avanzate consente di interagire con le API REST di Shift Toolkit.
@@ -93,6 +98,7 @@ image::shift-toolkit-254.png[Categorie di risorse API]
 
 
 
+[[authentication-and-setup-apis]]
 === API di autenticazione e configurazione
 
 Utilizzare queste API per stabilire connessioni, gestire gli utenti e configurare l'autenticazione per il server Shift Toolkit.
@@ -145,6 +151,7 @@ Gestisci configurazioni multi-tenant:
 
 
 
+[[infrastructure-management-apis]]
 === API di gestione delle infrastrutture
 
 Utilizza queste API per configurare e scoprire i tuoi ambienti di origine e di destinazione.
@@ -182,6 +189,7 @@ Scopri e inventaria le VM e le risorse nei siti di origine e di destinazione:
 
 
 
+[[vm-and-resource-management-apis]]
 === API di gestione delle risorse e delle VM
 
 Utilizza queste API per inventariare, organizzare e gestire le VM e le risorse per la migrazione.
@@ -220,6 +228,7 @@ Organizzare le VM in gruppi di protezione per la migrazione:
 
 
 
+[[migration-and-recovery-apis]]
 === API di migrazione e ripristino
 
 Utilizza queste API per eseguire migrazioni, monitorare la conformità e gestire le operazioni di ripristino.
@@ -270,6 +279,7 @@ Eseguire e gestire le operazioni di migrazione e ripristino:
 
 
 
+[[automation-apis]]
 === API di automazione
 
 Utilizza queste API per estendere e automatizzare le funzionalità di Shift Toolkit.
@@ -286,6 +296,7 @@ Accedi ed esegui gli script di automazione:
 
 
 
+[[script-block-and-automation]]
 == Blocco di script e automazione
 
 Il blocco di script all'interno di Shift Toolkit fornisce un codice di esempio per aiutarti ad automatizzare, integrare e sviluppare funzionalità utilizzando API interne ed esterne.  Sfoglia e scarica gli esempi nella sezione Esempi di codice, scritti dal team di automazione di Shift Toolkit e dai membri della community.  Utilizza questi esempi per iniziare con attività di automazione, gestione o integrazione.
@@ -304,6 +315,7 @@ L'obiettivo del blocco di script è fornire script di esempio per le operazioni 
 
 
 
+[[email-notifications-and-alerts]]
 == Notifiche e avvisi via e-mail
 
 Configura le notifiche e-mail per inviare avvisi sui processi di individuazione, conversione o migrazione a destinatari specifici.  Sono disponibili anche le notifiche dell'interfaccia utente (avvisi all'interno dell'interfaccia) e vengono archiviate per 7 giorni.
@@ -337,6 +349,7 @@ NOTE: In questa versione, la notifica via e-mail utilizza l'autenticazione SMTP 
 
 
 
+[[abort-and-revert-capabilities]]
 == Capacità di interruzione e ripristino
 
 Shift Toolkit offre la possibilità di annullare un lavoro in esecuzione in qualsiasi fase del flusso di lavoro.  Quando un lavoro viene annullato, tutti i componenti orfani vengono automaticamente ripuliti, tra cui:
@@ -350,6 +363,7 @@ Poiché Shift Toolkit non modifica in alcun modo la VM di origine, il rollback �
 
 
 
+[[verify-migration]]
 == Verifica la migrazione
 
 Shift toolkit ora offre un'opzione di verifica a livello di blueprint, che si abilita dopo che lo stato della migrazione è stato contrassegnato come "Success" o "Partial Failure". Una volta completata con successo, l'opzione di verifica avvierà un nuovo job e controllerà le impostazioni della VM come specificato nelle mappature del blueprint. Lo stato del job di verifica della migrazione sarà elencato nel Job Monitoring e i dettagli potranno essere visualizzati facendo clic sul job e selezionando "view logs".
@@ -366,6 +380,7 @@ image::shift-toolkit-472.png[Verifica l'elenco dei processi di migrazione]
 
 
 
+[[split-workflow]]
 == Flusso di lavoro suddiviso
 
 Il flusso di lavoro suddiviso (applicabile solo ai OpenShift migration blueprint che utilizzano il driver ONTAP NAS) rileva automaticamente i volumi associati alle VM, nonché i relativi volumi FlexClone.
@@ -389,6 +404,7 @@ image::shift-toolkit-474.png[Avanzamento del lavoro del flusso di lavoro diviso]
 
 
 
+[[advanced-hypervisor-settings]]
 == Impostazioni avanzate dell'hypervisor
 
 Shift Toolkit include impostazioni avanzate per l'hypervisor, utili per i processi di migrazione verso gli hypervisor di destinazione. Queste impostazioni consentono agli amministratori della migrazione di abilitare le funzionalità necessarie per ogni ondata di migrazione delle macchine virtuali. Shift Toolkit legge le impostazioni in fase di esecuzione, in modo che ogni processo applichi le opzioni selezionate all'avvio.

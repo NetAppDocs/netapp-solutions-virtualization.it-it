@@ -24,12 +24,14 @@ L'utilizzo NetApp con VCF migliora la gestione dei dati e l'efficienza dell'arch
 
 
 
+[[introduction-to-netapp-ontap]]
 == Introduzione a NetApp ONTAP
 
 NetApp ONTAP è un software completo per la gestione dei dati che offre funzionalità di storage avanzate su un'ampia gamma di prodotti.  ONTAP è disponibile come storage definito dal software, come servizio di prima parte tramite i principali provider cloud e come sistema operativo di storage per le piattaforme NetApp ASA (All San Array), AFF (All-flash FAS) e FAS (Fabric-Attached Storage).  ONTAP garantisce elevate prestazioni e bassa latenza per una varietà di casi d'uso, tra cui la virtualizzazione VMware, senza creare silos.
 
 
 
+[[introduction-to-vmware-cloud-foundation]]
 == Introduzione a VMware Cloud Foundation
 
 VCF integra le offerte di elaborazione, rete e storage con i prodotti VMware e le integrazioni di terze parti, facilitando sia i carichi di lavoro nativi Kubernetes sia quelli basati su macchine virtuali. Questa piattaforma software include componenti chiave quali VMware vSphere, NSX, Aria Suite Enterprise, Vmware vSphere Kubernetes Service, HCX Enterprise, SDDC Manager e capacità di archiviazione collegata ai core della CPU host tramite vSAN. NetApp ONTAP si integra perfettamente con una varietà di modelli di distribuzione VCF sia in locale che nel cloud pubblico.
@@ -38,6 +40,7 @@ image:vmware-vcf-overview-components.png["Componenti di VMware Cloud Foundation"
 
 
 
+[[vcf-domains]]
 == Domini VCF
 
 I domini sono una struttura fondamentale all'interno di VCF che consente di organizzare le risorse in raggruppamenti distinti e indipendenti.  I domini aiutano a organizzare l'infrastruttura in modo più efficace, garantendo che le risorse vengano utilizzate in modo efficiente.  Ogni dominio è distribuito con i propri elementi di elaborazione, rete e storage.
@@ -52,6 +55,7 @@ Esistono due tipi principali di domini con VCF:
 
 
 
+[[storage-with-vcf]]
 == Archiviazione con VCF
 
 Fondamentale per la funzionalità dei domini è lo spazio di archiviazione che essi consumano.  Sebbene VCF includa capacità vSAN basata su CPU-core per casi d'uso iperconvergenti, supporta anche un'ampia gamma di soluzioni di archiviazione esterna.  Questa flessibilità è fondamentale per le aziende che hanno effettuato investimenti significativi in array di storage esistenti o che hanno bisogno di supportare protocolli che vanno oltre quelli offerti da vSAN.  VMware supporta più tipi di storage con VCF.
@@ -80,6 +84,7 @@ Nota: * Supporto di protocollo specifico fornito quando si utilizza VCF Import T
 
 
 
+[[why-ontap-for-vcf]]
 == Perché ONTAP per VCF
 
 Oltre ai casi d'uso che riguardano la protezione degli investimenti e il supporto multiprotocollo, ci sono molti altri motivi per sfruttare i vantaggi dell'archiviazione condivisa esterna all'interno di un dominio di carico di lavoro VCF.  Si può supporre che lo storage fornito per un dominio di carico di lavoro sia semplicemente un repository per ospitare VM e container.  Tuttavia, le esigenze delle organizzazioni spesso superano le capacità della licenza e richiedono storage aziendale.  Lo storage fornito da ONTAP, assegnato ai domini all'interno di VCF, è facile da implementare e offre una soluzione di storage condiviso a prova di futuro.
@@ -98,6 +103,7 @@ Per ulteriori informazioni sui principali vantaggi ONTAP per VMware VCF identifi
 
 
 
+[[additional-information]]
 == Informazioni aggiuntive:
 
 * link:vmw-getting-started-ntap-options.html["Opzioni di archiviazione NetApp"]
@@ -115,12 +121,14 @@ Per ulteriori informazioni sui principali vantaggi ONTAP per VMware VCF identifi
 
 
 
+[[summary]]
 == Riepilogo
 
 ONTAP fornisce una piattaforma che soddisfa tutti i requisiti dei carichi di lavoro, offrendo soluzioni di storage a blocchi personalizzate e offerte unificate per consentire risultati più rapidi per VM e applicazioni in modo affidabile e sicuro.  ONTAP integra tecniche avanzate di riduzione e spostamento dei dati per ridurre al minimo l'ingombro del data center, garantendo al contempo una disponibilità a livello aziendale per mantenere online i carichi di lavoro critici.  Inoltre, AWS, Azure e Google supportano l'archiviazione esterna basata su NetApp per migliorare l'archiviazione vSAN nei cluster basati su cloud VMware come parte delle loro offerte VMware-in-the-Cloud.  Nel complesso, le capacità superiori di NetApp lo rendono una scelta più efficace per le distribuzioni VMware Cloud Foundation.
 
 
 
+[[documentation-resources]]
 == Risorse di documentazione
 
 Per informazioni dettagliate sulle offerte NetApp per VMware Cloud Foundation, fare riferimento a quanto segue:

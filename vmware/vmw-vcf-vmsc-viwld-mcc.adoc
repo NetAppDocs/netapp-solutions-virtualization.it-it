@@ -22,12 +22,14 @@ image:vmw-vcf-vmsc-viwld-mcc-001.png["Dominio del carico di lavoro VCF VI con vM
 
 
 
+[[introduction]]
 == Introduzione
 
 In questa soluzione mostreremo come implementare il dominio del carico di lavoro VCF VI esteso con NFS come datastore principale utilizzando ONTAP MetroCluster.  Il dominio del carico di lavoro VI può essere distribuito tramite SDDC Manager oppure importando un ambiente vSphere esistente come dominio del carico di lavoro VI.
 
 
 
+[[scenario-overview]]
 == Panoramica dello scenario
 
 Questo scenario comprende i seguenti passaggi di alto livello:
@@ -41,6 +43,7 @@ Questo scenario comprende i seguenti passaggi di alto livello:
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 Questo scenario richiede i seguenti componenti e configurazioni:
@@ -78,6 +81,7 @@ Per informazioni sulla configurazione di VCF fare riferimento alink:https://tech
 
 
 
+[[deployment-steps]]
 == Fasi di distribuzione
 
 Per distribuire VCF Stretched Management Domain con NFS come Principal Datastore,
@@ -98,6 +102,7 @@ Per una panoramica del processo di conversione, fare riferimento a https://techd
 
 
 
+[[deploy-vsphere-hosts-and-vcenter]]
 === Distribuisci host vSphere e vCenter
 
 Distribuisci vSphere sugli host utilizzando l'ISO scaricato dal portale di supporto Broadcom oppure utilizza l'opzione di distribuzione esistente per l'host vSphere.
@@ -124,6 +129,7 @@ Distribuisci vCenter su NFS Datastore.  Assicurarsi che SSH e Bash shell siano a
 
 
 
+[[create-vsphere-cluster]]
 === Crea un cluster vSphere
 
 . Accedi al webclient vSphere, crea il DataCenter e il cluster vSphere aggiungendo uno degli host in cui è distribuito NFS VAAI.  Abbiamo scelto di gestire tutti gli host nel cluster con l'opzione immagine singola.  [SUGGERIMENTO] Non selezionare Gestisci configurazione a livello di cluster.  Per ulteriori dettagli, fare riferimento https://knowledge.broadcom.com/external/article/373968/vlcm-config-manager-is-enabled-on-this-c.html["Considerazioni NSX su vSphere Cluster"] .  Per le best practice vMSC con ONTAP MetroCluster, controlla https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware_vmsc_design.html#netapp-storage-configuration["Linee guida per la progettazione e l'implementazione di vMSC"]
@@ -134,6 +140,7 @@ Distribuisci vCenter su NFS Datastore.  Assicurarsi che SSH e Bash shell siano a
 
 
 
+[[convert-vsphere-environment-to-vcf-vi-workload-domain]]
 === Convertire l'ambiente vSphere in un dominio di carico di lavoro VCF VI
 
 Nella sezione seguente vengono illustrati i passaggi per distribuire il gestore SDDC e convertire il cluster vSphere 8 in un dominio di gestione VCF 5.2.  Se del caso, per ulteriori dettagli si farà riferimento alla documentazione VMware.

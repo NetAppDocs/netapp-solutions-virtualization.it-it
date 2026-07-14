@@ -18,6 +18,7 @@ Configura il datastore Logical Volume Manager (LVM) per lo storage condiviso tra
 
 
 
+[[initial-virtualization-administrator-tasks]]
 == Attività iniziali dell'amministratore della virtualizzazione
 
 Completare queste attività iniziali per preparare gli host OpenNebula alla connettività FC e raccogliere le informazioni necessarie per l'amministratore dello storage.
@@ -60,6 +61,7 @@ cat /sys/class/fc_host/host*/port_name
 
 
 
+[[storage-administrator-tasks]]
 == Attività dell'amministratore dell'archiviazione
 
 Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza migliore.
@@ -73,6 +75,7 @@ Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza mig
 
 
 
+[[final-virtualization-administrator-tasks]]
 == Attività finali dell'amministratore della virtualizzazione
 
 Completa queste attività per configurare la LUN FC come datastore LVM condiviso in OpenNebula.

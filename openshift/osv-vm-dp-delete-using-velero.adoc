@@ -18,6 +18,7 @@ Eliminare le risorse di backup e ripristino per le VM in OpenShift Virtualizatio
 
 
 
+[[deleting-a-backup]]
 == Eliminazione di un backup
 
 È possibile eliminare un Backup CR senza eliminare i dati di Object Storage utilizzando lo strumento OC CLI.
@@ -36,6 +37,7 @@ velero backup delete <backup_CR_name> -n <velero_namespace>
 ....
 
 
+[[deleting-a-restore]]
 == Eliminazione di un ripristino
 
 È possibile eliminare il ripristino CR utilizzando la CLI di Velero

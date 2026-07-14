@@ -20,6 +20,7 @@ image:vmware-vcf-asa-mgmt-stretchcluster-001.png["Istanza singola - Zone di disp
 
 
 
+[[scenario-overview]]
 == Panoramica dello scenario
 
 Gli archivi dati sul dominio VCF Workload possono essere protetti con SnapMirror ActiveSync per fornire una soluzione di cluster estensibile.  La protezione è abilitata a livello di cluster vSphere e tutti i datastore a blocchi ONTAP nel cluster saranno protetti.
@@ -50,6 +51,7 @@ TIP: Se un cluster vSphere è protetto, saranno protetti tutti i datastore nel c
 ====
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] centro.
@@ -58,6 +60,7 @@ Per informazioni sulla configurazione di VCF fare riferimento alink:https://tech
 
 
 
+[[video-demo-for-this-solution]]
 == Demo video per questa soluzione
 
 .Cluster di allungamento per VCF con strumenti ONTAP

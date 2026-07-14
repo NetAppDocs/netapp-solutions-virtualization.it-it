@@ -22,6 +22,7 @@ Gli host KVM devono disporre di interfacce FC, Ethernet o altre interfacce suppo
 
 
 
+[[high-level-ontap-features]]
 == Funzionalità ONTAP di alto livello
 
 *Caratteristiche comuni*
@@ -72,6 +73,7 @@ Gli host KVM devono disporre di interfacce FC, Ethernet o altre interfacce suppo
 
 
 
+[[libvirt-with-ontap-storage]]
 == Libvirt con archiviazione ONTAP
 
 Libvirt può essere utilizzato per gestire macchine virtuali che sfruttano lo storage NetApp ONTAP per le loro immagini disco e i loro dati.  Questa integrazione consente di sfruttare le funzionalità di archiviazione avanzate di ONTAP, come la protezione dei dati, l'efficienza di archiviazione e l'ottimizzazione delle prestazioni, all'interno dell'ambiente di virtualizzazione basato su Libvirt.  Ecco come Libvirt interagisce con ONTAP e cosa puoi fare:
@@ -118,6 +120,7 @@ In sostanza, l'utilizzo di Libvirt con ONTAP consente di combinare la flessibili
 
 
 
+[[file-based-storage-pool-with-smb-or-nfs]]
 == Pool di archiviazione basato su file (con SMB o NFS)
 
 Per l'archiviazione basata su file sono applicabili pool di archiviazione di tipo dir e netfs.
@@ -238,6 +241,7 @@ Raccomandazione: * Per pool di archiviazione Libvirt generici su NFS: iniziare c
 
 
 
+[[block-based-storage-pool-with-iscsi-fc-or-nvme-of]]
 == Pool di archiviazione basato su blocchi (con iSCSI, FC o NVMe-oF)
 
 Un tipo di pool di directory viene spesso utilizzato sopra un file system cluster come OCFS2 o GFS2 su un LUN o namespace condiviso.

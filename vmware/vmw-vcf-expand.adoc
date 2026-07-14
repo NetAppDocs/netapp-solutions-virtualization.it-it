@@ -22,6 +22,7 @@ Gli strumenti ONTAP semplificano la configurazione e la gestione degli archivi d
 
 
 
+[[supported-protocols-for-expanding-storage]]
 == Protocolli supportati per l'espansione dello storage
 
 Gli ambienti VCF possono essere ampliati utilizzando diversi protocolli di archiviazione, ognuno dei quali offre vantaggi e casi d'uso unici.
@@ -75,6 +76,7 @@ Per maggiori informazioni sui vantaggi di NVMe, fare riferimento a https://www.n
 
 
 
+[[use-cases-for-adding-supplemental-storage]]
 == Casi d'uso per l'aggiunta di spazio di archiviazione supplementare
 
 I seguenti casi d'uso dimostrano come aggiungere storage supplementare ai domini di gestione VCF e ai domini di carico di lavoro dell'infrastruttura virtuale (VI) utilizzando protocolli e configurazioni diversi.

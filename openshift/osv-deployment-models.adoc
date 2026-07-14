@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-deployment-models.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization 
+summary: Virtualizzazione Red Hat OpenShift 
+---
+= Modelli di implementazione per OpenShift/OpenShift Virtualization
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+OpenShift Container Platform, i modelli di implementazione sono classificati principalmente in base all'infrastruttura su cui vengono eseguiti (cloud o on-premises) e a come vengono gestiti (da Red Hat o dal cliente). OpenShift Virtualization può essere installato sulla piattaforma OpenShift Container.
+
+
+
+[[key-deployment-models-include]]
+== I principali modelli di deployment includono
+
+. **Servizi gestiti (Red Hat Managed)**: In questo modello, Red Hat gestisce l'infrastruttura e le operazioni della OpenShift Container Platform. Il cliente è responsabile della gestione delle proprie applicazioni e dei carichi di lavoro sulla piattaforma. Esempi includono:
++
+.. **Red Hat OpenShift Service on AWS (ROSA)**: un servizio gestito che consente una facile integrazione con i servizi AWS. OpenShift Virtualization è installato su istanze bare metal EC2 su AWS.
+.. **Azure Red Hat OpenShift (ARO)**: Si tratta di un servizio gestito su Azure Cloud. OpenShift Virtualization opera su macchine virtuali Azure.
+.. **Red Hat OpenShift Dedicated (OSD)**: Un servizio completamente gestito, distribuito su Google Cloud e gestito da Red Hat. OpenShift Virtualization viene implementato su istanze bare metal di Google Cloud.
+
+
+. **Servizi autogestiti (gestiti dal cliente)**: In questo caso, la piattaforma OpenShift Container viene distribuita e gestita direttamente dal cliente sulla propria infrastruttura. L'infrastruttura può essere su cloud pubblico o on-premises.
++
+.. **Cloud pubblico:** Implementato su AWS, Azure o GCP utilizzando l'infrastruttura fornita dall'installer (IPI) o l'infrastruttura fornita dall'utente (UPI)
+.. **Bare Metal:** Installato direttamente sull'hardware fisico.
+.. **Virtualizzazione:** Implementata su piattaforme come VMware vSphere.
+
+
+
+
+
+
+[[infrastructure-deployment-options]]
+=== Opzioni di implementazione dell'infrastruttura
+
+. **Infrastruttura predisposta dall'installatore (IPI):** Il programma di installazione automatizza il provisioning dei componenti dell'infrastruttura, come la rete e le macchine.
+. **Infrastruttura fornita dall'utente (UPI):** L'utente crea e gestisce manualmente l'infrastruttura, ottenendo un maggiore controllo sull'ambiente.
+
+
+
+
+[[specialized-deployment-models]]
+== Modelli di implementazione specializzati
+
+. **Single-node OpenShift (SNO):** Un cluster OpenShift completo installato su una singola macchina fisica o virtuale, spesso usato per l'edge computing.
+. **Implementazione disconnessa (air-gapped):** Implementata in ambienti di rete ristretti senza accesso a Internet esterno.
+. **Red Hat OpenShift Virtualization Engine:** Un'infrastruttura di virtualizzazione bare metal, costruita ad hoc per fornire alle aziende una soluzione affidabile e di livello enterprise per la distribuzione, la gestione e la scalabilità delle VM. Un sottoinsieme delle funzionalità di OpenShift, questa edizione di OpenShift è pensata per carichi di lavoro esclusivamente su macchine virtuali.
+
+
+
+
+[[additional-resources]]
+== Risorse aggiuntive
+
+Per informazioni complete sulla piattaforma OpenShift Container, fai riferimento a Red Hat link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/overview/ocp-overview["documentazione qui."]
+
+Per informazioni complete su OpenShift Virtualization, consulta la documentazione Red Hat link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/virtualization/index["documentazione qui."]

@@ -18,6 +18,7 @@ Questa sezione illustra la creazione di un datastore VMFS con storage ONTAP medi
 
 
 
+[[what-you-need]]
 == Di cosa hai bisogno
 
 * Competenze di base necessarie per gestire un ambiente vSphere e ONTAP.
@@ -41,6 +42,7 @@ Questa sezione illustra la creazione di un datastore VMFS con storage ONTAP medi
 
 
 
+[[provision-vmfs-datastore]]
 == Fornire il datastore VMFS
 
 . Verificare la compatibilità con il https://mysupport.netapp.com/matrix["Strumento di matrice di interoperabilità (IMT)"] .
@@ -49,6 +51,7 @@ Questa sezione illustra la creazione di un datastore VMFS con storage ONTAP medi
 
 
 
+[[ontap-tasks]]
 == Attività ONTAP
 
 . link:https://docs.netapp.com/us-en/ontap-cli-98/system-license-show.html["Verificare la licenza ONTAP per FCP."]Utilizzare il `system license show` comando e verificare se NVMe_oF è elencato.  Utilizzo `license add -license-code <license code>` per aggiungere una licenza.
@@ -69,6 +72,7 @@ Questa sezione illustra la creazione di un datastore VMFS con storage ONTAP medi
 
 
 
+[[vmware-vsphere-tasks]]
 == Attività VMware vSphere
 
 . Verificare che i driver HBA siano installati.  Gli HBA supportati da VMware hanno i driver distribuiti immediatamente e dovrebbero essere visibili alink:++https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/GUID-ED20B7BE-0D1C-4BF7-85C9-631D45D96FEC.html++["Informazioni sull'adattatore di archiviazione"]

@@ -18,6 +18,7 @@ Red Hat OpenShift Container Platform unisce sviluppo e operazioni IT in un'unica
 
 
 
+[[red-hat-openshift-provides-the-following-capabilities]]
 == Red Hat OpenShift offre le seguenti funzionalità:
 
 * *Provisioning self-service* Gli sviluppatori possono creare applicazioni su richiesta in modo rapido e semplice utilizzando gli strumenti che utilizzano più spesso, mentre gli operatori mantengono il controllo completo sull'intero ambiente.
@@ -37,6 +38,7 @@ image:redhat-openshift-004.png["Figura che mostra il dialogo di input/output o c
 
 
 
+[[deployment-methods-for-red-hat-openshift]]
 == Metodi di distribuzione per Red Hat OpenShift
 
 A partire da Red Hat OpenShift 4, i metodi di distribuzione per OpenShift includono distribuzioni manuali mediante User Provisioned Infrastructure (UPI) per distribuzioni altamente personalizzate o distribuzioni completamente automatizzate mediante Installer Provisioned Infrastructure (IPI).
@@ -45,6 +47,7 @@ Il metodo di installazione IPI è quello preferito nella maggior parte dei casi 
 
 
 
+[[ipi-installation-of-red-hat-openshift]]
 === Installazione IPI di Red Hat OpenShift
 
 L'implementazione dell'infrastruttura di provisioning dell'installatore (IPI) di OpenShift prevede i seguenti passaggi di alto livello:
@@ -63,6 +66,7 @@ image:redhat-openshift-009.png["Figura che mostra il dialogo di input/output o c
 
 
 
+[[netapp-validated-openshift-deployments]]
 === Distribuzioni OpenShift convalidate da NetApp
 
 NetApp ha testato e convalidato la distribuzione di Red Hat OpenShift nei suoi laboratori utilizzando il metodo di distribuzione Installer Provisioned Infrastructure (IPI) in ciascuno dei seguenti ambienti di data center:

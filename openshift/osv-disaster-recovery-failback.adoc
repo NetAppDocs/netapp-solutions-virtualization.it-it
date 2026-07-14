@@ -1,0 +1,109 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-disaster-recovery-failback.html 
+keywords: OpenShift, OCP, Trident, Trident Protect, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, Red Hat OpenShift Virtualization 
+summary: Virtualizzazione Red Hat OpenShift 
+---
+= Failback di una VM in OpenShift Virtualization Disaster Recovery
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questa sezione fornisce informazioni sul processo di failback per una VM nel OpenShift Virtualization disaster recovery usando NetApp Trident Protect e AppMirror. Dopo che è stata eseguita un'operazione di failover per passare a un cluster di destinazione per il disaster recovery, puoi usare il processo di failback per invertire la direzione della replica e ripristinare il cluster di origine come cluster primario per la VM. Questo comporta la risincronizzazione di tutte le modifiche apportate alla VM durante il periodo di failover sul cluster di origine e poi la promozione della relazione di replica nella direzione inversa. Seguendo questi passaggi, puoi assicurarti che la tua VM venga eseguita sul cluster di origine con tutte le modifiche intatte dopo un evento di disaster recovery.
+
+
+
+[[failback-for-openshift-virtualization-disaster-recovery]]
+== Failback per il ripristino di emergenza della virtualizzazione OpenShift
+
+Utilizzando Trident Protect, puoi ottenere il "fail back" dopo un'operazione di failover utilizzando la seguente sequenza di operazioni. In questo flusso di lavoro per ripristinare la direzione di replica originale, Trident Protect replica (risincronizza) eventuali modifiche dell'applicazione all'applicazione sorgente originale prima di invertire la direzione di replica.
+
+Questo processo inizia da una relazione che ha completato un failover verso una destinazione e comporta i seguenti passaggi:
+
+. Inizia con uno stato di failover.
+. Inverti la risincronizzazione della relazione di replica
++
+Quando si esegue la risincronizzazione inversa di una relazione di replica fallita, l'applicazione di destinazione diventa l'applicazione di origine e l'origine diventa la destinazione. Le modifiche apportate all'applicazione di destinazione durante il failover vengono mantenute.
+
++
+.. Sul cluster di destinazione originale, eliminare il CR AppMirrorRelationship. Questo fa sì che la destinazione diventi la sorgente. Se ci sono policy di protezione rimanenti sul nuovo cluster di destinazione, rimuoverle.
++
+.Mostra esempio
+[%collapsible]
+====
+image:osv-disaster-recovery-013.png["Relazione OCP-v AppMirror eliminata per avviare il failback"]
+
+====
+.. Crea uno Snapshot sul nuovo cluster di origine (originariamente destinazione) per acquisire tutte le modifiche apportate durante il periodo di failover. Questo garantisce che tutte le modifiche vengano replicate nel cluster di origine originale durante il processo di risincronizzazione.
++
+.Mostra esempio
+[%collapsible]
+====
+[source, yaml]
+----
+# snapshot.yaml
+apiVersion: protect.trident.netapp.io/v1
+kind: Snapshot
+metadata:
+  name: test-source-dr-init-snapshot-failback
+  namespace: test-dr-ns
+spec:
+  applicationRef: test-dest-app
+  appVaultRef: ontap-s3-appvault
+  reclaimPolicy: Delete
+----
+image:osv-disaster-recovery-014.png["Snapshot on-demand di OCP-v della VM creata utilizzando Trident Protect CLI sul nuovo cluster di origine"] image:osv-disaster-recovery-015.png["Snapshot on-demand di OCP-v della VM creata tramite Trident Protect CLI sul nuovo cluster di origine"] image:osv-disaster-recovery-016.png["Snapshot on-demand di OCP-v della VM creata utilizzando Trident Protect CLI sul nuovo cluster di origine"]
+
+====
+.. Configura una relazione di replica dal nuovo cluster di origine (originariamente destinazione) al cluster di origine originale, configurando i valori per la direzione inversa.
++
+.Mostra esempio
+[%collapsible]
+====
+# application-mirror-relationship.yaml
+
+[source, yaml]
+----
+apiVersion: protect.trident.netapp.io/v1
+kind: AppMirrorRelationship
+metadata:
+  name: amr1
+spec:
+  desiredState: Established
+  destinationAppVaultRef: ontap-s3-appvault
+  destinationApplicationRef: dr-source-vm-failback
+  namespaceMapping:
+  - destination: test-dr-ns
+    source: test-dr-ns-dest
+  recurrenceRule: |-
+    DTSTART:20240901T000200Z
+    RRULE:FREQ=MINUTELY;INTERVAL=5
+  sourceAppVaultRef: ontap-s3-appvault
+  sourceApplicationName: test-dest-app
+  sourceApplicationUID: "uid of the app in the original source cluster"
+  storageClassName: "sc-nas"
+----
+image:osv-disaster-recovery-017.png["Relazione OCP-v AppMirror creata nel cluster di origine per invertire la direzione di replica"] image:osv-disaster-recovery-018.png["Relazione OCP-v AppMirror creata nel cluster di destinazione originale per invertire la direzione di replica"]
+
+====
+.. Promuovi la relazione di replica dal nuovo cluster di origine (originariamente destinazione) al cluster di origine originale aggiornando il campo desiredState nella CR AppMirrorRelationship su "Promoted".
++
+.Mostra esempio
+[%collapsible]
+====
+image:osv-disaster-recovery-019.png["Relazione OCP-v AppMirror nel cluster di origine promossa a failback completo"]
+
+Ora vedrai la macchina virtuale in esecuzione nel cluster di origine. Il processo di failback è ora completo. Ora puoi liberare le risorse nel cluster di destinazione. Puoi anche configurare una nuova relazione di replica se vuoi mantenere le funzionalità di disaster recovery dopo il processo di failback.
+
+
+NOTE: Non eseguire un'operazione di risincronizzazione normale, perché in questo modo si scartano i dati scritti sul cluster di destinazione durante la procedura di fail over.
+
+====
+
+
+

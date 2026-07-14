@@ -18,6 +18,7 @@ Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per 
 
 
 
+[[infrastructure-requirements]]
 == Requisiti infrastrutturali
 
 * Un sistema di archiviazione ONTAP AFF o ASA con porte dati fisiche su switch Ethernet dedicate al traffico di archiviazione.
@@ -27,6 +28,7 @@ Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per 
 
 
 
+[[recommended-nvmetcp-network-design]]
 == Progettazione di rete NVMe/TCP consigliata
 
 NetApp consiglia progettazioni di rete completamente ridondanti per NVMe/TCP. Il diagramma seguente illustra un esempio di configurazione ridondante, che garantisce tolleranza agli errori per sistemi di archiviazione, switch, adattatori di rete e sistemi host.
@@ -37,6 +39,7 @@ Per il multipathing e il failover su più percorsi, configurare almeno due LIF p
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver esaminato i requisiti di distribuzione,link:vmw-vcf-viwld-supp-nvme-svm-lifs.html["creare SVM e LIF"] .

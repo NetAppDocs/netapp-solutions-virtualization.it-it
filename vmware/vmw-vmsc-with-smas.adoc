@@ -33,6 +33,7 @@ NOTE: Nella modalità di accesso host non uniforme, le VM verranno riavviate in 
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 * link:vmw-vcf-mgmt-supplemental-iscsi.html["Host VMware vSphere distribuiti con doppio storage fabric (due HBA o doppia VLAN per iSCSI) per host"] .
@@ -50,6 +51,7 @@ TIP: Se si utilizza un certificato autofirmato, il certificato CA può essere re
 
 
 
+[[vmsc-non-uniform-host-access-with-ontap-system-manager-ui]]
 == Accesso host non uniforme vMSC con interfaccia utente di ONTAP System Manager.
 
 Nota: è possibile utilizzare ONTAP Tools 10.2 o versioni successive per predisporre un datastore esteso con modalità di accesso host non uniforme senza dover cambiare più interfacce utente.  Questa sezione è solo di riferimento se non si utilizza ONTAP Tools.
@@ -86,6 +88,7 @@ NOTE: Gli screenshot sopra mostrano l'I/O attivo su un singolo controller poich�
 
 
 
+[[vmsc-uniform-host-access-mode-with-ontap-tools]]
 == Modalità di accesso host uniforme vMSC con strumenti ONTAP .
 
 . Assicurarsi che NetApp ONTAP Tools sia distribuito e registrato su vCenter. image:vmware-vmsc-with-smas-015.png["Plug-in ONTAP Tools registrato su vCenter"] In caso contrario, seguirelink:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/ontap-tools-deployment.html["Distribuzione degli strumenti ONTAP"] Elink:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-vcenter.html["Aggiungi un'istanza del server vCenter"]
@@ -102,6 +105,7 @@ NOTE: Gli screenshot sopra mostrano l'I/O attivo su un singolo controller poich�
 
 
 
+[[vm-protection-with-snapcenter-plug-in-for-vmware-vsphere]]
 == Protezione delle VM con il plug-in SnapCenter per VMware vSphere.
 
 Il SnapCenter Plug-in for VMware vSphere (SCV) 6.0 o versioni successive supporta SnapMirror ActiveSync e, in combinazione con SnapMirror Async, consente la replica su un terzo dominio di errore.

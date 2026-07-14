@@ -18,6 +18,7 @@ In questo scenario mostreremo come distribuire un datastore VMFS con backend Fib
 
 
 
+[[benefits-of-fibre-channel]]
 == Vantaggi del Fibre Channel
 
 *Prestazioni elevate:* FC garantisce velocità di trasferimento dati elevate, rendendolo ideale per applicazioni che richiedono un accesso rapido e affidabile a grandi quantità di dati.
@@ -32,6 +33,7 @@ Per ulteriori informazioni sull'utilizzo di Fibre Channel con i sistemi di stora
 
 
 
+[[scenario-overview]]
 == Panoramica dello scenario
 
 Il datastore supplementare VCF viene fornito come parte delle operazioni del giorno 2 tramite vCenter.  Questo scenario comprende i seguenti passaggi di alto livello:
@@ -44,6 +46,7 @@ Il datastore supplementare VCF viene fornito come parte delle operazioni del gio
 
 
 
+[[prerequisites]]
 == Prerequisiti
 
 Questo scenario richiede i seguenti componenti e configurazioni:
@@ -66,6 +69,7 @@ Per ulteriori informazioni sull'utilizzo di VMFS con sistemi di archiviazione ON
 
 
 
+[[deployment-steps-for-management-domain]]
 == Fasi di distribuzione per il dominio di gestione
 
 Per distribuire ONTAP Tools e utilizzarlo per creare un datastore VMFS sul dominio di gestione VCF, completare i seguenti passaggi:
@@ -77,6 +81,7 @@ Per distribuire ONTAP Tools e utilizzarlo per creare un datastore VMFS sul domin
 
 
 
+[[deployment-steps-for-vi-workload-domain]]
 == Fasi di distribuzione per il dominio del carico di lavoro VI
 
 Per distribuire ONTAP Tools e utilizzarlo per creare un datastore VMFS sul dominio del carico di lavoro VCF VI, completare i seguenti passaggi:
@@ -88,6 +93,7 @@ Per distribuire ONTAP Tools e utilizzarlo per creare un datastore VMFS sul domin
 
 
 
+[[additional-information]]
 == Informazioni aggiuntive
 
 Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] centro.
@@ -96,6 +102,7 @@ Per informazioni sulla configurazione di VCF fare riferimento alink:https://tech
 
 
 
+[[video-demo-for-this-solution]]
 == Demo video per questa soluzione
 
 .Datastore VMFS(FC) come storage supplementare per il dominio di gestione VCF

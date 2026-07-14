@@ -1,0 +1,298 @@
+---
+sidebar: sidebar 
+permalink: openshift/osv-data-protection-third-party-tools.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, Red Hat OpenShift, OpenShift Virtualization, CNV, Container Native Virtualization, Red Hat OpenShift Virtualization, OADP operator, OpenShift Data Protection Application operator, velero 
+summary: Protezione dei dati di virtualizzazione Red Hat OpenShift con NetApp ONTAP 
+---
+= Protezione dei dati per le VM in Red Hat OpenShift Virtualization usando OpenShift API for Data Protection (OADP)
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+OpenShift API for Data Protection (OADP) con Velero fornisce funzionalità di backup, ripristino e disaster recovery per le VM in OpenShift Virtualization.  Utilizzare gli snapshot Trident CSI per eseguire il backup di volumi persistenti e metadati delle VM su NetApp ONTAP S3 o StorageGRID S3.  OADP si integra con le API Velero e i driver di archiviazione CSI per gestire le operazioni di protezione dei dati per le VM containerizzate.
+
+Le macchine virtuali nell'ambiente di virtualizzazione OpenShift sono applicazioni containerizzate che vengono eseguite nei nodi worker della piattaforma OpenShift Container. È importante proteggere i metadati delle VM e i dischi persistenti delle VM, in modo che sia possibile recuperarli quando vengono persi o danneggiati.
+
+I dischi persistenti delle VM di virtualizzazione OpenShift possono essere supportati dallo storage ONTAP integrato nel cluster OpenShift utilizzandolink:https://docs.netapp.com/us-en/trident/["Trident CSI"] . In questa sezione utilizziamolink:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/installing/installing-oadp-ocs.html["API OpenShift per la protezione dei dati (OADP)"] per eseguire il backup delle VM, inclusi i relativi volumi di dati
+
+* Archiviazione di oggetti ONTAP
+* StorageGrid
+
+
+Quando necessario, eseguiamo il ripristino dal backup.
+
+OADP consente il backup, il ripristino e il disaster recovery delle applicazioni su un cluster OpenShift. I dati che possono essere protetti con OADP includono oggetti di risorse Kubernetes, volumi persistenti e immagini interne.
+
+image:redhat-openshift-oadp-001.png["API OpenShift per la protezione dei dati"]
+
+Red Hat OpenShift ha sfruttato le soluzioni sviluppate dalle community open source per la protezione dei dati. link:https://velero.io/["Velero"] è uno strumento open source per eseguire backup e ripristino in modo sicuro, effettuare disaster recovery e migrare risorse di cluster Kubernetes e volumi persistenti. Per usare facilmente Velero, OpenShift ha sviluppato l'operatore OADP e il plugin Velero per integrarsi con i driver di storage CSI. Il nucleo delle API OADP esposte si basa sulle API di Velero. Dopo aver installato e configurato l'operatore OADP, le operazioni di backup/ripristino che puoi eseguire si basano sulle operazioni esposte dall'API di Velero.
+
+image:redhat-openshift-oadp-002.png["API OpenShift per la protezione dei dati"]
+
+OADP 1.3 è disponibile nell'hub operatore del cluster OpenShift 4.12 e versioni successive. Dispone di un Data Mover integrato in grado di spostare gli snapshot del volume CSI in un archivio oggetti remoto. Ciò garantisce portabilità e durata spostando gli snapshot in una posizione di archiviazione degli oggetti durante il backup. Gli snapshot sono quindi disponibili per il ripristino dopo i disastri.
+
+**Di seguito trovi i vari componenti utilizzati negli esempi di questa sezione**
+
+* Cluster OpenShift 4.14
+* OpenShift Virtualization installato tramite OpenShift Virtualization Operator fornito da Red Hat
+* Operatore OADP 1.3 fornito da Red Hat
+* Velero CLI per Linux
+* Driver CSI Trident 24.02 per ONTAP
+* ONTAP 9.12
+
+
+link:https://docs.netapp.com/us-en/trident/["Trident CSI"] link:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/installing/installing-oadp-ocs.html["API OpenShift per la protezione dei dati (OADP)"] link:https://velero.io/["Velero"]
+
+
+
+[[create-on-demand-backup-for-vms-in-red-hat-openshift-virtualization-using-velero]]
+== Crea backup su richiesta per VM in Red Hat OpenShift Virtualization utilizzando Velero
+
+Eseguire il backup delle VM in OpenShift Virtualization utilizzando Velero e NetApp ONTAP S3 o StorageGRID.  Questa procedura include la creazione di risorse di backup personalizzate (CR) per i backup su richiesta e di CR pianificate per i backup pianificati.  Ogni backup acquisisce i metadati della VM e i volumi persistenti, archiviandoli nella posizione di archiviazione degli oggetti specificata per scopi di ripristino o conformità.
+
+
+
+[[steps-to-create-a-backup-of-a-vm]]
+=== Passaggi per creare un backup di una VM
+
+Per creare un backup su richiesta dell'intera VM (metadati e dischi della VM), fare clic sulla scheda **Backup**.  In questo modo viene creata una risorsa personalizzata di backup (CR). Viene fornito un file yaml di esempio per creare il Backup CR.  Utilizzando questo yaml, verrà eseguito il backup della VM e dei suoi dischi nello spazio dei nomi specificato. È possibile impostare parametri aggiuntivi come mostrato inlink:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/backing_up_and_restoring/oadp-creating-backup-cr.html["documentazione"] .
+
+Il CSI creerà uno snapshot dei volumi persistenti che supportano i dischi.  Un backup della VM insieme allo snapshot dei suoi dischi vengono creati e archiviati nella posizione di backup specificata nel file yaml. Il backup rimarrà nel sistema per 30 giorni, come specificato nel ttl.
+
+....
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  name: backup1
+  namespace: openshift-adp
+spec:
+  includedNamespaces:
+  - virtual-machines-demo
+  snapshotVolumes: true
+  storageLocation: velero-demo-1
+  ##velero-demo-1 is the backupStorageLocation
+  ##previously created when Velero is configured.
+
+  ttl: 720h0m0s
+....
+Una volta completato il backup, la relativa fase verrà visualizzata come completata.
+
+image:redhat-openshift-oadp-backup-001.png["Backup completato"]
+
+È possibile ispezionare il backup nell'archivio oggetti con l'ausilio di un'applicazione browser S3. Il percorso del backup viene visualizzato nel bucket configurato con il nome del prefisso (velero/demobackup).  È possibile visualizzare il contenuto del backup, inclusi gli snapshot del volume, i registri e altri metadati della macchina virtuale.
+
+
+NOTE: In StorageGrid è anche possibile utilizzare la console S3 disponibile in Tenant Manager per visualizzare gli oggetti di backup.
+
+image:redhat-openshift-oadp-backup-002.png["Backup degli oggetti in S3"]
+
+
+
+[[creating-scheduled-backups]]
+=== Creazione di backup programmati
+
+Per creare backup programmati, devi creare una Schedule CR. La pianificazione è semplicemente un'espressione Cron che ti permette di specificare l'ora in cui vuoi creare il backup. Un esempio di yaml per creare una Schedule CR.
+
+[source, yaml]
+----
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: <schedule>
+  namespace: openshift-adp
+spec:
+  schedule: 0 7 * * *
+  template:
+    hooks: {}
+    includedNamespaces:
+    - <namespace>
+    storageLocation: velero-demo-1
+    defaultVolumesToFsBackup: true
+    ttl: 720h0m0s
+----
+L'espressione Cron 0 7 * * * significa che ogni giorno verrà creato un backup alle 7:00. Vengono inoltre specificati gli spazi dei nomi da includere nel backup e la posizione di archiviazione per il backup. Quindi, invece di un Backup CR, viene utilizzato il metodo Schedule CR per creare un backup all'ora e con la frequenza specificate.
+
+Una volta creata, la pianificazione sarà abilitata.
+
+image:redhat-openshift-oadp-backup-003.png["Programma creato"]
+
+I backup verranno creati in base a questa pianificazione e potranno essere visualizzati nella scheda Backup.
+
+image:redhat-openshift-oadp-backup-004.png["Programma creato"]
+
+
+
+[[restore-a-vm-from-backup-in-red-hat-openshift-virtualization-using-velero]]
+== Ripristina una VM dal backup in Red Hat OpenShift Virtualization utilizzando Velero
+
+Ripristina le VM in OpenShift Virtualization utilizzando Velero e l'API OpenShift per la protezione dei dati (OADP).  Questa procedura include la creazione di una risorsa personalizzata di ripristino (CR) per recuperare le VM e i relativi volumi persistenti dai backup, con opzioni per il ripristino nello spazio dei nomi originale, in uno spazio dei nomi diverso o utilizzando una classe di archiviazione alternativa.
+
+
+
+[[prerequisites]]
+=== Prerequisiti
+
+Per ripristinare da un backup, supponiamo che lo spazio dei nomi in cui era presente la macchina virtuale sia stato eliminato accidentalmente.
+
+
+
+[[restore-to-the-same-namespace]]
+=== Ripristina nello stesso namespace
+
+[%collapsible]
+====
+Per ripristinare dal backup appena creato, dobbiamo creare una risorsa personalizzata di ripristino (CR). Dobbiamo fornirgli un nome, specificare il nome del backup da cui vogliamo effettuare il ripristino e impostare restorePVs su true. È possibile impostare parametri aggiuntivi come mostrato inlink:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/backing_up_and_restoring/restoring-applications.html["documentazione"] . Fare clic sul pulsante Crea.
+
+image:redhat-openshift-oadp-restore-001.png["Crea Ripristina CR"]
+
+....
+apiVersion: velero.io/v1
+kind: Restore
+metadata:
+  name: restore1
+  namespace: openshift-adp
+spec:
+  backupName: backup1
+  restorePVs: true
+....
+Quando la fase risulta completata, è possibile vedere che le macchine virtuali sono state ripristinate allo stato in cui si trovava al momento dell'acquisizione dello snapshot.  (Se il backup è stato creato quando la VM era in esecuzione, il ripristino della VM dal backup avvierà la VM ripristinata e la riporterà in stato di esecuzione).  La VM viene ripristinata nello stesso namespace.
+
+image:redhat-openshift-oadp-restore-002.png["Ripristino completato"]
+
+====
+
+
+[[restore-to-a-different-namespace]]
+=== Ripristina in uno spazio dei nomi diverso
+
+[%collapsible]
+====
+Per ripristinare la VM in uno spazio dei nomi diverso, è possibile fornire un namespaceMapping nella definizione yaml del Restore CR.
+
+Il seguente file yaml di esempio crea un ripristino CR per ripristinare una VM e i relativi dischi nello spazio dei nomi virtual-machines-demo quando il backup è stato eseguito nello spazio dei nomi virtual-machines.
+
+....
+apiVersion: velero.io/v1
+kind: Restore
+metadata:
+  name: restore-to-different-ns
+  namespace: openshift-adp
+spec:
+  backupName: backup
+  restorePVs: true
+  includedNamespaces:
+  - virtual-machines-demo
+  namespaceMapping:
+    virtual-machines-demo: virtual-machines
+....
+Quando la fase risulta completata, è possibile vedere che le macchine virtuali sono state ripristinate allo stato in cui si trovava al momento dell'acquisizione dello snapshot.  (Se il backup è stato creato quando la VM era in esecuzione, il ripristino della VM dal backup avvierà la VM ripristinata e la riporterà in esecuzione).  La VM viene ripristinata in uno spazio dei nomi diverso, come specificato nel file yaml.
+
+image:redhat-openshift-oadp-restore-003.png["Ripristino completato in un nuovo namespace"]
+
+====
+
+
+[[restore-to-a-different-storage-class]]
+=== Ripristina in una classe di archiviazione diversa
+
+[%collapsible]
+====
+Velero offre la possibilità generica di modificare le risorse durante il ripristino specificando patch JSON. Le patch json vengono applicate alle risorse prima che vengano ripristinate. Le patch json sono specificate in una configmap e la configmap è referenziata nel comando restore. Questa funzionalità consente di eseguire il ripristino utilizzando classi di archiviazione diverse.
+
+Nell'esempio seguente, la macchina virtuale, durante la creazione, utilizza ontap-nas come classe di archiviazione per i suoi dischi.  Viene creato un backup della macchina virtuale denominato backup1.
+
+image:redhat-openshift-oadp-restore-004.png["VM che utilizza ontap-nas"]
+
+image:redhat-openshift-oadp-restore-005.png["Backup VM ontap-nas"]
+
+Simula la perdita della VM eliminandola.
+
+Per ripristinare la VM utilizzando una classe di archiviazione diversa, ad esempio la classe di archiviazione ontap-nas-eco, è necessario eseguire i due passaggi seguenti:
+
+**Passaggio 1**
+
+Crea una mappa di configurazione (console) nello spazio dei nomi openshift-adp come segue: Compila i dettagli come mostrato nello screenshot: Seleziona lo spazio dei nomi: openshift-adp Nome: change-storage-class-config (può essere qualsiasi nome) Chiave: change-storage-class-config.yaml: Valore:
+
+....
+version: v1
+resourceModifierRules:
+  - conditions:
+      groupResource: persistentvolumeclaims
+      resourceNameRegex: "^rhel*"
+      namespaces:
+        - virtual-machines-demo
+    patches:
+      - operation: replace
+        path: "/spec/storageClassName"
+        value: "ontap-nas-eco"
+....
+image:redhat-openshift-oadp-restore-006.png["configurazione mappa interfaccia utente"]
+
+L'oggetto mappa di configurazione risultante dovrebbe apparire così (CLI):
+
+image:redhat-openshift-oadp-restore-007.png["mappa di configurazione CLI"]
+
+Questa mappa di configurazione applicherà la regola del modificatore di risorse quando viene creato il ripristino. Verrà applicata una patch per sostituire il nome della classe di archiviazione in ontap-nas-eco per tutte le richieste di volume persistenti che iniziano con rhel.
+
+**Passaggio 2**
+
+Per ripristinare la VM utilizzare il seguente comando dalla CLI di Velero:
+
+....
+#velero restore create restore1 --from-backup backup1 --resource-modifier-configmap change-storage-class-config -n openshift-adp
+....
+La VM viene ripristinata nello stesso namespace con i dischi creati utilizzando la classe di archiviazione ontap-nas-eco.
+
+image:redhat-openshift-oadp-restore-008.png["Ripristino VM ontap-nas-eco"]
+
+====
+
+
+[[delete-a-backup-cr-or-restore-cr-in-red-hat-openshift-virtualization-using-velero]]
+== Elimina un CR di backup o ripristina CR in Red Hat OpenShift Virtualization utilizzando Velero
+
+Eliminare le risorse di backup e ripristino per le VM in OpenShift Virtualization utilizzando Velero.  Utilizzare l'interfaccia della riga di comando di OpenShift per eliminare i backup mantenendo i dati di archiviazione degli oggetti oppure l'interfaccia della riga di comando di Velero per eliminare sia la risorsa personalizzata di backup (CR) sia i dati di archiviazione associati.
+
+
+
+[[deleting-a-backup]]
+=== Eliminazione di un backup
+
+È possibile eliminare un Backup CR senza eliminare i dati di Object Storage utilizzando lo strumento OC CLI.
+
+[source, cli]
+----
+oc delete backup <backup_CR_name> -n <velero_namespace>
+----
+Se vuoi eliminare il Backup CR e i relativi dati nello storage a oggetti, puoi farlo utilizzando lo strumento CLI di Velero.
+
+Scarica la CLI di Velero da link:https://velero.io["velero.io"]. Usa la versione compatibile con la tua versione dell'operatore OADP. Puoi trovare la versione compatibile nella documentazione link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html-single/backup_and_restore/index#velero-oadp-version-relationship_velero-cli-tool["Qui"].
+
+Eseguire il seguente comando di eliminazione utilizzando la CLI di Velero
+
+[source, cli]
+----
+velero backup delete <backup_CR_name> -n <velero_namespace>
+----
+
+
+[[deleting-a-restore]]
+=== Eliminazione di un ripristino
+
+È possibile eliminare il ripristino CR utilizzando la CLI di Velero
+
+[source, cli]
+----
+velero restore delete restore --namespace openshift-adp
+----
+È possibile utilizzare il comando oc e l'interfaccia utente per eliminare il CR di ripristino
+
+[source, cli]
+----
+oc delete restore <restore_CR_name> -n <velero_namespace>
+----

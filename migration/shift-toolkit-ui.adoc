@@ -18,6 +18,7 @@ Configurare Shift Toolkit per automatizzare la migrazione o la conversione delle
 
 
 
+[[run-shift-toolkit]]
 == Kit di strumenti Run Shift
 
 * Utilizzando il browser, accedi all'interfaccia utente di Shift Toolkit inserendo `http://<IP address specified during installation>:3001`
@@ -50,12 +51,14 @@ image::shift-toolkit-052.png[Screenshot del Contratto di licenza per l'utente fi
 
 
 
+[[shift-toolkit-configuration]]
 == Configurazione del toolkit di spostamento
 
 Una volta configurati correttamente l'archiviazione e la connettività agli hypervisor di origine e di destinazione, è possibile iniziare a configurare Shift Toolkit per automatizzare la migrazione o la conversione delle macchine virtuali nel formato appropriato, sfruttando la funzionalità FlexClone .
 
 
 
+[[add-sites]]
 === Aggiungi siti
 
 Il primo passo è scoprire e aggiungere i dettagli dell'hypervisor di origine e di destinazione (sia hypervisor che storage) al toolkit Shift.  Apri Shift Toolkit in un browser supportato, utilizza il nome utente e la password predefiniti e fai clic su "Aggiungi siti".
@@ -175,6 +178,7 @@ Il passaggio successivo consiste nel raggruppare le VM richieste nei rispettivi 
 
 
 
+[[resource-groupings]]
 === Raggruppamenti di risorse
 
 Una volta aggiunte le piattaforme, raggruppa le VM che desideri migrare o convertire in gruppi di risorse.  I gruppi di risorse del toolkit Shift consentono di raggruppare un set di VM dipendenti in gruppi logici che contengono i rispettivi ordini di avvio e ritardi di avvio.
@@ -256,6 +260,7 @@ NOTE: Nel caso in cui sia necessario modificare il gruppo di risorse per aggiung
 
 
 
+[[blueprints]]
 === Progetti
 
 Per migrare o convertire macchine virtuali è necessario un piano. Selezionare le piattaforme hypervisor di origine e di destinazione dal menu a discesa e scegliere i gruppi di risorse da includere in questo progetto, insieme al raggruppamento delle modalità di accensione delle applicazioni (ad esempio controller di dominio, quindi livello 1, quindi livello 2, ecc.). Spesso vengono anche chiamati piani di migrazione. Per definire il progetto, vai alla scheda "Progetti" e clicca su "Crea nuovo progetto".

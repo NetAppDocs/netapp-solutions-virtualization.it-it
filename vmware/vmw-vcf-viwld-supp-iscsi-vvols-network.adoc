@@ -20,6 +20,7 @@ Utilizzare il client vSphere con vCenter Single Sign-On per eseguire questi pass
 
 
 
+[[step-1-create-distributed-port-groups-for-iscsi-traffic]]
 == Passaggio 1: creare gruppi di porte distribuiti per il traffico iSCSI
 
 Completare i seguenti passaggi per creare un nuovo gruppo di porte distribuite per ciascuna rete iSCSI.
@@ -72,6 +73,7 @@ image:vmware-vcf-asa-026.png["sposta uplink1 in non utilizzato"]
 
 
 
+[[step-2-create-vmkernel-adapters-on-each-esxi-host]]
 == Passaggio 2: creare adattatori VMkernel su ciascun host ESXi
 
 Eseguire i seguenti passaggi su ciascun host ESXi nel dominio del carico di lavoro utilizzando il client vSphere.
@@ -130,6 +132,7 @@ image:vmware-vcf-asa-034.png["Esaminare le selezioni VMkernel"]
 
 
 
+[[whats-next]]
 == Cosa succederà ora?
 
 Dopo aver configurato la rete per iSCSI su tutti gli host ESXi nel dominio del carico di lavoro,link:vmw-vcf-viwld-supp-iscsi-vvols-storage.html["configurare l'archiviazione per iSCSI vVols"] .

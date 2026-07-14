@@ -17,6 +17,7 @@ Preparati a installare NetApp Shift Toolkit assicurandoti che il tuo ambiente so
 
 
 
+[[before-you-begin]]
 == Prima di iniziare
 
 Verifica che il tuo ambiente soddisfi i seguenti requisiti:
@@ -32,6 +33,7 @@ NOTE: Installa Shift Toolkit su una VM dedicata per abilitare la gestione di pi√
 
 
 
+[[select-an-installation-package]]
 == Seleziona un pacchetto di installazione
 
 Shift Toolkit √® disponibile in due pacchetti di installazione da link:https://mysupport.netapp.com/site/tools/tool-eula/netapp-shift-toolkit["NetApp Toolchest"]:

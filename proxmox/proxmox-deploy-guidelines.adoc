@@ -20,6 +20,7 @@ Per informazioni sui tipi di archiviazione supportati e sulla compatibilità dei
 
 
 
+[[network-configuration-guidelines]]
 == Linee guida per la configurazione di rete
 
 Seguire queste linee guida per ottimizzare le prestazioni e l'affidabilità della rete:
@@ -34,6 +35,7 @@ Seguire queste linee guida per ottimizzare le prestazioni e l'affidabilità dell
 
 
 
+[[storage-configuration-best-practices]]
 == Procedure consigliate per la configurazione dell'archiviazione
 
 Segui queste best practice per ottimizzare le prestazioni e la scalabilità dell'archiviazione:
@@ -52,6 +54,7 @@ Segui queste best practice per ottimizzare le prestazioni e la scalabilità dell
 
 
 
+[[proxmox-ve-configuration-guidelines]]
 == Linee guida per la configurazione di Proxmox VE
 
 Seguire queste linee guida per ottimizzare Proxmox VE con lo storage NetApp ONTAP :

@@ -6,6 +6,7 @@ Questa migrazione consente un'integrazione fluida, una migliore protezione dei d
 
 
 
+[[use-cases]]
 == Casi d'uso
 
 Quando si valuta il passaggio a datastore supportati ONTAP , sono disponibili numerose opzioni di migrazione in termini di origine e destinazione.

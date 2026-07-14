@@ -18,6 +18,7 @@ Scopri come NetApp e VMware semplificano le configurazioni multicloud ibride int
 
 
 
+[[introduction]]
 == Introduzione
 
 Questo approccio consente alle aziende di migrare facilmente i carichi di lavoro, ottimizzare l'utilizzo delle risorse e mantenere operazioni coerenti in entrambi gli ambienti.
@@ -26,6 +27,7 @@ Per ulteriori informazioni sugli scenari di cloud ibrido con VMware e NetApp, ve
 
 
 
+[[vmware-deployment-scenarios-with-netapp]]
 == Scenari di distribuzione VMware con NetApp
 
 Questa sezione descrive le varie opzioni di distribuzione per gli ambienti VMware su cloud pubblici e locali.  Ciascuno dei provider cloud supporta uno stack VMware Software Defined Data Center (SDDC) e/o VMware Cloud Foundation (VCF) all'interno delle rispettive offerte di cloud pubblico.

@@ -15,6 +15,7 @@ Esaminare i requisiti di distribuzione e le considerazioni per Proxmox Backup Se
 
 
 
+[[deployment-considerations]]
 == Considerazioni sulla distribuzione
 
 Distribuisci PBS su bare metal o come VM su Proxmox VE. Quando si distribuisce PBS come VM, è opportuno considerare la disponibilità del server di backup nel caso in cui l'host Proxmox VE subisca tempi di inattività. Distribuisci PBS su bare metal o su un host o cluster Proxmox VE separato per garantire la disponibilità del server di backup durante i guasti dell'host primario.
@@ -23,6 +24,7 @@ I contenuti del backup sono autonomi nel datastore, consentendo la migrazione de
 
 
 
+[[storage-backend-support]]
 == Supporto backend di archiviazione
 
 PBS supporta vari backend di archiviazione, tra cui archiviazione locale, NFS, iSCSI, FC, NVMe-oF e S3 (anteprima tecnica). L'integrazione con lo storage NetApp ONTAP consente alle organizzazioni di sfruttare funzionalità avanzate di gestione dei dati per una migliore protezione e ripristino dei dati.
@@ -31,6 +33,7 @@ Utilizzare ONTAP SnapMirror per replicare il datastore PBS su un altro sistema O
 
 
 
+[[multi-cluster-management]]
 == Gestione multi-cluster
 
 Una singola istanza PBS può gestire più cluster Proxmox VE, fornendo un backup centralizzato per distribuzioni su larga scala. Utilizzare gli spazi dei nomi per separare logicamente i dati di backup per diversi cluster o tenant, garantendo l'isolamento e la sicurezza dei dati.
@@ -39,12 +42,14 @@ Configurare criteri di conservazione dei dati per gestire automaticamente il cic
 
 
 
+[[management-interfaces]]
 == Interfacce di gestione
 
 Gestisci PBS tramite un'interfaccia basata sul Web, strumenti da riga di comando o API REST. Accedi all'interfaccia web sulla porta 8007 utilizzando l'URL `https://<pbs-ip-address>:8007`.
 
 
 
+[[network-configuration-best-practices]]
 == Buone pratiche per la configurazione di rete
 
 Garantire percorsi di rete ridondanti tra PBS e storage ONTAP per garantire elevata disponibilità e prestazioni. Per aumentare la larghezza di banda e la ridondanza, si può prendere in considerazione l'aggregazione dei link (LACP). Configurare i frame jumbo (MTU 9000) su tutti i dispositivi di rete per migliorare le prestazioni del traffico di archiviazione.
