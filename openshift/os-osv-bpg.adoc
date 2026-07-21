@@ -174,9 +174,9 @@ NOTE: Per ulteriori dettagli sulle best practice per la configurazione dello sto
 [[openshift-virtualization-tuning-scaling-guide]]
 == **Virtualizzazione OpenShift - Guida all'ottimizzazione e al ridimensionamento**
 
-Red Hat ha documentatolink:https://docs.openshift.com/container-platform/latest/scalability_and_performance/recommended-performance-scale-practices/recommended-control-plane-practices.html["Raccomandazioni e limitazioni per il ridimensionamento del cluster OpenShift"] .
+Red Hat ha documentato link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/scalability_and_performance/recommended-performance-and-scalability-practices-2["Raccomandazioni e limitazioni per il ridimensionamento del cluster OpenShift"].
 
-Inoltre, hanno anche documentatolink:https://access.redhat.com/articles/6994974]["Guida all'ottimizzazione della virtualizzazione OpenShift"] Elink:https://access.redhat.com/articles/6571671["Limiti supportati per OpenShift Virtualization 4.x"] .
+Inoltre, hanno anche documentato link:https://access.redhat.com/articles/6994974["Guida all'ottimizzazione della virtualizzazione OpenShift"] e link:https://access.redhat.com/articles/6571671["Limiti supportati per OpenShift Virtualization 4.x"].
 
 
 NOTE: Per accedere ai contenuti sopra indicati è necessario un abbonamento Red Hat attivo.
@@ -185,7 +185,7 @@ La guida all'ottimizzazione contiene informazioni su molti parametri di ottimizz
 
 * Parametri di ottimizzazione per creare più VM contemporaneamente o in grandi batch
 * Migrazione live delle VM
-* link:https://docs.openshift.com/container-platform/latest/virt/vm_networking/virt-dedicated-network-live-migration.html["Configurazione di una rete dedicata per la migrazione in tempo reale"]
+* link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/virtualization/live-migration#virt-configuring-secondary-network-vm-live-migration_virt-configuring-cross-cluster-live-migration-network["Configurazione di una rete dedicata per la migrazione in tempo reale"]
 * Personalizzazione di un modello di VM includendo un tipo di carico di lavoro
 
 

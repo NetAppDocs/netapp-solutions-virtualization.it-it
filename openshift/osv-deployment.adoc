@@ -38,9 +38,9 @@ Per i prerequisiti Trident sopra indicati, vederelink:osv-trident-install.html["
 * Una postazione di lavoro di amministrazione con gli strumenti tridentctl e oc installati e aggiunti a $PATH
 
 
-Poiché la OpenShift Virtualization è gestita da un operatore installato sul cluster OpenShift, impone un overhead aggiuntivo su memoria, CPU e storage, che devi considerare quando pianifichi i requisiti hardware del cluster. Consulta la documentazione link:https://docs.openshift.com/container-platform/4.7/virt/install/preparing-cluster-for-virt.html#virt-cluster-resource-requirements_preparing-cluster-for-virt["Qui"] per maggiori dettagli.
+Poiché la OpenShift Virtualization è gestita da un operatore installato sul cluster OpenShift, impone un overhead aggiuntivo su memoria, CPU e storage, che devi considerare quando pianifichi i requisiti hardware del cluster. Consulta la documentazione link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/virtualization/installing["Qui"] per maggiori dettagli.
 
-Facoltativamente, puoi anche specificare un sottoinsieme dei nodi del cluster OpenShift per ospitare gli operatori, i controller e le VM di OpenShift Virtualization configurando le regole di posizionamento dei nodi. Per configurare le regole di posizionamento dei nodi per OpenShift Virtualization, segui la documentazione link:https://docs.openshift.com/container-platform/4.7/virt/install/virt-specifying-nodes-for-virtualization-components.html["Qui"].
+Facoltativamente, puoi anche specificare un sottoinsieme dei nodi del cluster OpenShift per ospitare gli operatori, i controller e le VM di OpenShift Virtualization configurando le regole di posizionamento dei nodi. Per configurare le regole di posizionamento dei nodi per OpenShift Virtualization, segui la documentazione link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/virtualization/installing["Qui"].
 
 Per lo storage che supporta OpenShift Virtualization, NetApp consiglia di avere una StorageClass dedicata che richiede storage da un particolare backend Trident , che a sua volta è supportato da una SVM dedicata.  In questo modo si mantiene un livello di multi-tenancy per quanto riguarda i dati forniti per i carichi di lavoro basati su VM sul cluster OpenShift.
 
