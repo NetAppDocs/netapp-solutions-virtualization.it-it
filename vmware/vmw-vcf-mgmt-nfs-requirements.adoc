@@ -2,18 +2,18 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-mgmt-nfs-requirements.html 
 keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, array, ontap tools, otv, sddc, sddc manager, ontap tools, ontap tools 10 
-summary: Esaminare i requisiti per la conversione di un cluster vSphere 8 con datastore NFS NetApp ONTAP in un dominio di gestione VMware Cloud Foundation. 
+summary: Esamina i requisiti per la convergenza di un cluster vSphere con datastore NFS NetApp ONTAP a un dominio di gestione VMware Cloud Foundation. 
 ---
-= Requisiti di distribuzione per la conversione delle istanze del server vCenter in domini di gestione VCF utilizzando datastore NFS
+= Requisiti di implementazione per la convergenza dell'istanza server vCenter al dominio di gestione VCF utilizzando i datastore NFS
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/
 
 
 [role="lead"]
-Esaminare i requisiti per la conversione di un cluster vSphere 8 con datastore NFS NetApp ONTAP in un dominio di gestione VMware Cloud Foundation.
+Esamina i requisiti per la convergenza di un cluster vSphere con datastore NFS NetApp ONTAP a un dominio di gestione VMware Cloud Foundation.
 
-Il processo di conversione richiede un sistema di archiviazione AFF o ASA , SVM e LIF per il traffico FC, zonizzazione NFS sugli switch, un cluster vSphere con host ESXi e vCenter e segmenti di rete dedicati per vMotion.
+Il processo di convergenza richiede un sistema storage AFF o AFX, SVM e LIF per il traffico NFS, VLAN NFS sugli switch, un vSphere cluster con host vSphere e vCenter, e un segmento di rete dedicato per vMotion.
 
 
 
@@ -22,11 +22,11 @@ Il processo di conversione richiede un sistema di archiviazione AFF o ASA , SVM 
 
 Assicurarsi che i seguenti componenti e configurazioni siano presenti.
 
-* Sistema di archiviazione NetApp AFF con una macchina virtuale di archiviazione (SVM) configurata per consentire il traffico NFS.
+* NetApp AFF o AFX sistema storage con una macchina virtuale di storage (SVM) configurata per consentire il traffico NFS.
 * Interfaccia logica (LIF) creata sulla rete IP per trasportare il traffico NFS e associata all'SVM.
-* Un cluster vSphere con 4 host ESXi e un'appliance vCenter collocata nel cluster.
+* Un vSphere cluster con almeno 2 x vSphere host e una vCenter appliance collocata nello stesso cluster.
 * Gruppo di porte distribuito configurato per il traffico di archiviazione vMotion e NFS sulle VLAN o sui segmenti di rete stabiliti a tale scopo.
-* Software per la conversione VCF. Per il software richiesto, vai a https://support.broadcom.com/["Portale di supporto Broadcom"] .
+* Strumento di installazione VCF per la convergenza del vCenter al dominio di gestione VCF.
 * Prerequisiti per gli strumenti ONTAP .
 +
 Per informazioni complete sui prerequisiti per gli strumenti ONTAP , fare riferimento a https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/prerequisites.html#system-requirements["Prerequisiti per gli ONTAP tools for VMware vSphere"] .
@@ -41,9 +41,9 @@ Gli ONTAP tools for VMware vSphere possono essere installati in configurazioni H
 [[additional-resources]]
 == Risorse aggiuntive
 
-* Per l'archiviazione supportata e altre considerazioni per la conversione o l'importazione di vSphere in VCF 5.2, fare riferimento a https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2/map-for-administering-vcf-5-2/importing-existing-vsphere-environments-admin/considerations-before-converting-or-importing-existing-vsphere-environments-into-vcf-admin.html["Considerazioni prima di convertire o importare ambienti vSphere esistenti in VMware Cloud Foundation"] .
+* Per informazioni sullo storage supportato e altre considerazioni relative alla convergenza vSphere a VCF, fai riferimento a  https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/converging-your-existing-vsphere-infrastructure-to-a-vcf-or-vvf-platform-/supported-and-not-supported-configurations.html["Configurazioni supportate e non supportate per la convergenza a VCF"].
 * Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"] .
-* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2.html["Documentazione di VMware Cloud Foundation 5.2"] .
+* Per informazioni sulla configurazione di VCF, consulta la link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1.html["Documentazione VMware Cloud Foundation 9.1"].
 
 
 

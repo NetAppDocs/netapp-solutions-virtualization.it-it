@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vcf-mgmt-vmfs.html 
+keywords: netapp, vmware, cloud, foundation, vcf, asa, aff, all-flash, fc, array, ontap tools, otv, sddc, sddc manager, ontap tools, ontap tools 10 
+summary: Convergi un cluster vSphere esistente con datastore VMFS NetApp ONTAP supportati in un dominio di gestione VMware Cloud Foundation. Rivedi i requisiti di configurazione, distribuisci gli ONTAP tools e fornisci i datastore VMFS, e usa il VCF Installer Tool per convalidare e convergere il cluster. 
+---
+= Flusso di lavoro di deployment per la convergenza di istanze server vCenter al dominio di gestione VCF con datastore VMFS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Convergi un cluster vSphere esistente con datastore NetApp ONTAP VMFS in un dominio di gestione VMware Cloud Foundation. Rivedrai i requisiti di configurazione, distribuirai gli ONTAP tools e fornirai i datastore VMFS, e userai lo strumento VCF Installer per convalidare e usare i componenti esistenti, distribuire i nuovi componenti necessari e configurare la piattaforma.
+
+Questo flusso di lavoro viene utilizzato anche per sfruttare qualsiasi datastore VMFS supportato da utilizzare come storage primario per il dominio di gestione VCF.
+
+Per una panoramica del processo di conversione, consulta la documentazione VMware: https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/converging-your-existing-vsphere-infrastructure-to-a-vcf-or-vvf-platform-.html["Conversione dell'infrastruttura virtuale esistente in un VCF"].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Uno"]link:vmw-vcf-mgmt-vmfs-requirements.html["Rivedere i requisiti di configurazione"]
+[role="quick-margin-para"]
+Esamina i requisiti principali per la convergenza delle istanze server vCenter ai domini di gestione VCF utilizzando i datastore VMFS.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Due"]link:vmw-vcf-mgmt-vmfs-deploy.html["Distribuisci ONTAP tools e crea un datastore VMFS supportato"]
+[role="quick-margin-para"]
+Distribuisci ONTAP tools for VMware vSphere e crea un datastore VMFS supportato.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Tre"]link:vmw-vcf-mgmt-vmfs-converge.html["Convergi il cluster vSphere nel dominio di gestione VCF"]
+[role="quick-margin-para"]
+Utilizza lo strumento di installazione VCF per convalidare, riutilizzare i componenti esistenti e distribuire quelli nuovi che costituiscono il dominio di gestione VCF.
+
+
+
+[[reference-video]]
+== Video di riferimento:
+
+.iSCSI Multipath con AFF e ASA r2
+video::62c2a66c-1a07-4284-bc7b-b4ac00e9aeea[panopto,width=360]
+.Datastore supplementare con NVMe/TCP
+video::f85530ec-ff24-4c7d-abb4-b49b0176402c[panopto,width=360]
+.Datastore supplementare con NVMe/FC
+video::b2b16a35-05cd-49c9-a91a-b4ac0127813d[panopto,width=360]
+.Datastore supplementare con FC
+video::96311abf-aa45-4ce9-984b-b4b001005bab[panopto,width=360]

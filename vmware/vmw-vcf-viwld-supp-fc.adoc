@@ -4,7 +4,7 @@ permalink: vmware/vmw-vcf-viwld-supp-fc.html
 keywords: netapp, vmware, cloud, foundation, vcf, asa, all-flash, array, ontap tools, otv, sddc, fc 
 summary:  
 ---
-= Aggiungere un datastore VMFS basato su FC come storage supplementare ai domini di carico di lavoro VI
+= Aggiungi un datastore VMFS basato su FC come storage supplementare ai workload domain
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary:
 
 
 [role="lead"]
-In questo caso d'uso descriviamo la procedura per configurare un datastore VMFS utilizzando Fibre Channel (FC) come storage supplementare per un dominio di carico di lavoro VMware Cloud Foundation (VCF) Virtual Infrastructure (VI).  Questa procedura riassume la distribuzione di ONTAP Tools per VMware vSphere, la registrazione del server vCenter del carico di lavoro VI, la definizione del backend di storage e il provisioning del datastore FC.
+In questo caso d'uso, descriviamo la procedura per configurare un datastore VMFS utilizzando Fiber Channel (FC) come storage supplementare per un workload domain VMware Cloud Foundation (VCF). Questa procedura riassume il deployment di ONTAP tools for VMware vSphere, la registrazione del server vCenter di workload, la definizione del backend di storage e il provisioning del datastore FC.
 
 .Prima di iniziare
 Assicurarsi che i seguenti componenti e configurazioni siano presenti.
@@ -33,9 +33,9 @@ Assicurarsi che i seguenti componenti e configurazioni siano presenti.
 
 ====
 .Passi
-. Registrare il carico di lavoro VI vCenter seguendo le istruzioni nella documentazione degli ONTAP tools for VMware vSphere :link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-vcenter.html["Registra il carico di lavoro VI vCenter"] .
+. Registra il dominio del carico di lavoro vCenter seguendo le istruzioni nella documentazione di ONTAP tools for VMware vSphere: link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-vcenter.html["Registra il carico di lavoro vCenter"].
 +
-La registrazione del carico di lavoro VI vCenter abilita il plugin vCenter.
+Registrare il server vCenter del dominio del carico di lavoro abilita il plugin vCenter.
 
 . Aggiungere un backend di storage utilizzando l'interfaccia client vSphere seguendo le istruzioni nella documentazione degli ONTAP tools for VMware vSphere :link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["Definisci il backend di archiviazione utilizzando l'interfaccia client vSphere"] .
 +
@@ -46,11 +46,18 @@ L'aggiunta di un backend di archiviazione consente di integrare un cluster ONTAP
 
 
 
+[[reference-video]]
+== Video di riferimento
+
+.Datastore supplementare con FC
+video::96311abf-aa45-4ce9-984b-b4b001005bab[panopto,width=360]
+
+
 [[additional-information]]
 == Informazioni aggiuntive
 
 * Per informazioni sulla configurazione dei sistemi di archiviazione ONTAP , fare riferimento alink:https://docs.netapp.com/us-en/ontap["Documentazione ONTAP 9"^] .
-* Per informazioni sulla configurazione di VCF, fare riferimento alink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-5-2-and-earlier/5-2.html["Documentazione di VMware Cloud Foundation"^] .
+* Per informazioni sulla configurazione di VCF, consulta la link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1.html["Documentazione di VMware Cloud Foundation"^].
 * Per informazioni sulla configurazione di Fibre Channel sui sistemi di archiviazione ONTAP , fare riferimento a https://docs.netapp.com/us-en/ontap/san-management/index.html["Gestione dello storage SAN"^] nella documentazione ONTAP 9.
 * Per informazioni sull'utilizzo di VMFS con sistemi di archiviazione ONTAP , fare riferimento alink:vmw-vmfs-deploy.html["Guida alla distribuzione per VMFS"] .
 * Per demo video di questa soluzione, fare riferimento alink:../videos/vmware-videos.html#vmware-datastore-provisioning-with-ontap["Provisioning del datastore VMware"] .

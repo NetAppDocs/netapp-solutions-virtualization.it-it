@@ -2,14 +2,14 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-viwld-supp-nfs-vvols-requirements.html 
 keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc 
-summary: 'Per distribuire NFS vVols in un dominio di carico di lavoro VMware Cloud Foundation VI, è necessario un sistema di archiviazione ONTAP AFF o ASA completamente configurato, un dominio di gestione VCF completato e un dominio di carico di lavoro VI esistente.  Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per garantire un"integrazione di storage affidabile e ad alte prestazioni.' 
+summary: 'Per implementare NFS vVols in un dominio di workload VMware Cloud Foundation, ti serve un sistema storage ONTAP AFF o ASA completamente configurato, un dominio di gestione VCF completato e un dominio di workload VI esistente. Rivedi la progettazione di rete consigliata e i requisiti infrastrutturali per garantire un"integrazione dello storage affidabile e dalle performance elevate.' 
 ---
-= Requisiti di distribuzione per l'aggiunta vVols NFS in un dominio di carico di lavoro VI
+= Requisiti di implementazione per l'aggiunta di NFS vVols in un workload domain
 :allow-uri-read: 
 
 
 [role="lead"]
-Esaminare i requisiti di progettazione e infrastruttura di rete consigliati per distribuire NFS vVols in un dominio di carico di lavoro VMware Cloud Foundation VI.  È necessario un sistema di archiviazione ONTAP AFF o ASA completamente configurato, un dominio di gestione VCF completato e un dominio di carico di lavoro VI esistente.
+Esamina la progettazione di rete e i requisiti di infrastruttura consigliati per implementare NFS vVols in un dominio di workload VMware Cloud Foundation. Ti serve un sistema storage ONTAP AFF o ASA completamente configurato, un dominio di gestione VCF completato e un dominio di workload esistente.
 
 
 
@@ -20,7 +20,7 @@ Assicurarsi che i seguenti componenti e configurazioni siano presenti.
 
 * Un sistema di archiviazione ONTAP AFF o FAS con porte dati fisiche su switch Ethernet dedicate al traffico di archiviazione.
 * La distribuzione del dominio di gestione VCF è completa e il client vSphere è accessibile.
-* In precedenza è stato distribuito un dominio di carico di lavoro VI.
+* Un workload domain è già stato distribuito.
 
 
 

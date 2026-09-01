@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-viwld-supp-nfs-vvols-storage.html 
 keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc 
-summary: 'Configurare l"archiviazione NFS vVols in un dominio di carico di lavoro VI.  Dopo aver distribuito gli ONTAP tools for VMware vSphere, utilizzerai l"interfaccia client vSphere per aggiungere il sistema di storage, creare un profilo di capacità di storage e predisporre un datastore vVols .' 
+summary: 'Configura lo storage NFS vVols in un dominio di carico di lavoro. Dopo aver distribuito ONTAP tools for VMware vSphere, userai l"interfaccia client vSphere per aggiungere il sistema storage, creare un profilo di funzionalità di storage e predisporre un datastore vVols.' 
 ---
-= Configurare l'archiviazione NFS vVols in un dominio di carico di lavoro VCF VI utilizzando gli strumenti ONTAP
+= Configura lo storage NFS vVols in un dominio workload VCF usando ONTAP tools
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,14 +14,14 @@ summary: 'Configurare l"archiviazione NFS vVols in un dominio di carico di lavor
 
 
 [role="lead"]
-Configurare l'archiviazione NFS vVols in un dominio di carico di lavoro VI.  Dopo aver distribuito gli ONTAP tools for VMware vSphere, utilizzerai l'interfaccia client vSphere per aggiungere il sistema di storage, creare un profilo di capacità di storage e predisporre un datastore vVols .
+Configura lo storage NFS vVols in un dominio di carico di lavoro. Dopo aver distribuito ONTAP tools for VMware vSphere, userai l'interfaccia client vSphere per aggiungere il sistema storage, creare un profilo di funzionalità di storage e predisporre un datastore vVols.
 
 
 
 [[step-1-deploy-ontap-tools-for-vmware-vsphere]]
 == Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
 
-Per i domini del carico di lavoro VI, gli strumenti ONTAP vengono installati nel cluster di gestione VCF ma registrati con il vCenter associato al dominio del carico di lavoro VI.
+Per i workload domain, ONTAP tools viene installato nel cluster di gestione VCF ma registrato con il vCenter associato al workload domain.
 
 Gli ONTAP tools for VMware vSphere vengono distribuiti come appliance VM e forniscono un'interfaccia utente vCenter integrata per la gestione dello storage ONTAP .
 

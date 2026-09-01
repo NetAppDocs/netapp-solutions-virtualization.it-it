@@ -2,16 +2,16 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-mgmt-nfs-deploy.html 
 keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, array, ontap tools, otv, sddc, sddc manager, ontap tools, ontap tools 10 
-summary: 'Distribuisci gli ONTAP tools for VMware vSphere 10 e predisponi un datastore NFS per consentire un"integrazione fluida con VMware Cloud Foundation.  Distribuirai gli strumenti ONTAP , configurerai i backend di archiviazione e creerai un datastore NFS per supportare la conversione di un cluster vSphere 8 in un dominio di gestione VCF.' 
+summary: Distribuisci ONTAP tools for VMware vSphere 10 e crea un NFS datastore per consentire una perfetta integrazione con VMware Cloud Foundation. Distribuirai ONTAP tools, configurerai i backend di storage e creerai un NFS datastore per supportare la convergenza di un vCenter a un dominio di gestione VCF. 
 ---
-= Distribuisci gli strumenti ONTAP e fornisci l'archivio dati NFS per la conversione del dominio di gestione VCF
+= Distribuisci ONTAP tools e crea un datastore NFS per il dominio di gestione VCF
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/
 
 
 [role="lead"]
-Distribuisci gli ONTAP tools for VMware vSphere 10 e predisponi un datastore NFS per consentire un'integrazione fluida con VMware Cloud Foundation.  Distribuirai gli strumenti ONTAP , configurerai i backend di archiviazione e creerai un datastore NFS per supportare la conversione di un cluster vSphere 8 in un dominio di gestione VCF.
+Distribuisci ONTAP tools for VMware vSphere 10 e crea un NFS datastore per consentire una perfetta integrazione con VMware Cloud Foundation. Distribuirai ONTAP tools, configurerai i backend di storage e creerai un NFS datastore per supportare la convergenza di un vCenter a un dominio di gestione VCF.
 
 
 
@@ -27,7 +27,7 @@ In questa fase, gli strumenti ONTAP vengono distribuiti in una configurazione no
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-001.png[Distribuisci il modello OVF]
+image::vmw-vcf-mgmt-nfs-deploy-001.png[Distribuisci il modello OVF]
 
 ====
 . Nel *Modello di distribuzione OVF* completare i passaggi per:
@@ -44,7 +44,7 @@ image::vmware-vcf-import-nfs-001.png[Distribuisci il modello OVF]
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-002.png[configurazione - tipo di distribuzione]
+image::vmw-vcf-mgmt-nfs-deploy-002.png[configurazione - tipo di distribuzione]
 
 ====
 . Nella pagina *Seleziona storage*, seleziona il datastore su cui installare la VM e fai clic su *Avanti*.
@@ -62,7 +62,7 @@ image::vmware-vcf-import-nfs-002.png[configurazione - tipo di distribuzione]
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-003.png[Personalizza il modello]
+image::vmw-vcf-mgmt-nfs-deploy-003.png[Personalizza il modello]
 
 ====
 
@@ -84,7 +84,7 @@ Dopo aver installato e acceso la VM degli strumenti ONTAP , aggiungere i server 
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-004.png[strumenti ONTAP aperti]
+image::vmw-vcf-mgmt-nfs-deploy-004.png[strumenti ONTAP aperti]
 
 ====
 . Vai su *Backend di archiviazione* nel menu a sinistra e clicca su *Aggiungi* per accedere alla finestra *Aggiungi backend di archiviazione*.
@@ -93,7 +93,7 @@ image::vmware-vcf-import-nfs-004.png[strumenti ONTAP aperti]
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-005.png[Aggiungi backend di archiviazione]
+image::vmw-vcf-mgmt-nfs-deploy-005.png[Aggiungi backend di archiviazione]
 
 ====
 +
@@ -116,7 +116,7 @@ Gli strumenti ONTAP integrano le funzionalità nell'intera interfaccia utente de
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-006.png[Crea archivio dati]
+image::vmw-vcf-mgmt-nfs-deploy-006.png[Crea archivio dati]
 
 ====
 . Nella procedura guidata *Crea datastore*, seleziona il tipo di datastore da creare.  Le opzioni sono NFS o VMFS.
@@ -125,7 +125,7 @@ image::vmware-vcf-import-nfs-006.png[Crea archivio dati]
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-007.png[Nome e protocollo]
+image::vmw-vcf-mgmt-nfs-deploy-007.png[Nome e protocollo]
 
 ====
 . Nella pagina *Archiviazione*, selezionare la piattaforma di archiviazione ONTAP e la macchina virtuale di archiviazione (SVM). Qui puoi anche selezionare qualsiasi criterio di esportazione personalizzato disponibile. Fare clic su *Avanti* per continuare.
@@ -133,19 +133,19 @@ image::vmware-vcf-import-nfs-007.png[Nome e protocollo]
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-008.png[Pagina di archiviazione]
+image::vmw-vcf-mgmt-nfs-deploy-008.png[Pagina di archiviazione]
 
 ====
 . Nella pagina *Attributi di archiviazione*, selezionare l'aggregato di archiviazione da utilizzare. Fare clic su *Avanti* per continuare.
 . Nella pagina *Riepilogo*, rivedere le informazioni e fare clic su *Fine* per avviare il processo di provisioning.
 +
-Gli strumenti ONTAP creano un volume sul sistema di archiviazione ONTAP e lo montano come datastore NFS su tutti gli host ESXi nel cluster.
+ONTAP tools crea un volume sul sistema storage ONTAP e lo monta come datastore NFS su tutti gli host vSphere nel cluster.
 
 +
 .Mostra esempio
 [%collapsible]
 ====
-image::vmware-vcf-import-nfs-009.png[Pagina di riepilogo]
+image::vmw-vcf-mgmt-nfs-deploy-009.png[Pagina di riepilogo]
 
 ====
 
@@ -155,4 +155,4 @@ image::vmware-vcf-import-nfs-009.png[Pagina di riepilogo]
 [[whats-next]]
 == Cosa succederà ora?
 
-Dopo aver distribuito gli strumenti ONTAP e aver effettuato il provisioning del datastore NFS,link:vmw-vcf-mgmt-nfs-conversion.html["convertire il cluster vSphere nel dominio di gestione VCF"] .
+Dopo che hai distribuito ONTAP tools e hai predisposto il datastore NFS, link:vmw-vcf-mgmt-nfs-converge.html["convergi il vSphere cluster al dominio di gestione VCF"].

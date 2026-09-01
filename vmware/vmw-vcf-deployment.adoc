@@ -14,19 +14,19 @@ summary: Distribuisci, integra o aggiorna gli ambienti VMware Cloud Foundation 9
 
 
 [role="lead"]
-Distribuisci, fai convergere o aggiorna gli ambienti VMware Cloud Foundation 9 con ONTAP.  Scopri come configurare nuovi ambienti VCF 9.0, far convergere istanze vCenter e datastore ONTAP esistenti e aggiornare le precedenti distribuzioni VCF.
+Distribuisci, unifica o importa e aggiorna gli ambienti VMware Cloud Foundation 9 con ONTAP. Scopri come configurare nuovi ambienti VCF 9.1, unificare istanze vCenter esistenti come Management Domain o importare istanze vCenter esistenti come Workload Domain e aggiornare le precedenti distribuzioni VCF.
+
+Per maggiori dettagli, consulta il link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/overview-of-deploy--converge--and-upgrade.html["Link Broadcom per i percorsi di deployment di VCF 9.1"].
 
 
 
 [[deploy-a-new-vcf-9-instance]]
 == Distribuisci una nuova istanza VCF 9
 
-Utilizzare questo flusso di lavoro per distribuire un ambiente VMware Cloud Foundation (VCF) 9.0 pulito.  Dopo la distribuzione, è possibile migrare i carichi di lavoro o iniziare a fornire applicazioni e servizi infrastrutturali.
-
-Per i passaggi di alto livello, vederelink:https://techdocs.broadcom.com/content/dam/broadcom/techdocs/us/en/assets/vmware-cis/vcf/vcf-9.0-vcf-deploy-journey.pdf["Build Journey: installa una nuova distribuzione VMware Cloud Foundation"] .
+Utilizza questo flusso di lavoro per implementare un ambiente VMware Cloud Foundation (VCF) 9.1 pulito. Dopo l'implementazione, puoi migrare i carichi di lavoro o iniziare a eseguire il provisioning delle applicazioni e fornire servizi infrastrutturali.
 
 .Passi
-. Segui illink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-0/deployment/deploying-a-new-vmware-cloud-foundation-or-vmware-vsphere-foundation-private-cloud-/preparing-your-environment.html["Passaggi di distribuzione di Broadcom VCF 9"] .
+. Segui il link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/deploying-a-new-vmware-cloud-foundation-or-vmware-vsphere-foundation-private-cloud-/preparing-your-environment.html["Passaggi di distribuzione di Broadcom VCF 9"].
 . Nella fase di preparazione della distribuzione, completa le attività per l'opzione di archiviazione principale.
 
 
@@ -51,7 +51,7 @@ NOTE: Utilizzare i WWPN delle interfacce logiche SVM (LIF), non i WWPN dell'adat
 . Assicurare illink:https://docs.netapp.com/us-en/ontap/task_nas_enable_linux_nfs.html["SVM ha NFS abilitato"] Elink:https://docs.netapp.com/us-en/ontap/nfs-admin/enable-disable-vmware-vstorage-over-nfs-task.html["vStorage su NFS è abilitato"] .
 . Creare un volume ed esportarlo con una policy che consenta gli host ESXi.
 . Regolare le autorizzazioni secondo necessità.
-. Distribuire l' ONTAP NFS VAAI VIB e includerlo nell'immagine vLCM.  Per esempio: `esxcli software vib install -d /NetAppNasPlugin2.0.1.zip` .  (Scaricare il file ZIP dal sito di supporto NetApp .)
+. Distribuisci il VAAI VIB NFS ONTAP e utilizza quel server per l'immagine del cluster. Ad esempio:  `esxcli software vib install -d /NetAppNasPlugin2.0.1.zip`. (Scarica il file ZIP dal sito di supporto NetApp.)
 . Montare il volume NFS sull'host in cui è stata creata l'interfaccia VMkernel.  Per esempio: `esxcli storage nfs add -c 4 -H 192.168.122.210 -s /use1_m01_nfs01 -v use1-m01-cl01-nfs01` .
 +
 
@@ -61,7 +61,7 @@ NOTE: IL `nConnect` il conteggio delle sessioni è per host.  Aggiornare gli alt
 
 --
 ====
-. Al termine della fase *Verifica riepilogo distribuzione e revisione passaggi successivi* nella fase *Distribuzione flotta VCF*, completare quanto segue:
+. Dopo la corretta implementazione della fase link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/deploying-a-new-vmware-cloud-foundation-or-vmware-vsphere-foundation-private-cloud-/deploy-a-new-vcf-fleet-or-a-new-vcf-instance.html["VCF Fleet"], completa quanto segue:
 +
 .. Distribuisci gli strumenti ONTAP
 +
@@ -91,13 +91,13 @@ NOTE: IL `nConnect` il conteggio delle sessioni è per host.  Aggiornare gli alt
 
 .. Utilizzare NetApp Backup and Recovery
 +
-*** link:https://docs.netapp.com/us-en/data-services-backup-recovery/prev-vmware-protect-overview.html["Proteggere i carichi di lavoro VM"].
+*** link:https://docs.netapp.com/us-en/data-services-backup-recovery/br-use-vmware-protect-overview.html["Proteggere i carichi di lavoro VM"].
 *** link:https://docs.netapp.com/us-en/data-services-backup-recovery/br-use-kubernetes-protect-overview.html["Proteggere i carichi di lavoro VKS"].
 
 
 
 
-. Dopo aver importato vCenter come dominio del carico di lavoro nell'istanza VCF, completare le seguenti operazioni:
+. Dopo che ti sei link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/building-your-private-cloud-infrastructure/working-with-workload-domains/import-an-existing-vcenter-to-create-a-workload-domain.html["importa vCenter come workload domain"]connesso all'istanza VCF, completa quanto segue:
 +
 .. Registra gli strumenti ONTAP
 +
@@ -116,7 +116,7 @@ NOTE: IL `nConnect` il conteggio delle sessioni è per host.  Aggiornare gli alt
 
 .. Utilizzare NetApp Backup and Recovery
 +
-*** link:https://docs.netapp.com/us-en/data-services-backup-recovery/prev-vmware-protect-overview.html["Proteggere i carichi di lavoro VM"].
+*** link:https://docs.netapp.com/us-en/data-services-backup-recovery/br-use-vmware-protect-overview.html["Proteggere i carichi di lavoro VM"].
 *** link:https://docs.netapp.com/us-en/data-services-backup-recovery/br-use-kubernetes-protect-overview.html["Proteggere i carichi di lavoro VKS"].
 
 
@@ -140,7 +140,7 @@ Potresti già disporre di alcuni componenti della flotta VCF e preferire riutili
 
 
 .Passi
-. Rivedere illink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-0/deployment/converging-your-existing-vsphere-infrastructure-to-a-vcf-or-vvf-platform-/supported-scenarios-to-converge-to-vcf.html["scenari supportati per convergere verso VCF"] .
+. Esaminare la link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/converging-your-existing-vsphere-infrastructure-to-a-vcf-or-vvf-platform-/supported-scenarios-to-converge-to-vcf.html["scenari supportati per convergere verso VCF"].
 . Convergere un'istanza vCenter con datastore forniti da ONTAP come storage principale.
 . Verificare le versioni supportate utilizzandolink:https://imt.netapp.com/imt/#welcome["Matrice di interoperabilità"] .
 . Aggiornamentolink:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/upgrade/upgrade-ontap-tools.html["Strumenti ONTAP"] se necessario.
@@ -152,14 +152,14 @@ Potresti già disporre di alcuni componenti della flotta VCF e preferire riutili
 [[upgrade-an-existing-vcf-environment-to-vcf-9]]
 == Aggiorna un ambiente VCF esistente a VCF 9
 
-Aggiornare una precedente distribuzione VCF alla versione 9.0 utilizzando la procedura di aggiornamento standard.  Il risultato è un ambiente VCF che esegue la versione 9.0 con domini di gestione e di carico di lavoro aggiornati.
+Aggiorna una precedente implementazione VCF alla versione 9.1 utilizzando la procedura di upgrade standard. Il risultato è un ambiente VCF che esegue la versione 9.1 con domini di gestione e workload aggiornati.
 
 .Prerequisiti
 * Eseguire il backup del dominio di gestione e dei domini del carico di lavoro.
-* Verificare la compatibilità degli strumenti ONTAP e del plug-in SnapCenter con VCF 9.0.  Segui illink:https://imt.netapp.com/imt/#welcome["Matrice di interoperabilità"] Alink:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/upgrade/upgrade-ontap-tools.html["aggiornare gli strumenti ONTAP"] Elink:https://docs.netapp.com/us-en/sc-plugin-vmware-vsphere/scpivs44_upgrade.html["Plugin SnapCenter per VMware vSphere"] supportati per VCF 9.
+* Verifica la compatibilità di ONTAP tools e del SnapCenter Plug-in con VCF 9.1. Segui le link:https://imt.netapp.com/imt/#welcome["Matrice di interoperabilità"] per link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/upgrade/upgrade-ontap-tools.html["aggiornare gli strumenti ONTAP"] e link:https://docs.netapp.com/us-en/sc-plugin-vmware-vsphere/scpivs44_upgrade.html["Plugin SnapCenter per VMware vSphere"] supportate per VCF 9.1.
 
 
 .Passi
-. Aggiornare il dominio di gestione VCF.  Vederelink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-0/deployment/upgrading-cloud-foundation.html["Aggiornare il dominio di gestione VCF a VCF 9"] per istruzioni.
-. Aggiornare tutti i domini di carico di lavoro VCF 5.x.  Vederelink:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-0/lifecycle-management/lifecycle-management-of-vcf-core-components/upgrade-workload-domains-to-vcf-5-2.html["Aggiorna il dominio del carico di lavoro VCF 5.x a VCF 9"] per istruzioni.
+. Aggiorna il dominio di gestione VCF. Vedi link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/upgrading-cloud-foundation.html["Aggiorna il dominio di gestione VCF a VCF 9.1"] per le istruzioni.
+. Aggiorna qualsiasi dominio di carico di lavoro VCF 5.x. Vedi link:https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/lifecycle-management/upgrade-workload-domains-to-vcf-5-2.html["Aggiorna il workload domain VCF 5.x a VCF 9.1"] per le istruzioni.
 

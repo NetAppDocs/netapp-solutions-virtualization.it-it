@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-viwld-supp-nvme-network.html 
 keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc, iscsi 
-summary: 'Configurare la rete per l"archiviazione NVMe su TCP (NVMe/TCP) sugli host ESXi in un dominio di carico di lavoro VI.  Creerai gruppi di porte distribuiti per il traffico NVMe, configurerai adattatori VMkernel su ciascun host ESXi e aggiungerai un adattatore NVMe/TCP per abilitare connettività affidabile e multipathing.' 
+summary: 'Configura il networking per lo storage NVMe over TCP (NVMe/TCP) sugli host vSphere in un dominio di carico di lavoro. Creerai gruppi di porte distribuiti per il traffico NVMe, configurerai gli adattatori VMkernel su ciascun host vSphere e aggiungerai un adattatore NVMe/TCP per abilitare una connettività affidabile e il multipathing.' 
 ---
-= Configurare la rete per NVMe/TCP su host ESXi in un dominio di carico di lavoro VCF VI
+= Configura il networking per NVMe/TCP sugli host vSphere in un dominio workload VCF
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,14 +14,14 @@ summary: 'Configurare la rete per l"archiviazione NVMe su TCP (NVMe/TCP) sugli h
 
 
 [role="lead"]
-Configurare la rete per l'archiviazione NVMe su TCP (NVMe/TCP) sugli host ESXi in un dominio di carico di lavoro VI.  Creerai gruppi di porte distribuiti per il traffico NVMe, configurerai adattatori VMkernel su ciascun host ESXi e aggiungerai un adattatore NVMe/TCP per abilitare connettività affidabile e multipathing.
+Configura il networking per lo storage NVMe over TCP (NVMe/TCP) sugli host vSphere in un dominio di carico di lavoro. Creerai gruppi di porte distribuiti per il traffico NVMe, configurerai gli adattatori VMkernel su ciascun host vSphere e aggiungerai un adattatore NVMe/TCP per abilitare una connettività affidabile e il multipathing.
 
-Eseguire i seguenti passaggi sul cluster del dominio del carico di lavoro VI utilizzando il client vSphere. In questo caso viene utilizzato vCenter Single Sign-On, quindi il client vSphere è comune sia al dominio di gestione che a quello del carico di lavoro.
+Esegui i seguenti passaggi sul cluster del dominio di carico di lavoro utilizzando il client vSphere. In questo caso viene utilizzato vCenter Single Sign-On, quindi il client vSphere è comune sia al dominio di gestione che a quello di carico di lavoro.
 
 
 
 [[step-1-create-distributed-port-groups-for-nvmetcp-traffic]]
-== Passaggio 1: creare gruppi di porte distribuiti per il traffico NVME/TCP
+== Passaggio 1: Crea gruppi di porte distribuiti per il traffico NVMe/TCP
 
 Completare i seguenti passaggi per creare un nuovo gruppo di porte distribuito per ciascuna rete NVMe/TCP.
 
@@ -82,13 +82,13 @@ image:vmware-vcf-asa-079.png["sposta l'uplink 1 in non utilizzato"]
 
 
 
-[[step-2-create-the-vmkernel-adapters-on-each-esxi-host]]
-== Passaggio 2: creare gli adattatori VMkernel su ciascun host ESXi
+[[step-2-create-the-vmkernel-adapters-on-each-vsphere-host]]
+== Passaggio 2: Crea gli adattatori VMkernel su ciascun host vSphere
 
-Creare gli adattatori VMkernel su ciascun host ESXi nel dominio del carico di lavoro.
+Crea gli adattatori VMkernel su ciascun host vSphere nel dominio del carico di lavoro.
 
 .Passi
-. Dal client vSphere, passare a uno degli host ESXi nell'inventario del dominio del carico di lavoro.  Dalla scheda *Configura* seleziona *Schede VMkernel* e fai clic su *Aggiungi rete...* per iniziare.
+. Dal client vSphere, vai su uno degli host vSphere nell'inventario del dominio di carico di lavoro. Dalla scheda *Configura* seleziona *Adattatori VMkernel* e clicca su *Aggiungi rete...* per iniziare.
 +
 .Mostra esempio
 [%collapsible]
@@ -142,13 +142,13 @@ image:vmware-vcf-asa-098.png["Esaminare le selezioni VMkernel"]
 
 
 [[step-3-add-nvmetcp-adapter]]
-== Passaggio 3: aggiungere l'adattatore NVMe/TCP
+=== Passaggio 3: aggiungere l'adattatore NVMe/TCP
 
-Ogni host ESXi nel cluster del dominio del carico di lavoro deve disporre di un adattatore software NVMe/TCP installato per ogni rete NVMe/TCP stabilita dedicata al traffico di archiviazione.
+Ogni host vSphere nel cluster del workload domain deve avere un adattatore software NVMe/TCP installato per ogni rete NVMe/TCP dedicata al traffico storage.
 
 Per installare gli adattatori NVMe/TCP e rilevare i controller NVMe, completare i seguenti passaggi.
 
-. Nel client vSphere, passare a uno degli host ESXi nel cluster del dominio del carico di lavoro.  Dalla scheda *Configura*, fare clic su *Schede di archiviazione* nel menu.
+. Nel client vSphere, vai su uno degli host vSphere nel cluster del dominio workload. Dalla scheda *Configura*, fai clic su *Storage Adapters* nel menu.
 . Dal menu a discesa *Aggiungi adattatore software*, seleziona *Aggiungi adattatore NVMe su TCP*.
 +
 .Mostra esempio

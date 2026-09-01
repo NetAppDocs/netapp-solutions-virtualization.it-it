@@ -26,7 +26,7 @@ indexpage:
       url: "/videos/index.html"
   - title: Soluzioni NetApp per la virtualizzazione
     links:
-    - title: VMware on-premise e cloud
+    - title: Cloud privato con VMware
       url: "/vmware/index.html"
     - title: Microsoft Hyper-V
       url: hyperv/index.html

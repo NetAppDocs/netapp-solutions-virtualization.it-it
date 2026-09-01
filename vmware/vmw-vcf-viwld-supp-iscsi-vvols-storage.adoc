@@ -2,26 +2,26 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-viwld-supp-iscsi-vvols-storage.html 
 keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc, iscsi 
-summary: 'Configurare l"archiviazione iSCSI vVols in un dominio di carico di lavoro VI utilizzando gli strumenti ONTAP .  Distribuirai gli ONTAP tools for VMware vSphere, registrerai un sistema di storage, creerai un profilo di capacità di storage e fornirai un datastore vVols nel client vSphere.' 
+summary: Configura lo storage iSCSI vVols in un dominio di carico di lavoro utilizzando ONTAP tools. Distribuisci ONTAP tools for VMware vSphere, registra un sistema storage, crea un profilo di funzionalità di storage ed esegui il provisioning di un datastore vVols nel client vSphere. 
 ---
-= Configurare l'archiviazione iSCSI vVols in un dominio di carico di lavoro VCF VI utilizzando gli strumenti ONTAP
-:hardbreaks:
+= Configura lo storage iSCSI vVols in un dominio workload VCF usando ONTAP tools
 :allow-uri-read: 
-:nofooter: 
-:icons: font
-:linkattrs: 
-:imagesdir: ../media/
 
+
+
+
+[[configure-iscsi-vvols-storage-in-a-vcf-workload-domain-using-ontap-tools]]
+== Configura lo storage iSCSI vVols in un dominio workload VCF usando ONTAP tools
 
 [role="lead"]
-Configurare l'archiviazione iSCSI vVols in un dominio di carico di lavoro VI utilizzando gli strumenti ONTAP .  Distribuirai gli ONTAP tools for VMware vSphere, registrerai un sistema di storage, creerai un profilo di capacità di storage e fornirai un datastore vVols nel client vSphere.
+Configura lo storage iSCSI vVols in un dominio di carico di lavoro utilizzando ONTAP tools. Distribuisci ONTAP tools for VMware vSphere, registra un sistema storage, crea un profilo di funzionalità di storage ed esegui il provisioning di un datastore vVols nel client vSphere.
 
 
 
 [[step-1-deploy-ontap-tools-for-vmware-vsphere]]
-== Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
+=== Passaggio 1: distribuire gli ONTAP tools for VMware vSphere
 
-Per i domini del carico di lavoro VI, gli strumenti ONTAP vengono installati nel cluster di gestione VCF ma registrati con il vCenter associato al dominio del carico di lavoro VI.
+Per i workload domain, ONTAP tools viene installato nel cluster di gestione VCF ma registrato con il vCenter associato al workload domain.
 
 Gli ONTAP tools for VMware vSphere vengono distribuiti come appliance VM e forniscono un'interfaccia utente vCenter integrata per la gestione dello storage ONTAP .
 
@@ -89,7 +89,7 @@ image:vmware-vcf-asa-035.png["Personalizza il modello OTV 2"]
 
 
 [[step-2-add-a-storage-system]]
-== Passaggio 2: aggiungere un sistema di archiviazione
+=== Passaggio 2: aggiungere un sistema di archiviazione
 
 Per aggiungere un sistema di archiviazione utilizzando gli strumenti ONTAP , procedere come segue.
 
@@ -134,7 +134,7 @@ image:vmware-vcf-asa-017.png["Autorizza il certificato del cluster"]
 
 
 [[step-3-create-a-storage-capability-profile-in-ontap-tools]]
-== Passaggio 3: creare un profilo di capacità di archiviazione negli strumenti ONTAP
+=== Passaggio 3: creare un profilo di capacità di archiviazione negli strumenti ONTAP
 
 I profili di capacità di archiviazione descrivono le funzionalità fornite da un array di archiviazione o da un sistema di archiviazione.  Includono definizioni di qualità del servizio e vengono utilizzate per selezionare i sistemi di archiviazione che soddisfano i parametri definiti nel profilo.  È possibile utilizzare uno dei profili forniti oppure crearne di nuovi.
 
@@ -201,7 +201,7 @@ image:vmware-vcf-asa-040.png["Riepilogo per SCP"]
 
 
 [[step-4-create-a-vvols-datastore-in-ontap-tools]]
-== Passaggio 4: creare un datastore vVols negli strumenti ONTAP
+=== Passaggio 4: creare un datastore vVols negli strumenti ONTAP
 
 Per creare un datastore vVols negli strumenti ONTAP , completare i seguenti passaggi.
 

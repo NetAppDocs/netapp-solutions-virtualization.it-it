@@ -2,20 +2,20 @@
 sidebar: sidebar 
 permalink: vmware/vmw-vcf-viwld-supp-iscsi-vvols.html 
 keywords: netapp, vmware, cloud, foundation, vcf, aff, all-flash, nfs, vvol, vvols, array, ontap tools, otv, sddc, iscsi 
-summary: 'Inizia a configurare un datastore vVols con iSCSI per l"archiviazione supplementare in un dominio di carico di lavoro VMware Cloud Foundation (VCF) Virtual Infrastructure (VI).  Creerai SVM e LIF, configurerai la rete iSCSI, implementerai gli ONTAP tools for VMware vSphere e fornirai il datastore vVols .' 
+summary: 'Inizia configurando un datastore vVols con iSCSI per lo storage supplementare in un dominio workload di VMware Cloud Foundation (VCF). Creerai la SVM e i LIF, configurerai la rete iSCSI, distribuirai ONTAP tools for VMware vSphere e effettuerai il provisioning del datastore vVols.' 
 ---
-= Flusso di lavoro di distribuzione per l'aggiunta di un datastore iSCSI vVols come storage supplementare in un dominio di carico di lavoro VI
+= Flusso di lavoro di deployment per aggiungere un datastore iSCSI vVols come storage supplementare in un workload domain
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/
 
 
 [role="lead"]
-Inizia a configurare un datastore iSCI vVols come storage supplementare in un dominio di carico di lavoro VMware Cloud Foundation (VCF) Virtual Infrastructure (VI).  Creerai SVM e LIF, configurerai la rete iSCSI, implementerai gli ONTAP tools for VMware vSphere e configurerai lo storage.
+Inizia configurando un datastore iSCSI vVols come storage supplementare in un workload domain VMware Cloud Foundation (VCF). Creerai la SVM e le LIF, imposterai la rete iSCSI, distribuirai ONTAP tools for VMware vSphere e configurerai lo storage.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Uno"]link:vmw-vcf-viwld-supp-iscsi-vvols-requirements.html["Esaminare i requisiti di distribuzione"]
 [role="quick-margin-para"]
-Esaminare i requisiti per distribuire iSCSI vVols in un dominio di carico di lavoro VMware Cloud Foundation VI.
+Esamina i requisiti per distribuire iSCSI vVols in un workload domain VMware Cloud Foundation.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Due"]link:vmw-vcf-viwld-supp-iscsi-vvols-svm-lifs.html["Creare SVM e LIF"]
 [role="quick-margin-para"]
@@ -23,7 +23,7 @@ Creare una SVM con più LIF per il traffico iSCSI.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Tre"]link:vmw-vcf-viwld-supp-iscsi-vvols-network.html["Configurare la rete"]
 [role="quick-margin-para"]
-Configurare la rete per iSCSI sugli host ESXi.
+Configura la rete per iSCSI sugli host vSphere.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Quattro"]link:vmw-vcf-viwld-supp-iscsi-vvols-storage.html["Configurare l'archiviazione"]
 [role="quick-margin-para"]

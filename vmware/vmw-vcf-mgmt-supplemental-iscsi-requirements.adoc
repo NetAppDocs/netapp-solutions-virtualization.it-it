@@ -24,7 +24,7 @@ Esaminare i requisiti per l'aggiunta di datastore iSCSI come storage supplementa
 Assicurarsi che i seguenti componenti e configurazioni siano presenti.
 
 * Un sistema di archiviazione ONTAP AFF o ASA con porte dati fisiche su switch Ethernet dedicate al traffico di archiviazione.
-* La distribuzione del dominio di gestione VCF è completa e il client vSphere è accessibile.
+* L'implementazione del dominio di gestione VCF è completa e il vSphere web client è accessibile.
 
 
 
@@ -36,10 +36,10 @@ Assicurarsi che i seguenti componenti e configurazioni siano presenti.
 
 image:vmware-vcf-asa-074.png["progettazione di reti iSCSI"]{nbsp}
 
-Per il multipathing e il failover su più percorsi, creare almeno due LIF per nodo di archiviazione in reti Ethernet separate per tutte le SVM nelle configurazioni iSCSI.
+Per il multipathing e il failover su più percorsi, crea almeno due LIF per nodo di storage in reti Ethernet separate per tutti gli SVM nelle configurazioni iSCSI. Con ONTAP 9.19.1 e versioni successive, puoi abilitare l'opzione di multipathing attivo-attivo simmetrico sugli SVM su AFF. In ASA, il multipathing attivo-attivo simmetrico è abilitato per impostazione predefinita.
 
 
-TIP: Nei casi in cui più adattatori VMkernel sono configurati sulla stessa rete IP, si consiglia di utilizzare il binding delle porte iSCSI software sugli host ESXi per garantire il bilanciamento del carico tra gli adattatori. Fare riferimento all'articolo della Knowledge Baselink:https://knowledge.broadcom.com/external/article?legacyId=2038869["Considerazioni sull'utilizzo del binding delle porte iSCSI software in ESX/ESXi"^] .
+TIP: Nelle situazioni in cui sono configurati più adattatori VMkernel sulla stessa rete IP, ti consigliamo di usare il binding software delle porte iSCSI sugli host ESXi per garantire che avvenga il bilanciamento del carico tra gli adattatori. Consulta l'articolo KB link:https://knowledge.broadcom.com/external/article?legacyId=2038869["Considerazioni sull'utilizzo del binding della porta iSCSI software in vSphere"^].
 
 
 

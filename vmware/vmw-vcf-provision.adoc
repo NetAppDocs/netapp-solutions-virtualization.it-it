@@ -14,12 +14,12 @@ summary:
 
 
 [role="lead"]
-Lo storage NetApp ONTAP è una soluzione di storage primaria ideale per la gestione di VMware Cloud Foundation (VCF) e per i domini di carico di lavoro di Virtual Infrastructure (VI).  ONTAP offre elevate prestazioni, scalabilità, gestione avanzata dei dati e integrazione perfetta per migliorare l'efficienza operativa e la protezione dei dati.
+NetApp ONTAP storage è la soluzione di storage primario ideale per i domini di gestione e workload di VMware Cloud Foundation (VCF). ONTAP offre prestazioni elevate, scalabilità, gestione avanzata dei dati e integrazione perfetta per migliorare l'efficienza operativa e la protezione dei dati.
 
 Per i dettagli tecnici sul provisioning di un ambiente VCF nel dominio appropriato e con il protocollo appropriato, fare riferimento alle seguenti soluzioni.
 
 * link:vmw-vcf-mgmt-principal-fc.html["Dominio di gestione con FC"]
 * link:vmw-vcf-mgmt-principal-nfs.html["Dominio di gestione con NFS"]
-* link:vmw-vcf-viwld-principal-fc.html["Dominio del carico di lavoro dell'infrastruttura virtuale con FC"]
-* link:vmw-vcf-viwld-principal-nfs.html["Dominio del carico di lavoro dell'infrastruttura virtuale con NFS"]
+* link:vmw-vcf-viwld-principal-fc.html["Workload Domain con FC"]
+* link:vmw-vcf-viwld-principal-nfs.html["Workload Domain con NFS"]
 
