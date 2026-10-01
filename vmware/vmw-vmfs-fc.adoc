@@ -102,3 +102,5 @@ Per effettuare il provisioning di un datastore VMFS, completare i seguenti passa
 
 .Datastore supplementare con FC
 video::96311abf-aa45-4ce9-984b-b4b001005bab[panopto,width=360]
+.Datastore principale con FC
+video::9c51101c-292b-41ef-8dd5-b4cf0131dd62[panopto,width=360]
