@@ -1,0 +1,179 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vvol-nfs-migration.html 
+keywords: netapp, vmware, vvol, vvols, ONTAP tools, nfs, flexgroup, migration 
+summary: 'Scopri di più su VMware vSphere Virtual Volumes (vVols), sui motivi per cui le organizzazioni li hanno adottati e su come i datastore NFS ONTAP possono sostituire i datastore vVols, semplificando la gestione e migliorando la scalabilità.' 
+---
+= Scopri come migrare dai datastore vVols ai datastore NFS ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Scopri di più su VMware vSphere Virtual Volumes (vVols), sui motivi della loro adozione, sulla loro architettura e su come i datastore NFS ONTAP possono fungere da alternativa. I datastore NFS ONTAP semplificano la gestione e migliorano la scalabilità, mantenendo al contempo le prestazioni e la flessibilità richieste dal tuo ambiente virtualizzato.
+
+
+
+[[solution-overview]]
+== Panoramica della soluzione
+
+Gli ambienti cloud privati richiedono scalabilità, flessibilità e semplicità operativa. vVols sono stati introdotti con vSphere 6.0 per applicare policy a livello di singolo disco VM e per superare i limiti delle LUN utilizzando la funzionalità LUN secondaria per lo storage SCSI.
+
+Il multipathing delle LUN e i mount NFS sono gestiti dagli endpoint di protocollo (PE), che fungono da percorso dei dati verso l'array di storage.
+
+Con l'implementazione ONTAP vVols, è presente un PE per ogni volume FlexVol utilizzato per le LUN SCSI e per ogni interfaccia logica (LIF) sulla SVM per il protocollo NFS.
+
+[cols="4a,4a"]
+|===
+| vVols con SCSI | vVols con NFS 
+
+
+ a| 
+image:vmw-vvol-nfs-migration-001.png["vVols con SCSI"]
+ a| 
+image:vmw-vvol-nfs-migration-002.png["vVols con NFS"]
+
+|===
+
+NOTE: VMware ha deprecato vVols a partire da VCF e VVF 9.0 e prevede di interromperli in una versione futura. vVols sono ancora disponibili in VCF e VVF 9.1. Per i dettagli, consulta link:https://knowledge.broadcom.com/external/article?articleId=401070["Deprecazione dei volumi virtuali VMware vSphere (vVols) in VCF 9.0 e VVF 9.0"^].
+
+
+
+[[scale-considerations]]
+=== Considerazioni di scala
+
+Poiché ogni disco VM è un LUN separato con vVols, un ambiente può avvicinarsi rapidamente al numero massimo di LUN e percorsi supportati per host ESXi. vVols consentono di gestire la scalabilità dei LUN utilizzando la funzionalità LUN secondaria, che richiede il supporto sia dell'array di storage che degli switch fabric.
+
+I datastore NFS non sono soggetti a limiti LUN per host. ESXi supporta fino a 256 mount di datastore NFS per host. Per i limiti attuali, vedi link:https://configmax.broadcom.com["Massimi di configurazione di VMware"^].
+
+
+
+[[storage-consumption-models]]
+=== Modelli di consumo dello storage
+
+Con NFS, i datastore vengono utilizzati tramite punti di montaggio e la configurazione della macchina virtuale e i file di dati vengono archiviati nel volume. L'aggiunta di un volume di archiviazione richiede un punto di montaggio aggiuntivo.
+
+vVols superano i limiti di capacità aggiungendo altri volumi FlexVol, con l'endpoint del protocollo che punta alla radice di SVM su ogni LIF. Il datastore vVols è un container di storage la cui capacità è pari al totale di tutti i volumi FlexVol a esso collegati.
+
+vVols includono diversi tipi di oggetti: configurazione, dati, swap, snapshot e memoria. vVols sono sottoposti a thin provisioning per impostazione predefinita.
+
+
+
+[[vasa-and-storage-policy-management]]
+=== VASA e gestione delle policy di archiviazione
+
+Snapshot, clonazione del disco della VM, replica e altre operazioni di storage vengono trasferite all'array di storage tramite le API vSphere per Storage Awareness (VASA), un componente fondamentale di vVols.
+
+Alcuni fornitori di storage implementano VASA sull'array. NetApp implementa VASA fuori dall'array in ONTAP tools for VMware vSphere, in modo che una singola istanza possa gestire più array.
+
+Storage Policy Based Management (SPBM) posiziona i dischi delle VM su storage specifici in base ai criteri di storage desiderati.
+
+
+
+[[why-organizations-use-vvols]]
+== Perché le organizzazioni utilizzano vVols
+
+Le organizzazioni hanno adottato vVols per diversi motivi:
+
+* *Gestione granulare dello storage*: le policy di storage si applicano a livello del singolo disco della VM, offrendo un controllo preciso su prestazioni, disponibilità e protezione dei dati.
+* *Operazioni semplificate*: il provisioning e la gestione dello storage sono automatizzati tramite SPBM, riducendo le attività manuali e gli errori.
+* *Operazioni di storage delegate*: VASA delega Snapshot, clonazione e replica all'array di storage.
+* *Scalabilità migliorata*: gli endpoint di protocollo e le LUN secondarie superano i limiti tradizionali delle LUN per host.
+* *Integrazione dell'ecosistema VMware*: vVols si integrano perfettamente con gli strumenti e i flussi di lavoro di VMware, inclusa l'applicazione automatizzata delle policy.
+
+
+Con la dismissione di vVols, le organizzazioni hanno bisogno di un sostituto che mantenga questi vantaggi operativi senza dipendere da VASA.
+
+
+
+[[architecture-overview]]
+== Panoramica dell'architettura
+
+NFS è una scelta popolare per gli ambienti vSphere grazie alla sua semplicità, scalabilità e flessibilità. I datastore NFS sono facili da configurare ed espandere e supportano implementazioni di grandi dimensioni con un carico amministrativo minimo. Con ONTAP, NFS aggiunge il multipathing, nConnect per le prestazioni e l'integrazione con gli strumenti VMware.
+
+
+
+[[ontap-nfs-advantages]]
+=== Vantaggi di ONTAP NFS
+
+I clienti ONTAP apprezzano la semplicità di link:https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-vsphere-datastores-nfs.html["Datastore NFS"^], inclusa la possibilità di spostare i dati tra le istanze di Server vCenter. Con ONTAP, puoi ripristinare un singolo disco VM senza influire sulle altre VM nello stesso volume.
+
+Un singolo volume ONTAP FlexGroup può scalare fino a 20 PB e 400 miliardi di file e può ospitare migliaia di VM. Un singolo disco VM può arrivare fino a 62 TB. Le copie ONTAP Snapshot semplificano le operazioni di backup e ripristino.
+
+
+
+[[performance-and-disaster-recovery-tools]]
+=== Strumenti per le prestazioni e il ripristino di emergenza
+
+Il NetApp NFS Plug-in for VMware VAAI (vSphere APIs for Array Integration) delega operazioni come la clonazione all'array di storage per ottenere prestazioni migliori.
+
+Per il disaster recovery, NetApp fornisce lo Storage Replication Adapter (SRA) per VMware Live Site Recovery (in precedenza VMware Site Recovery Manager) e il servizio link:vmw-dr-gs.html["NetApp Disaster Recovery"].
+
+image:vmw-vvol-nfs-migration-004.png["NFS VAAI"]
+
+
+
+[[nfs-operational-simplicity]]
+=== Semplicità operativa di NFS
+
+Il diagramma seguente confronta due applicazioni ospitate su server fisici (a sinistra), su VM in un datastore NFS (al centro) e su VM in un datastore vVols (a destra). L'hosting delle VM su datastore vVols e NFS è molto simile.
+
+image:vmw-vvol-nfs-migration-003.png["vVols e NFS"]
+
+I datastore NFS non dipendono da VASA e SPBM per le operazioni quotidiane. I datastore NFS possono essere montati su più istanze di vCenter Server e supportano vMotion, DRS, HA, FT e altre funzionalità VMware. Gli amministratori utilizzano ONTAP tools for VMware vSphere per gestire lo storage dal client vSphere.
+
+
+
+[[ontap-cluster-architecture]]
+=== Architettura del cluster ONTAP
+
+Un cluster NAS ONTAP può scalare fino a 24 nodi. Ogni nodo può avere più aggregati e ogni aggregato può contenere più volumi FlexVol o FlexGroup. Un SVM può estendersi su più nodi e può avere più LIF per il protocollo NFS. Gli host ESXi possono montare datastore NFS tramite ogni LIF.
+
+
+
+[[pnfs-support]]
+=== supporto pNFS
+
+pNFS consente ai client di accedere allo storage in parallelo attraverso più percorsi di rete, migliorando le prestazioni e la scalabilità. ONTAP supporta pNFS con NFSv4.1, consentendo agli host ESXi di utilizzare più LIF sulla SVM ONTAP per l'accesso parallelo ai dati.
+
+L'immagine seguente mostra la configurazione di esempio utilizzata per testare pNFS.
+
+image:vmw-vvol-nfs-migration-006.png["Configurazione pNFS"]
+
+
+NOTE: pNFS richiede il link:https://docs.netapp.com/us-en/ontap/nfs-admin/enable-disable-pnfs-task.html["Opzione pNFS da abilitare sulla SVM"^]. pNFS è supportato solo con NFSv4.1.
+
+
+
+[[benefits-of-migrating-to-ontap-nfs]]
+== Vantaggi della migrazione a ONTAP NFS
+
+La migrazione dai datastore vVols ai datastore ONTAP NFS offre diversi vantaggi:
+
+* *Gestione semplificata*: esegui il provisioning, espandi e gestisci i datastore NFS utilizzando ONTAP tools for VMware vSphere integrati con vCenter.
+* *Scalabilità*: i volumi FlexGroup supportano migliaia di VM in un singolo datastore.
+* *Prestazioni*: il multipathing NFS, nConnect e le ottimizzazioni di ONTAP garantiscono un throughput elevato e una bassa latenza.
+* *Protezione dei dati*: le copie Snapshot di ONTAP offrono backup e ripristini rapidi ed efficienti in termini di spazio, senza influire sulle prestazioni delle macchine virtuali.
+* *Flessibilità operativa*: i datastore NFS possono essere montati su più istanze di vCenter Server e supportano vMotion, DRS, HA e FT.
+* *Integrazione*: ONTAP NFS funziona con il plug-in NFS VAAI, VMware Live Site Recovery e NetApp Disaster Recovery.
+* *Utilizzo efficiente dello spazio*: thin provisioning, deduplicazione e compressione riducono i costi di storage.
+* *Sicurezza e conformità*: i criteri di esportazione, RBAC, Kerberos e la crittografia proteggono i dati e controllano l'accesso.
+* *A prova di futuro*: NFS non è interessato dalla deprecazione di vVols, garantendo compatibilità e supporto a lungo termine.
+
+
+
+
+[[whats-next]]
+== Cosa c'è dopo
+
+* link:vmw-vvol-nfs-migration-best-practices.html["Esamina le migliori pratiche di implementazione per i datastore NFS"]
+* link:vmw-vvol-nfs-migration-storage-options.html["Scegli tra volumi FlexVol e FlexGroup"]
+* link:vmw-vvol-nfs-migration-sizing.html["Consulta le linee guida sul dimensionamento"]
+* link:vmw-vvol-nfs-migration-integ-tools.html["Scopri gli strumenti di integrazione di ONTAP"]
+* link:vmw-vvol-nfs-migration-options.html["Scegli un'opzione di migrazione"]
+* link:vmw-vvol-nfs-migration-add-info.html["Trova altre risorse"]
+

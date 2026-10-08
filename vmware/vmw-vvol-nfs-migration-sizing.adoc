@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vvol-nfs-migration-sizing.html 
+keywords: netapp, vmware, nfs, ontap, sizing, capacity, planning, datastore, performance 
+summary: Scopri le linee guida per il dimensionamento dei datastore NFS negli ambienti VMware vSphere con ONTAP, tra cui pianificazione della capacità, dimensionamento dei datastore, densità delle VM e prestazioni. 
+---
+= Linee guida per il dimensionamento dei datastore NFS negli ambienti VMware vSphere con ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Scopri le linee guida per il dimensionamento dei datastore NFS negli ambienti VMware vSphere con ONTAP, incluse la pianificazione della capacità, il dimensionamento dei datastore, la densità delle VM e le prestazioni, in modo che i datastore NFS di destinazione siano pronti prima di migrare le VM dai vVols.
+
+Quando dimensioni i datastore NFS per gli ambienti VMware vSphere con ONTAP, considera le seguenti linee guida:
+
+* *Pianificazione della capacità*: stima lo storage totale necessario in base al numero di VM, alle dimensioni dei dischi delle VM, al tasso di crescita e alla conservazione degli Snapshot. Includi l'overhead per i file di swap e i log delle VM. Usa come punto di partenza la capacità attualmente utilizzata dai datastore vVols.
+* *Dimensioni del datastore*: dimensiona ciascun datastore entro i limiti del volume ONTAP per la tua piattaforma. I volumi FlexGroup superano i limiti di un singolo volume FlexVol. Per i limiti della piattaforma, consulta la link:https://hwu.netapp.com["NetApp Hardware Universe"^].
+* *Densità delle VM*: Pianifica il numero di VM per datastore in base ai requisiti di prestazioni del carico di lavoro, alla granularità di backup e ripristino e alle preferenze operative. I volumi FlexGroup possono ospitare migliaia di VM in un singolo datastore.
+* *Prestazioni*: Considera i requisiti di IOPS, throughput e latenza. Usa più ONTAP LIF e distribuisci i volumi tra nodi e aggregati per ripartire il carico.
+* *riserva di Snapshot*: assegna spazio sufficiente per le copie Snapshot di ONTAP in modo da soddisfare i requisiti di conservazione per il backup e il ripristino.
+* *Thin provisioning*: Abilita il thin provisioning per ottimizzare l'utilizzo dello spazio e monitora l'utilizzo per evitare l'assegnazione in eccesso.
+* *Crescita ed espansione*: Progetta i datastore pensando alla crescita futura. Puoi espandere i volumi FlexVol e FlexGroup senza tempi di inattività.
+* *Backup e ripristino di emergenza*: Tieni conto dello spazio necessario per le copie di backup e la replica.
+
+
+
+
+[[additional-information]]
+== Informazioni aggiuntive
+
+* link:https://configmax.broadcom.com["Massimi di configurazione di VMware"^]
+* link:https://hwu.netapp.com["NetApp Hardware Universe"^]
+* link:https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-vsphere-datastores-nfs.html["Datastore NFS in VMware vSphere con ONTAP: guida alle best practice"^]
+

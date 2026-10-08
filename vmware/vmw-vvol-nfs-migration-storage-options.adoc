@@ -1,0 +1,46 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmw-vvol-nfs-migration-storage-options.html 
+keywords: netapp, vmware, nfs, ontap, flexvol, flexgroup, storage, options, scalability 
+summary: Scopri le opzioni di storage ONTAP per i datastore NFS negli ambienti VMware e confronta i volumi FlexVol e FlexGroup per scegliere la soluzione più adatta ai tuoi carichi di lavoro. 
+---
+= Opzioni di archiviazione per i datastore NFS negli ambienti VMware vSphere con ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Scopri le opzioni di storage ONTAP per i datastore NFS negli ambienti VMware. Confronta i volumi FlexVol e FlexGroup per scegliere la soluzione migliore per i requisiti del tuo carico di lavoro e di scalabilità.
+
+Quando scegli tra i volumi FlexVol e FlexGroup per datastore NFS in ambienti VMware, considera quanto segue:
+
+image:vmw-vvol-nfs-migration-005.png["FlexVol e FlexGroup confronto"]
+
+.FlexVol
+FlexVol volumi sono adatti per ambienti di piccole e medie dimensioni in cui sono richieste prestazioni prevedibili e una gestione granulare.
+
+Supportano copie Snapshot, clonazione e replica. I volumi FlexVol sono ideali quando devi isolare i carichi di lavoro o applicare criteri specifici a singoli datastore.
+
+.FlexGroup
+FlexGroup volumi sono progettati per implementazioni su larga scala e offrono elevata scalabilità (fino a 20 PB e 400 miliardi di file) e parallelismo.
+
+Distribuiscono automaticamente i dati su più volumi costituenti, offrendo prestazioni elevate e una gestione semplificata per ambienti con migliaia di VM. Usa volumi FlexGroup quando hai bisogno di un datastore singolo e scalabile per molte VM.
+
+.Raccomandazione
+* *Usa i volumi FlexVol* per carichi di lavoro più piccoli e isolati o quando ti serve un controllo granulare.
+* *Usa i volumi FlexGroup* per ambienti di grandi dimensioni e dalle performance elevate che richiedono una gestione semplificata e scalabilità.
+
+
+
+
+[[additional-information]]
+== Informazioni aggiuntive
+
+* link:https://docs.netapp.com/us-en/ontap/flexgroup/index.html["FlexGroup documentazione dei volumi"^]
+* link:https://docs.netapp.com/us-en/ontap/flexgroup/supported-unsupported-config-concept.html["Configurazioni supportate e non supportate per i volumi FlexGroup"^]
+* link:https://docs.netapp.com/us-en/ontap/volumes/index.html["Documentazione sulla gestione dello storage logico"^]
+
