@@ -38,7 +38,7 @@ image:redhat-openshift-ocpv-tp-003.png["VM OCP-v installata nello spazio dei nom
 
 Questa sezione mostra come configurare un oggetto AppVault in Trident Protect utilizzando lo storage a oggetti ONTAP S3.
 
-Utilizza i comandi oc e i file yaml mostrati di seguito per creare un segreto e la risorsa personalizzata AppVault per ONTAP s3. Assicurati di crearli nel namespace trident protect.
+Utilizza i comandi oc e i file yaml mostrati di seguito per creare un secret e la risorsa personalizzata AppVault per ONTAP s3. Assicurati di crearli nel namespace trident-protect.
 
 [source, cli]
 ----

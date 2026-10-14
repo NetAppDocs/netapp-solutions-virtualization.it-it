@@ -19,7 +19,7 @@ Accedi a risorse aggiuntive che offrono maggiori informazioni sul supporto all'i
 * https://docs.netapp.com/["Documentazione NetApp"^]
 * https://docs.netapp.com/us-en/trident/index.html["Documentazione Trident"^]
 * https://access.redhat.com/documentation/en-us/openshift_container_platform/4.7/["Documentazione di Red Hat OpenShift"^]
-* https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.1/["Documentazione della piattaforma Red Hat OpenStack"^]
+* https://docs.redhat.com/en/documentation/red_hat_openstack_platform/16.1["Documentazione della piattaforma Red Hat OpenStack"^]
 * https://access.redhat.com/documentation/en-us/red_hat_virtualization/4.4/["Documentazione di Red Hat Virtualization"^]
 * https://docs.vmware.com["Documentazione di VMware vSphere"^]
 

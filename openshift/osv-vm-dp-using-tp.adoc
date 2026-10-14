@@ -140,7 +140,7 @@ image:rh-os-n-use-case-ocpv-tp-dp-007.png["vm, pod e pvc creati"]
 .Crea app
 [%collapsible]
 ====
-**Creare un'app Trident Protect per la VM**
+**Crea un'app Trident Protect per la VM**
 
 Nell'esempio, lo spazio dei nomi demo ha una VM e tutte le risorse dello spazio dei nomi vengono incluse durante la creazione dell'app.
 
