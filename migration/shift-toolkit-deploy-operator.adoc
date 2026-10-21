@@ -312,6 +312,8 @@ image::shift_migration_completed.png[Piano di migrazione completato con successo
 .Cosa c'è dopo
 Al termine della migrazione, ogni volume clone deve essere scollegato. Il metodo di scollegamento dipende dalla versione di ONTAP: usa clone split per ONTAP 9.17.1 e versioni successive, oppure vol move per le versioni precedenti.
 
+Per velocizzare le operazioni di suddivisione del PVC dopo la migrazione, mantieni l'NFS datastore di origine a 5 TB o meno. Puoi usare volumi più grandi, ma quando crei 200–300 cloni per le migrazioni delle VM, i volumi più piccoli sono ideali per completare le suddivisioni più rapidamente.
+
 Sia clone split che vol move sono operazioni in background e non influiscono sui carichi di lavoro di produzione mentre sono in esecuzione. Uno script per avviare il processo di distacco è disponibile nel widget *Post Migrate Detach* all'interno del NetApp Console Automation Catalog.
 
 
