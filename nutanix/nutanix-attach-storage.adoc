@@ -1,0 +1,81 @@
+---
+sidebar: sidebar 
+permalink: nutanix/nutanix-attach-storage.html 
+keywords: nutanix, prism element, prism central, external storage, ontap, nfs, storage container, attach 
+summary: Collega i volumi NFS ONTAP come container di storage a un cluster di calcolo Nutanix utilizzando Prism Element. 
+---
+= Collega lo storage NFS ONTAP a un cluster di calcolo Nutanix
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver eseguito il provisioning dei volumi ONTAP e configurato la connettività, usa Prism Element o Prism Central per collegare i volumi NFS ONTAP come container di storage al cluster di calcolo Nutanix.
+
+.Prima di iniziare
+Assicurati che siano soddisfatti i seguenti prerequisiti:
+
+* Il cluster ONTAP o la SVM è raggiungibile dal cluster Nutanix.
+* È disponibile un LIF di gestione ONTAP valido (indirizzo IP o FQDN).
+* Sono disponibili le credenziali ONTAP appropriate.
+* I percorsi di esportazione richiesti per FlexVol, qtree o cartelle sono stati creati e configurati per l'accesso NFS.
+
+
+.Passi
+. Accedi alla console web di Prism Element.
+. Dal menu principale, seleziona *Storage* e poi fai clic su *+ Attach External Storage*.
+. Nella pagina *Configurazione iniziale*, esamina le informazioni disponibili e fai clic su *Avanti*.
++
+image:nutanix-attach-001.png["Procedura guidata per collegare storage esterno, pagina di configurazione iniziale"]
+
+. Nella pagina *Dettagli di connessione*, seleziona *NetApp ONTAP* come fornitore di storage esterno, quindi inserisci i seguenti valori:
++
+** *Indirizzo IP (IPv4) o FQDN*: Inserisci l'indirizzo o l'FQDN della LIF di gestione del cluster ONTAP o della SVM.
+** *Nome utente*: Inserisci il nome utente dell'account di servizio ONTAP.
+** *Password*: Inserisci la password dell'account di servizio.
++
+Fare clic su *Avanti*.
+
++
+image:nutanix-attach-002.png["Procedura guidata per collegare dispositivi di archiviazione esterni, pagina Dettagli di connessione"]
+
+
+
+. Nella pagina *Dettagli di archiviazione*, specifica un nome univoco per il sistema storage ONTAP in *Nome storage esterno*, inserisci uno o più percorsi di esportazione dello storage in *Percorso di esportazione*, quindi fai clic su *Aggiungi*.
++
+
+NOTE: I percorsi di esportazione supportati includono i percorsi di esportazione FlexVol e qtree.
+
++
+image:nutanix-attach-003.png["Procedura guidata per collegare lo storage esterno, pagina Dettagli dello storage che mostra la selezione del percorso di esportazione del volume di servizio"]
+
+. Fai clic su *Allega*.
++
+Il sistema collega lo storage ONTAP al cluster Nutanix. Puoi monitorare l'avanzamento e le informazioni sullo stato da *Tasks* in Prism Element.
+
++
+image:nutanix-attach-004.png["Procedura guidata Collega storage esterno, pagina Dettagli storage che mostra i percorsi di esportazione selezionati e la loro capacità"]
+
++
+
+NOTE: L' `nconnect`opzione viene utilizzata nelle opzioni di montaggio.
+
+
+
+[NOTE]
+====
+* Il primo percorso di esportazione aggiunto durante la configurazione viene automaticamente designato come container di storage predefinito ed è contrassegnato con il tag *Contenitore predefinito*.
+* NetApp consiglia di utilizzare più volumi FlexVol come contenitori di storage per distribuire i carichi di lavoro delle VM e bilanciare l'utilizzo della capacità.
+* Usa un volume dedicato per i servizi di metadati (gestione).
+* Puoi rimuovere i percorsi di esportazione a meno che non siano assegnati al volume dei servizi cluster (metadati) o al container di storage predefinito.
+* Non è possibile rimuovere lo storage esterno finché è collegato a un Nutanix compute cluster.
+* È possibile collegare un solo sistema storage esterno ONTAP a un cluster di calcolo Nutanix.
+* Nutanix raccomanda fino a 128 VM per nodo, fino a 32 nodi e fino a 4.800 vDisks AOS replicati tra cluster di disaster recovery (repliche asincrone e sincrone combinate).
+
+
+====
+Dopo aver collegato lo storage, distribuisci Prism Central sulla piattaforma Nutanix Cloud Infrastructure (NCI) per eseguire attività di gestione e configurazione del cluster. Puoi anche collegare lo storage ONTAP tramite Prism Central.

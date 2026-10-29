@@ -44,7 +44,15 @@ nvme show-hostnqn
 Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza migliore.
 
 . Assicurarsi che l'SVM sia disponibile con il protocollo NVMe abilitato. Fare riferimento a link:https://docs.netapp.com/us-en/ontap/san-admin/create-nvme-namespace-subsystem-task.html["Documentazione sulle attività NVMe su ONTAP 9"].
-. Creare lo spazio dei nomi NVMe.
+. Crea lo spazio dei nomi NVMe con il tipo di sistema operativo impostato su `linux`.
++
+Proxmox VE è basato su Debian Linux, quindi usa il `linux` tipo di sistema operativo per i namespace a cui accedono gli host Proxmox VE. In System Manager, seleziona *Linux* come sistema operativo host. Se usi ONTAP CLI, specifica `-ostype linux`.
+
++
+[source, cli]
+----
+vserver nvme namespace create -vserver <svm_name> -path /vol/<volume_name>/<namespace_name> -size <size> -ostype linux
+----
 +
 .Mostra esempio
 [%collapsible]
@@ -52,7 +60,17 @@ Se non hai familiarità con ONTAP, utilizza System Manager per un'esperienza mig
 image:proxmox-ontap-nvme-fc-001.png["creazione dello spazio dei nomi nvme"]
 
 ====
-. Creare il sottosistema e assegnare gli NQN host (se si utilizza la CLI). Seguire il link di riferimento sopra.
+. Crea il sottosistema con il tipo di sistema operativo host impostato su `linux`, assegna gli NQN host e mappa il namespace al sottosistema.
++
+System Manager crea il sottosistema quando crei il namespace e selezioni *Linux* come sistema operativo host. Se usi la ONTAP CLI, esegui i seguenti comandi.
+
++
+[source, cli]
+----
+vserver nvme subsystem create -vserver <svm_name> -subsystem <subsystem_name> -ostype linux
+vserver nvme subsystem host add -vserver <svm_name> -subsystem <subsystem_name> -host-nqn <host_nqn>
+vserver nvme subsystem map add -vserver <svm_name> -subsystem <subsystem_name> -path /vol/<volume_name>/<namespace_name>
+----
 . Assicurarsi che la protezione anti-ransomware sia abilitata nella scheda sicurezza.
 +
 .Mostra esempio

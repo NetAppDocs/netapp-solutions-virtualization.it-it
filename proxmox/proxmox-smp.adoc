@@ -152,7 +152,7 @@ Ad esempio: `https://10.61.187.117:4001`
 
 
 
-. Apri un browser web e accedi all'interfaccia utente SMP inserendo `http://<IP address specified during installation>:4001`
+. Apri un browser web e accedi all'interfaccia utente SMP inserendo `https://<IP address specified during installation>:4001`
 +
 .Visualizza la schermata di accesso SMP
 [%collapsible]
@@ -160,6 +160,10 @@ Ad esempio: `https://10.61.187.117:4001`
 image::proxmox-smp-image4.png[schermata di accesso SMP]
 
 ====
+. Accedi a SMP con il nome utente `admin` e la password `admin` predefiniti.
++
+Quando richiesto, modifica la password predefinita. Le stesse credenziali predefinite valgono quando installi SMP utilizzando Shift toolkit.
+
 +
 .Visualizza la schermata iniziale di SMP
 [%collapsible]
