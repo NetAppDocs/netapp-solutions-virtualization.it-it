@@ -26,7 +26,7 @@ Per ripristinare da un backup, supponiamo che lo spazio dei nomi in cui era pres
 .Ripristina nello stesso namespace
 [%collapsible%open]
 ====
-Per ripristinare dal backup appena creato, dobbiamo creare una risorsa personalizzata di ripristino (CR). Dobbiamo fornirgli un nome, specificare il nome del backup da cui vogliamo effettuare il ripristino e impostare restorePVs su true. È possibile impostare parametri aggiuntivi come mostrato inlink:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/backing_up_and_restoring/restoring-applications.html["documentazione"] . Fare clic sul pulsante Crea.
+Per ripristinare dal backup che hai appena creato, devi creare una risorsa di ripristino personalizzata (CR). Devi assegnarle un nome, specificare il nome del backup da cui vuoi eseguire il ripristino e impostare restorePVs su true. Puoi impostare parametri aggiuntivi come mostrato nella link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.14/html/backup_and_restore/oadp-application-backup-and-restore#oadp-backing-up["documentazione"]. Fai clic sul pulsante Create.
 
 image:redhat-openshift-oadp-restore-001.png["Crea Ripristina CR"]
 

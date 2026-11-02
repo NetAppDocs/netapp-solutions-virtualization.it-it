@@ -46,7 +46,7 @@ OADP 1.3 è disponibile nell'hub operatore del cluster OpenShift 4.12 e versioni
 * ONTAP 9.12
 
 
-link:https://docs.netapp.com/us-en/trident/["Trident CSI"] link:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/installing/installing-oadp-ocs.html["API OpenShift per la protezione dei dati (OADP)"] link:https://velero.io/["Velero"]
+link:https://docs.netapp.com/us-en/trident/["Trident CSI"] link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.14/html/backup_and_restore/oadp-application-backup-and-restore#installing-oadp["API OpenShift per la protezione dei dati (OADP)"] link:https://velero.io/["Velero"]
 
 
 
@@ -146,7 +146,7 @@ Per ripristinare da un backup, supponiamo che lo spazio dei nomi in cui era pres
 
 [%collapsible]
 ====
-Per ripristinare dal backup appena creato, dobbiamo creare una risorsa personalizzata di ripristino (CR). Dobbiamo fornirgli un nome, specificare il nome del backup da cui vogliamo effettuare il ripristino e impostare restorePVs su true. È possibile impostare parametri aggiuntivi come mostrato inlink:https://docs.openshift.com/container-platform/4.14/backup_and_restore/application_backup_and_restore/backing_up_and_restoring/restoring-applications.html["documentazione"] . Fare clic sul pulsante Crea.
+Per ripristinare dal backup che hai appena creato, devi creare una risorsa di ripristino personalizzata (CR). Devi assegnarle un nome, specificare il nome del backup da cui vuoi eseguire il ripristino e impostare restorePVs su true. Puoi impostare parametri aggiuntivi come mostrato nella link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.14/html/backup_and_restore/oadp-application-backup-and-restore#oadp-backing-up["documentazione"]. Fai clic sul pulsante Create.
 
 image:redhat-openshift-oadp-restore-001.png["Crea Ripristina CR"]
 

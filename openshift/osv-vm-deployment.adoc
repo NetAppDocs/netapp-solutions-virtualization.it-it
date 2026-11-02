@@ -49,7 +49,7 @@ In genere, durante il provisioning dei dischi della VM, si preferisce la modalit
 Per personalizzare la creazione della macchina virtuale dopo aver selezionato il modello del sistema operativo, fare clic su Personalizza macchina virtuale anziché su Creazione rapida.
 
 . Se il sistema operativo selezionato ha configurato la sorgente di avvio, è possibile fare clic su *Personalizza parametri VirtualMachine*.
-. Se il sistema operativo selezionato non ha alcuna sorgente di avvio configurata, è necessario configurarla.  È possibile visualizzare i dettagli sulle procedure illustrate nellink:https://docs.openshift.com/container-platform/4.14/virt/virtual_machines/creating_vms_custom/virt-creating-vms-from-custom-images-overview.html["documentazione"] .
+. Se il sistema operativo selezionato non ha una sorgente di avvio configurata, devi configurarla. Puoi vedere i dettagli delle procedure mostrate in link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.14/html/virtualization/virtual-machines#virt-creating-vms-from-custom-images-overview["documentazione"].
 . Dopo aver configurato il disco di avvio, puoi fare clic su *Personalizza parametri VirtualMachine*.
 . È possibile personalizzare la VM dalle schede presenti in questa pagina.  Ad esempio, fare clic sulla scheda *Dischi* e quindi su *Aggiungi disco* per aggiungere un altro disco alla VM.
 . Fare clic su Crea macchina virtuale per creare la macchina virtuale; in questo modo verrà avviato un pod corrispondente in background.

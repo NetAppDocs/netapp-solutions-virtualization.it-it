@@ -71,6 +71,6 @@ indexpage:
     - title: 'OpenShift Virtualization: liberare la potenza degli ambienti virtuali'
       url: https://www.redhat.com/en/blog/openshift-virtualization-unleashing-the-power-of-cloud-native-virtual-environments
     - title: Documentazione di Red Hat OpenShift
-      url: https://docs.openshift.com/container-platform/4.22
+      url: https://docs.redhat.com/en/documentation/openshift_container_platform/4.22
     - title: Blog di Red Hat
       url: https://www.redhat.com/en/blog/products
